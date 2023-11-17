@@ -10,10 +10,10 @@ import NewsCard from './NewsCard/NewsCard';
 import PetCard from './PetCard/PetCard';
 import RegisterForm from './RegisterForm/RegisterForm';
 import SharedLayout from './SharedLayout/SharedLayout';
-import UserCard from './UserCard/UserCard';
+// import UserCard from './UserCard/UserCard';
 
 export default {
-  UserCard,
+  // UserCard,
   SharedLayout,
   RegisterForm,
   AddPetForm,
