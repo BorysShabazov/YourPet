@@ -1,3 +1,17 @@
-const UserPage = () => <p>UserPage</p>;
+// import MyPetsCard from "../../components/MyPetsCard/MyPetsCard";
+// import UserCard from "../../components/UserCard/UserCard";
+// import { ProfileContainer, ProfileWrapper } from "./UserPage.styled";
 
-export default UserPage;
+// const UserPage = () => {
+
+//   return (
+//     <ProfileContainer>
+//       <ProfileWrapper>
+//         <UserCard/>
+//         <MyPetsCard/>
+//       </ProfileWrapper>
+//     </ProfileContainer>
+//   )
+// };
+
+// export default UserPage;
