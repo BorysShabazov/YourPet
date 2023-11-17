@@ -1,28 +1,23 @@
 import { Route, Routes } from 'react-router-dom';
-import SharedLayout from './components/SharedLayout/SharedLayout';
-import FirstPage from './pages/FirstPage/FirstPage';
-import SecondPage from './pages/SecondPage/SecondPage';
-import HalfPage from './pages/HalfPage/HalfPage';
-import ErrorPage from './pages/ErrorPage/ErrorPage';
-import { AppWrapper } from './App.styled';
+import Components from './components';
 
-const test = import.meta.env.VITE_API_TEST;
+// const test = import.meta.env.VITE_API_TEST;
+const { SharedLayout } = Components;
 
 function App() {
-  console.log(test);
   return (
-    <AppWrapper>
+    <>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
-          <Route path="/first" element={<FirstPage />} />
-          <Route path="/second" element={<SecondPage />}>
-            <Route path=":half" element={<HalfPage />} />
+          <Route path="/first" element={<p>current page</p>} />
+          <Route path="/second" element={<p>second page</p>}>
+            <Route path=":half" element={<p>half</p>} />
           </Route>
 
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="*" element={<p>not found</p>} />
         </Route>
       </Routes>
-    </AppWrapper>
+    </>
   );
 }
 export default App;
