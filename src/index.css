@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 @import 'modern-normalize/modern-normalize.css';
 @import './css/reset.css';
 @import './css/variables.css';
 @import './css/visually-hidden.css';
-=======
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
->>>>>>> dev
