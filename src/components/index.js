@@ -1,7 +1,7 @@
 import AddPetForm from './AddPetForm';
 import Filters from './Filters/Filters';
 import FriendCard from './FriendCard/FriendCard';
-import Header from './Header/Header';
+import Header from './Header/Header/header';
 import LoginForm from './LoginForm/LoginForm';
 import MobileMenu from './MobileMenu/MobileMenu';
 import Modals from './Modals';
@@ -10,10 +10,12 @@ import NewsCard from './NewsCard/NewsCard';
 import PetCard from './PetCard/PetCard';
 import RegisterForm from './RegisterForm/RegisterForm';
 import SharedLayout from './SharedLayout/SharedLayout';
-import UserCard from './UserCard/UserCard';
+// import UserCard from './UserCard/UserCard';
+import Svg from './Svg/Svg';
 
 export default {
-  UserCard,
+  // UserCard,
+  Svg,
   SharedLayout,
   RegisterForm,
   AddPetForm,
