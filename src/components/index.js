@@ -10,6 +10,7 @@ import NewsCard from './NewsCard/NewsCard';
 import PetCard from './PetCard/PetCard';
 import RegisterForm from './RegisterForm/RegisterForm';
 import SharedLayout from './SharedLayout/SharedLayout';
+import NoticesCategoriesNav from './Notices/NoticesCategoriesNav'
 // import UserCard from './UserCard/UserCard';
 
 export default {
@@ -26,4 +27,5 @@ export default {
   MyPetsCard,
   NewsCard,
   PetCard,
+  NoticesCategoriesNav,
 };

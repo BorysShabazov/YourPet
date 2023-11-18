@@ -1,3 +1,7 @@
-const NoticesPage = () => <p>NoticesPage</p>;
+const NoticesPage = () => {
+    return (
+        
+    )
+};
 
 export default NoticesPage;
