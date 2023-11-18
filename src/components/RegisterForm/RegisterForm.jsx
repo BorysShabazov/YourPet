@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import sprite from './sprite.svg';
 import { useDispatch } from 'react-redux';
 import { register } from '../../Redux/auth/auth-operations';
+import RegisterSchema from './RegisterSchema';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -13,8 +14,12 @@ const RegisterForm = () => {
       name: '',
       email: '',
       password: '',
-      rePassword: '',
+      confirmPassword: '',
     },
+    validateOnChange: false,
+    validateOnBlur: false,
+
+    validationSchema: RegisterSchema,
 
     onSubmit: ({ name, email, password }, { resetForm }) => {
       dispatch(register({ name, email, password }));
@@ -43,14 +48,15 @@ const RegisterForm = () => {
 
   return (
     <form
-      className="w-[280px] h-[479px] pt-10 pb-10 pl-3 pr-3 bg-white rounded-[20px] shadow"
+      noValidate
+      className="w-[280px] pt-10 pb-10 pl-3 pr-3 bg-white rounded-[20px] shadow"
       onSubmit={formik.handleSubmit}
     >
       <h1 className="text-center text-neutral-900 text-2xl font-medium mb-5">
         Registration
       </h1>
 
-      <div className="mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center">
+      <div className="mb-3">
         <label htmlFor="name" className="sr-only">
           Name
         </label>
@@ -59,13 +65,18 @@ const RegisterForm = () => {
           name="name"
           type="text"
           placeholder="Name"
-          className=""
+          className="w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none"
           value={formik.values.name}
           onChange={formik.handleChange}
         />
+        {formik.errors.name && (
+          <div className="pl-4 mt-1 text-rose-500 text-xs font-normal">
+            {formik.errors.name}
+          </div>
+        )}
       </div>
 
-      <div className="mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center">
+      <div className="mb-3">
         <label htmlFor="email" className="sr-only">
           Email
         </label>
@@ -73,61 +84,87 @@ const RegisterForm = () => {
           id="email"
           name="email"
           type="email"
+          className="w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none"
           placeholder="Email"
           value={formik.values.email}
           onChange={formik.handleChange}
         />
+
+        {formik.errors.email && (
+          <div className="pl-4 mt-1 text-rose-500 text-xs font-normal">
+            {formik.errors.email}
+          </div>
+        )}
       </div>
 
-      <div className="flex mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center relative">
+      <div className="mb-3">
         <label htmlFor="password" className="sr-only">
           Password
         </label>
 
-        <input
-          id="password"
-          name="password"
-          type={passwordVisible ? 'text' : 'password'}
-          placeholder="Password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-        />
-        <svg
-          className="w-6 h-6 right-3 absolute"
-          onClick={() => togglePasswordVisibility('password')}
-        >
-          <use
-            xlinkHref={
-              passwordVisible ? `${sprite}#eye-open` : `${sprite}#eye-closed`
-            }
+        <div className="flex relative items-center justify-between">
+          <input
+            id="password"
+            name="password"
+            type={passwordVisible ? 'text' : 'password'}
+            placeholder="Password"
+            className="w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none"
+            value={formik.values.password}
+            onChange={formik.handleChange}
           />
-        </svg>
+          <svg
+            className="w-6 h-6 right-3 absolute"
+            onClick={() => togglePasswordVisibility('password')}
+          >
+            <use
+              xlinkHref={
+                passwordVisible ? `${sprite}#eye-open` : `${sprite}#eye-closed`
+              }
+            />
+          </svg>
+        </div>
+
+        {formik.errors.password && (
+          <div className="pl-4 mt-1 text-rose-500 text-xs font-normal">
+            {formik.errors.password}
+          </div>
+        )}
       </div>
 
-      <div className="flex mb-10 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center relative">
-        <label htmlFor="rePassword" className="sr-only">
+      <div className="mb-10">
+        <label htmlFor="confirmPassword" className="sr-only">
           Repeat Password
         </label>
-        <input
-          id="rePassword"
-          name="rePassword"
-          type={confirmPasswordVisible ? 'text' : 'password'}
-          placeholder="Confirm password"
-          value={formik.values.rePassword}
-          onChange={formik.handleChange}
-        />
-        <svg
-          className="w-6 h-6 right-3 absolute"
-          onClick={() => togglePasswordVisibility('confirmPassword')}
-        >
-          <use
-            xlinkHref={
-              confirmPasswordVisible
-                ? `${sprite}#eye-open`
-                : `${sprite}#eye-closed`
-            }
+
+        <div className="flex relative items-center justify-between">
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type={confirmPasswordVisible ? 'text' : 'password'}
+            placeholder="Confirm password"
+            className="w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none"
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
           />
-        </svg>
+          <svg
+            className="w-6 h-6 right-3 absolute"
+            onClick={() => togglePasswordVisibility('confirmPassword')}
+          >
+            <use
+              xlinkHref={
+                confirmPasswordVisible
+                  ? `${sprite}#eye-open`
+                  : `${sprite}#eye-closed`
+              }
+            />
+          </svg>
+        </div>
+
+        {formik.errors.confirmPassword && (
+          <div className="pl-4 mt-1 text-rose-500 text-xs font-normal">
+            {formik.errors.confirmPassword}
+          </div>
+        )}
       </div>
 
       <button
