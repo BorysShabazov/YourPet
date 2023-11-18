@@ -1,10 +1,9 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import css from "./nav.module.css"
-
+import css from './nav.module.css';
 
 export default function Nav({ style, onClick }) {
   const location = useLocation();
-  console.log('onClick ', onClick);
+const navLinkArr=[{path:"/news",text:"news"},{path:"/news",text:"news"},{path:"/news",text:"news"}]
   return (
     <div className={style}>
       <ul className={`${css.listNav} `}>
