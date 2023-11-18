@@ -1,7 +1,11 @@
-@import 'modern-normalize/modern-normalize.css';
-@import './css/reset.css';
-@import './css/variables.css';
-@import './css/visually-hidden.css';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './assets/fonts/custom-fonts.css';
+
+@layer {
+  .blue-gradient {
+    background: linear-gradient(290deg, #419ef1 0%, #9bd0ff 107.89%);
+  }
+}
