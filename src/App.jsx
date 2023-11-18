@@ -14,10 +14,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<SharedLayout></SharedLayout>}>
-          <Route path="/first" element={<p>current page</p>} />
+          {/* <Route path="/first" element={<p>current page</p>} />
           <Route path="/second" element={<p>second page</p>}>
             <Route path=":half" element={<p>half</p>} />
-          </Route>
+          </Route> */}
 
           <Route index element={<MainPage />} />
           {/* <Route path="/singin" element={<AuthForma />} />
@@ -34,5 +34,3 @@ function App() {
 }
 
 export default App;
-
-
