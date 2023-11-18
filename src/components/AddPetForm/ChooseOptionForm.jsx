@@ -5,7 +5,7 @@ const hoveredButtonStyles = 'bg-blue text-background';
 
 const ChooseOptionSection = ({ callback, category }) => {
   return (
-    <div className="flex flex-col mb-[91px] gap-[12px]">
+    <div className="flex flex-col mb-[45px] gap-[12px]">
       <label
         className={`${baseButtonStyles} ${
           category === 'own' ? hoveredButtonStyles : regularButtonStyles
@@ -38,18 +38,33 @@ const ChooseOptionSection = ({ callback, category }) => {
       </label>
       <label
         className={`${baseButtonStyles} ${
-          category === 'lost-found' ? hoveredButtonStyles : regularButtonStyles
+          category === 'lost' ? hoveredButtonStyles : regularButtonStyles
         }`}
       >
         <input
           id="category"
           name="category"
           type="radio"
-          value="lost-found"
+          value="lost"
           onChange={callback}
           className="w-0 h-0 invisible"
         />
         lost
+      </label>
+      <label
+        className={`${baseButtonStyles} ${
+          category === 'found' ? hoveredButtonStyles : regularButtonStyles
+        }`}
+      >
+        <input
+          id="category"
+          name="category"
+          type="radio"
+          value="found"
+          onChange={callback}
+          className="w-0 h-0 invisible"
+        />
+        found
       </label>
       <label
         className={`${baseButtonStyles} ${

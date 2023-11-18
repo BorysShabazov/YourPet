@@ -11,28 +11,24 @@ import AddPetPage from './pages/AddPetPage/AddPetPage';
 const { SharedLayout, Svg } = Components;
 
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<SharedLayout></SharedLayout>}>
-          <Route path="/first" element={<p>current page</p>} />
-          <Route path="/second" element={<p>second page</p>}>
-            <Route path=":half" element={<p>half</p>} />
-          </Route>
-
-          <Route index element={<MainPage />} />
-          {/* <Route path="/singin" element={<AuthForma />} />
-    <Route path="/singup" element={<AuthForma isLogIn={false} />} /> */}
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/notices" element={<NoticesPage />} />
-          <Route path="/friends" element={<OurFriendsPage />} />
-
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>{' '}
-      */}
-    </>
-  );
+  return <AddPetPage />;
+  // <>
+  //   <Routes>
+  //     <Route path="/" element={<SharedLayout></SharedLayout>}>
+  //       <Route path="/first" element={<p>current page</p>} />
+  //       <Route path="/second" element={<p>second page</p>}>
+  //         <Route path=":half" element={<p>half</p>} />
+  //       </Route>
+  //       <Route index element={<MainPage />} />
+  //       {/* <Route path="/singin" element={<AuthForma />} />
+  // <Route path="/singup" element={<AuthForma isLogIn={false} />} /> */}
+  //       <Route path="/news" element={<NewsPage />} />
+  //       <Route path="/notices" element={<NoticesPage />} />
+  //       <Route path="/friends" element={<OurFriendsPage />} />
+  //       <Route path="*" element={<NotFoundPage />} />
+  //     </Route>
+  //   </Routes>
+  // </>
 }
 
 export default App;
