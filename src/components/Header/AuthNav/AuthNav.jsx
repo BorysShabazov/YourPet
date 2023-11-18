@@ -6,10 +6,10 @@ export default function AuthNav({onClick,style=null}) {
     <ul className={`${css.listUserNav} ${style} `}
     >
       <li onClick={onClick}>
-        <BtnAuth path="/login"></BtnAuth>
+        <BtnAuth path="/login">Login</BtnAuth>
       </li>
       <li>
-        <BtnAuth path="/register"></BtnAuth>
+        <BtnAuth path="/register">Register</BtnAuth>
       </li>
     </ul>
   );
