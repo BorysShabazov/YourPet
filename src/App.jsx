@@ -7,28 +7,30 @@ import MainPage from './pages/MainPage/MainPage';
 import OurFriendsPage from './pages/OurFriendsPage/OurFriendsPage';
 
 // const test = import.meta.env.VITE_API_TEST;
-const { SharedLayout } = Components;
+const { SharedLayout, Svg } = Components;
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<SharedLayout />}>
+    <>
+      <Routes>
+        <Route path="/" element={<SharedLayout></SharedLayout>}>
+          <Route path="/first" element={<p>current page</p>} />
+          <Route path="/second" element={<p>second page</p>}>
+            <Route path=":half" element={<p>half</p>} />
+          </Route>
 
-        <Route index element={<MainPage/>} />
-        {/* <Route path="/singin" element={<AuthForma />} />
-        <Route path="/singup" element={<AuthForma isLogIn={false} />} /> */}
-        <Route path="/news" element={<NewsPage/>} />
-        <Route path="/notices" element={<NoticesPage/>} />
-        <Route path="/friends" element={< OurFriendsPage/>} />
+          <Route index element={<MainPage />} />
+          {/* <Route path="/singin" element={<AuthForma />} />
+    <Route path="/singup" element={<AuthForma isLogIn={false} />} /> */}
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/notices" element={<NoticesPage />} />
+          <Route path="/friends" element={<OurFriendsPage />} />
 
-        <Route
-          path="*"
-          element={<NotFoundPage/>
-           
-          }
-        />
-      </Route>
-    </Routes>
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
+
 export default App;
