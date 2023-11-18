@@ -1,11 +1,7 @@
-import { Search } from "../../components/Notices/Search";
-
 const NoticesPage = () => {
-  return (
-    <>
-      <Search />
-    </>
-  );
+    return (
+        
+    )
 };
 
 export default NoticesPage;
