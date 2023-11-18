@@ -1,0 +1,59 @@
+.header {
+  padding-top: 20px;
+}
+.headerPosition {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    padding-top: 24px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .header {
+    padding-top: 20px;
+  }
+}
+.wrapperHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: block;
+  width: 116px;
+}
+@media screen and (min-width: 768px) {
+  .logo {
+    width: 116px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .logo {
+    width: 116px;
+  }
+}
+
+.wrapperUser {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.burgerImg {
+  stroke: #ffc107;
+}
+.navDescktop {
+  display: none;
+}
+@media screen and (min-width: 1280px) {
+  .navDescktop {
+    display: flex;
+  }
+}
