@@ -1,3 +1,5 @@
-const SharedLayout = () => <p className="font-bold">SharedLayout</p>;
+const SharedLayout = () => (
+  <p className="container manrope mx-auto font-bold">SharedLayout</p>
+);
 
 export default SharedLayout;
