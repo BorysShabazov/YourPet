@@ -11,9 +11,11 @@ import PetCard from './PetCard/PetCard';
 import RegisterForm from './RegisterForm/RegisterForm';
 import SharedLayout from './SharedLayout/SharedLayout';
 // import UserCard from './UserCard/UserCard';
+import Svg from './Svg/Svg';
 
 export default {
   // UserCard,
+  Svg,
   SharedLayout,
   RegisterForm,
   AddPetForm,
