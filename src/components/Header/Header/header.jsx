@@ -43,7 +43,6 @@ export default function Header({ isMobileActive }) {
           <div className={css.wrapperUser}>
             {isLogin ? (
               <>
-                {' '}
                 <BtnAuth path="/" onClick={onLogout}>
                   Logout
                 </BtnAuth>
