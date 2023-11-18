@@ -1,132 +1,148 @@
-// // import { useState } from 'react';
-// // import { useFormik } from 'formik';
-// // import {
-// //   RegisterFormWrapper,
-// //   RegisterLabel,
-// //   RegisterInput,
-// //   RegisterHeader,
-// //   RegisterDivWrapper,
-// //   RegisterEye,
-// // } from './RegisterForm.styled';
-// // import sprite from './sprite.svg';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useFormik } from 'formik';
+import sprite from './sprite.svg';
 
-// // const RegisterForm = () => {
-// //   // formik hook
-// //   const formik = useFormik({
-// //     initialValues: {
-// //       name: '',
-// //       email: '',
-// //       password: '',
-// //       rePassword: '',
-// //     },
+const RegisterForm = () => {
+  // formik hook
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      rePassword: '',
+    },
 
-// //     onSubmit: (values) => {
-// //       // send data to backend
-// //     },
-// //   });
+    onSubmit: (values) => {
+      // send data to backend
+    },
+  });
 
-// //   const [passwordVisible, setPasswordVisible] = useState(false);
-// //   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-// //   // toggle password
-// //   const togglePasswordVisibility = (value) => {
-// //     switch (value) {
-// //       case 'password':
-// //         setPasswordVisible(!passwordVisible);
-// //         break;
+  // toggle password
+  const togglePasswordVisibility = (value) => {
+    switch (value) {
+      case 'password':
+        setPasswordVisible(!passwordVisible);
+        break;
 
-// //       case 'confirmPassword':
-// //         setConfirmPasswordVisible(!confirmPasswordVisible);
-// //         break;
+      case 'confirmPassword':
+        setConfirmPasswordVisible(!confirmPasswordVisible);
+        break;
 
-// //       default:
-// //         break;
-// //     }
-// //   };
+      default:
+        break;
+    }
+  };
 
-// //   return (
-// //     <RegisterFormWrapper onSubmit={formik.handleSubmit}>
-// //       <RegisterHeader>Registration</RegisterHeader>
-// //       <RegisterDivWrapper>
-// //         <RegisterLabel htmlFor="name" className="visually-hidden">
-// //           Name
-// //         </RegisterLabel>
-// //         <RegisterInput
-// //           id="name"
-// //           name="name"
-// //           type="text"
-// //           placeholder="Name"
-// //           value={formik.values.name}
-// //           onChange={formik.handleChange}
-// //         />
-// //       </RegisterDivWrapper>
+  return (
+    <form
+      className="w-[280px] h-[479px] pt-10 pb-10 pl-3 pr-3 bg-white rounded-[20px] shadow"
+      onSubmit={formik.handleSubmit}
+    >
+      <h1 className="text-center text-neutral-900 text-2xl font-medium mb-5">
+        Registration
+      </h1>
 
-// //       <RegisterDivWrapper>
-// //         <RegisterLabel htmlFor="email" className="visually-hidden">
-// //           Email
-// //         </RegisterLabel>
-// //         <RegisterInput
-// //           id="email"
-// //           name="email"
-// //           type="email"
-// //           placeholder="Email"
-// //           value={formik.values.email}
-// //           onChange={formik.handleChange}
-// //         />
-// //       </RegisterDivWrapper>
+      <div className="mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center">
+        <label htmlFor="name" className="visually-hidden">
+          Name
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Name"
+          className=""
+          value={formik.values.name}
+          onChange={formik.handleChange}
+        />
+      </div>
 
-// //       <RegisterDivWrapper>
-// //         <RegisterLabel htmlFor="password" className="visually-hidden">
-// //           Password
-// //         </RegisterLabel>
+      <div className="mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center">
+        <label htmlFor="email" className="visually-hidden">
+          Email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+        />
+      </div>
 
-// //         <RegisterInput
-// //           id="password"
-// //           name="password"
-// //           type={passwordVisible ? 'text' : 'password'}
-// //           placeholder="Password"
-// //           value={formik.values.password}
-// //           onChange={formik.handleChange}
-// //         />
-// //         <RegisterEye onClick={() => togglePasswordVisibility('password')}>
-// //           <use
-// //             xlinkHref={
-// //               passwordVisible ? `${sprite}#eye-open` : `${sprite}#eye-closed`
-// //             }
-// //           />
-// //         </RegisterEye>
-// //       </RegisterDivWrapper>
+      <div className="flex mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center relative">
+        <label htmlFor="password" className="visually-hidden">
+          Password
+        </label>
 
-// //       <RegisterDivWrapper>
-// //         <RegisterLabel htmlFor="rePassword" className="visually-hidden">
-// //           Repeat Password
-// //         </RegisterLabel>
-// //         <RegisterInput
-// //           id="rePassword"
-// //           name="rePassword"
-// //           type={confirmPasswordVisible ? 'text' : 'password'}
-// //           placeholder="Confirm password"
-// //           value={formik.values.rePassword}
-// //           onChange={formik.handleChange}
-// //         />
-// //         <RegisterEye
-// //           onClick={() => togglePasswordVisibility('confirmPassword')}
-// //         >
-// //           <use
-// //             xlinkHref={
-// //               confirmPasswordVisible
-// //                 ? `${sprite}#eye-open`
-// //                 : `${sprite}#eye-closed`
-// //             }
-// //           />
-// //         </RegisterEye>
-// //       </RegisterDivWrapper>
-// //     </RegisterFormWrapper>
-// //   );
-// // };
+        <input
+          id="password"
+          name="password"
+          type={passwordVisible ? 'text' : 'password'}
+          placeholder="Password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+        />
+        <svg
+          className="w-6 h-6 right-3 absolute"
+          onClick={() => togglePasswordVisibility('password')}
+        >
+          <use
+            xlinkHref={
+              passwordVisible ? `${sprite}#eye-open` : `${sprite}#eye-closed`
+            }
+          />
+        </svg>
+      </div>
 
-// const RegisterForm = () => {
-//   return <>123</>;
-// };
+      <div className="flex mb-10 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center relative">
+        <label htmlFor="rePassword" className="visually-hidden">
+          Repeat Password
+        </label>
+        <input
+          id="rePassword"
+          name="rePassword"
+          type={confirmPasswordVisible ? 'text' : 'password'}
+          placeholder="Confirm password"
+          value={formik.values.rePassword}
+          onChange={formik.handleChange}
+        />
+        <svg
+          className="w-6 h-6 right-3 absolute"
+          onClick={() => togglePasswordVisibility('confirmPassword')}
+        >
+          <use
+            xlinkHref={
+              confirmPasswordVisible
+                ? `${sprite}#eye-open`
+                : `${sprite}#eye-closed`
+            }
+          />
+        </svg>
+      </div>
 
-// export default RegisterForm;
+      <button className="w-64 h-12 mb-2 px-7 py-2.5 bg-blue-400 rounded-[40px] justify-center items-center gap-2.5 inline-flex">
+        <p className="text-white text-xl tracking-wide font-semibold">Login</p>
+      </button>
+
+      <div className="text-center">
+        <span className="text-zinc-500 text-xs font-normal tracking-wide">
+          Already have an account?&nbsp;
+        </span>
+        <NavLink
+          className="text-blue-400 text-xs font-normal underline tracking-wide"
+          to={'/login'}
+        >
+          Login
+        </NavLink>
+      </div>
+    </form>
+  );
+};
+
+export default RegisterForm;
