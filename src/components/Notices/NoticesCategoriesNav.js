@@ -1,9 +1,9 @@
-
-
-export const NoticesCategoriesNav = () => {
+const NoticesCategoriesNav = () => {
 
     
- }
+}
+ 
+export default NoticesCategoriesNav
 
 // "Компонент рендерить блок навіції з маршрутами:
 //   - /notices/sell -  відкриває на сторінці компонент NoticesCategoryList зі списком оголошеннь з продажу
