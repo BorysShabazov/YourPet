@@ -1,0 +1,13 @@
+.buttonBurger{
+    display: flex;
+    align-items: center;
+    border:none;
+    background-color: inherit;
+    padding: 0;
+    
+}
+@media screen and (min-width: 1280px) {
+    .buttonBurger{
+        display: none;
+    }}
+  
