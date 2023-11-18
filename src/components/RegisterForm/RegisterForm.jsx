@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import sprite from './sprite.svg';
+import { useDispatch } from 'react-redux';
+import { register } from '../../Redux/auth/auth-operations';
 
 const RegisterForm = () => {
-  // formik hook
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -13,8 +16,9 @@ const RegisterForm = () => {
       rePassword: '',
     },
 
-    onSubmit: (values) => {
-      // send data to backend
+    onSubmit: ({ name, email, password }, { resetForm }) => {
+      dispatch(register({ name, email, password }));
+      resetForm();
     },
   });
 
@@ -47,7 +51,7 @@ const RegisterForm = () => {
       </h1>
 
       <div className="mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center">
-        <label htmlFor="name" className="visually-hidden">
+        <label htmlFor="name" className="sr-only">
           Name
         </label>
         <input
@@ -62,7 +66,7 @@ const RegisterForm = () => {
       </div>
 
       <div className="mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center">
-        <label htmlFor="email" className="visually-hidden">
+        <label htmlFor="email" className="sr-only">
           Email
         </label>
         <input
@@ -76,7 +80,7 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex mb-3 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center relative">
-        <label htmlFor="password" className="visually-hidden">
+        <label htmlFor="password" className="sr-only">
           Password
         </label>
 
@@ -101,7 +105,7 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex mb-10 w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 justify-between items-center relative">
-        <label htmlFor="rePassword" className="visually-hidden">
+        <label htmlFor="rePassword" className="sr-only">
           Repeat Password
         </label>
         <input
@@ -126,7 +130,10 @@ const RegisterForm = () => {
         </svg>
       </div>
 
-      <button className="w-64 h-12 mb-2 px-7 py-2.5 bg-blue-400 rounded-[40px] justify-center items-center gap-2.5 inline-flex">
+      <button
+        type="submit"
+        className="w-64 h-12 mb-2 bg-blue rounded-[40px] justify-center items-center gap-2.5 inline-flex"
+      >
         <p className="text-white text-xl tracking-wide font-semibold">Login</p>
       </button>
 
