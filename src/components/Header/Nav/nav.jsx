@@ -13,7 +13,7 @@ const navLinkArr=[{path:"/news",text:"news"},{path:"/news",text:"news"},{path:"/
           </NavLink>
         </li>
         <li onClick={onClick}>
-          <NavLink to="/notices" className="navLink" state={{ from: location }}>
+          <NavLink to="/notices/sell" className="navLink" state={{ from: location }}>
             find pet
           </NavLink>
         </li>
