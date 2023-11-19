@@ -24,12 +24,13 @@ export default function MobileMenu({
     onToogleIsLogin();
   };
   return (
-    <div className={css.wrapperMobileMenu}>
-      <Container>
+    <Container>
+      <div className={css.wrapperMobileMenu}>
         <div className={cssHeader.wrapperHeader}>
           <NavLink to="/" className="navLink" state={{ from: location }}>
             <Logo className={cssHeader.logo} onClick={onToogleMobileMenu} />
           </NavLink>
+
           <div className={cssHeader.wrapperUser}>
             {isLogin ? (
               <BtnAuth path="/" onClick={onLogout}>
@@ -49,7 +50,7 @@ export default function MobileMenu({
           <UserImg />
         )}
         <Nav onClick={onToogleMobileMenu} />
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 }
