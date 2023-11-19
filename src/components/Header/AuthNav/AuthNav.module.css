@@ -1,0 +1,18 @@
+.listUserNav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .listUserNav {
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+
+/* @media screen and (min-width: 1280px) {
+  .listUserNav {
+  }
+} */
+

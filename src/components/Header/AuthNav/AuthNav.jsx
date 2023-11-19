@@ -1,14 +1,17 @@
 import BtnAuth from '../BtnAuth/BtnAuth';
+import css from './AuthNav.module.css'
 
-export default function AuthNav() {
+export default function AuthNav({onClick,style=null}) {
   return (
-    <ul>
-      <li>
-        <BtnAuth path="/login"></BtnAuth>
+    <ul className={`${css.listUserNav} ${style} `}
+    >
+      <li onClick={onClick}>
+        <BtnAuth path="/login">Login</BtnAuth>
       </li>
       <li>
-        <BtnAuth path="/register"></BtnAuth>
+        <BtnAuth path="/register">Register</BtnAuth>
       </li>
     </ul>
   );
 }
+
