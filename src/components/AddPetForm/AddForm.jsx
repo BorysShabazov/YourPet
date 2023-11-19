@@ -15,14 +15,39 @@ const AddForm = () => {
       birth: '',
       type: '',
       sex: '',
-      petAvatarURL: '',
+      petAvatarURL: null,
       price: '',
       location: '',
       comments: '',
     },
 
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: ({
+      category,
+      title,
+      name,
+      birth,
+      type,
+      sex,
+      petAvatarURL,
+      price,
+      location,
+      comments,
+    }) => {
+      const formData = new FormData();
+      formData.append('category', category);
+      formData.append('title', title);
+      formData.append('name', name);
+      formData.append('birth', birth);
+      formData.append('type', type);
+      formData.append('sex', sex);
+      formData.append('image', petAvatarURL, 'petImage');
+      formData.append('price', price);
+      formData.append('location', location);
+      formData.append('comments', comments);
+
+      fetch('https://httpbin.org/post', { method: 'POST', body: formData })
+        .then((res) => res.json())
+        .then(console.log);
     },
   });
 
@@ -40,32 +65,47 @@ const AddForm = () => {
       : console.log('This is the end!');
   };
 
+  const {
+    category,
+    name,
+    birth,
+    type,
+    sex,
+    price,
+    location,
+    petAvatarURL,
+    comments,
+  } = formik.values;
+
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
       {step === 1 && (
         <ChooseOptionSection
           callback={formik.handleChange}
-          category={formik.values.category}
+          category={category}
         />
       )}
       {step === 2 && (
         <PersonalDetailsForm
           callback={formik.handleChange}
-          category={formik.values.category}
-          name={formik.values.name}
-          birth={formik.values.birth}
-          type={formik.values.type}
+          category={category}
+          name={name}
+          birth={birth}
+          type={type}
         />
       )}
       {step === 3 && (
         <MoreInfoForm
           callback={formik.handleChange}
-          category={formik.values.category}
-          sex={formik.values.sex}
-          price={formik.values.sex}
-          location={formik.values.location}
-          petAvatarURL={formik.values.petAvatarURL}
-          comments={formik.values.comments}
+          setPhoto={(file) => {
+            formik.setFieldValue('petAvatarURL', file);
+          }}
+          category={category}
+          sex={sex}
+          price={price}
+          location={location}
+          petAvatarURL={petAvatarURL}
+          comments={comments}
         />
       )}
 
