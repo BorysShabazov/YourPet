@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Svg from "../Svg/Svg";
+import { useState } from 'react';
+import Svg from '../Svg/Svg';
 
 export const Search = ({className = ''}) => {
   const [value, setValue] = useState("");
@@ -8,7 +8,7 @@ export const Search = ({className = ''}) => {
     setValue(target.value);
   };
   const handleClear = () => {
-    setValue("");
+    setValue('');
   };
 
   return (
