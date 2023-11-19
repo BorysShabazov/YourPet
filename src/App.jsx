@@ -28,12 +28,12 @@ function App() {
 
           <Route path="news" element={<NewsPage />} />
           <Route path="notices" element={<NoticesPage />}>
-            {/* <Route path="/sell" element={<NoticesCategoriesNav />} />
-            <Route path="/lost" element={<NoticesCategoriesNav />} />
-            <Route path="/found" element={<NoticesCategoriesNav />} />
-            <Route path="/in-good-hands" element={<NoticesCategoriesNav />} />
-            <Route path="/favorite" element={<NoticesCategoriesNav />} />
-            <Route path="/own" element={<NoticesCategoriesNav />} /> */}
+            <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
+            <Route path="/notices/lost" element={<NoticesCategoriesNav />} />
+            <Route path="/notices/found" element={<NoticesCategoriesNav />} />
+            <Route path="/notices/in-good-hands" element={<NoticesCategoriesNav />} />
+            <Route path="/notices/favorite" element={<NoticesCategoriesNav />} />
+            <Route path="/notices/own" element={<NoticesCategoriesNav />} />
           </Route>
           <Route path="add-pet" element={<AddPetPage />} />
 

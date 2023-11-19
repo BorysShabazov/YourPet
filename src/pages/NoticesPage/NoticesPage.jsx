@@ -1,4 +1,5 @@
 
+import { Outlet } from "react-router";
 import NoticesCategoriesNav from "../../components/Notices/NoticesCategoriesNav";
 import { Search } from "../../components/Notices/Search";
 import { Container, Title } from "../../ui";
@@ -10,6 +11,7 @@ const NoticesPage = () => {
             <Title>Find your favorite pet</Title>
             <Search/>
             <NoticesCategoriesNav />
+            
         </Container>
         
     )

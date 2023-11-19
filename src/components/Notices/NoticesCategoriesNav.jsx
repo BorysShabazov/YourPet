@@ -10,13 +10,8 @@ const NoticesCategoriesNav = () => {
             <Link to='/notices/in-good-hands'>in-good-hands</Link>
             <Link to='/notices/favorite'>favorite</Link>
             <Link to='/notices/own'>own</Link>
-
-
         </div>
     )
-//     <div class="w-[57px] h-[35px] px-4 py-2 bg-blue-200 rounded-[40px] justify-center items-center gap-2 inline-flex">
-//   <div class="text-blue-400 text-sm font-medium font-['Manrope'] tracking-wide">sell</div>
-// </div>
 }
  
 export default NoticesCategoriesNav
