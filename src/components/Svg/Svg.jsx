@@ -1,8 +1,8 @@
 import sprite from '../../images/sprite.svg';
 
-const Svg = ({ id, size, fill, stroke }) => {
+const Svg = ({ id, size, fill, stroke, className='' }) => {
   return (
-    <div>
+    <div className={className}>
       <svg width={size} height={size} fill={fill} stroke={stroke}>
         <use href={`${sprite}#${id}`} />
       </svg>
