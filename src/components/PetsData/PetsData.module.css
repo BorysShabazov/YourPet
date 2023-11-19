@@ -1,0 +1,39 @@
+.NoPetsMessage {
+	margin-top: 20px;
+	padding-top: 20px;
+	padding-right: 28px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+  
+	color: var(--black, #111);
+	font-family: Manrope;
+	font-size: 28px;
+  
+	font-weight: 500;
+	line-height: 1.36;
+	letter-spacing: 0.04em;
+	text-align: center;
+  }
+  
+  
+  .AddPetBtn {
+	  display: flex;
+	  width: 129px;
+	  padding: 8px 20px;
+	  justify-content: center;
+	  align-items: center;
+	  gap: 8px;
+	  border-radius: 40px;
+	  border: none;
+	  background: var(--blue, #54ADFF);
+  
+	  color: var(--background, #FEF9F9);
+	  font-family: Manrope;
+	  font-size: 16px;
+  
+	  font-weight: 700;
+	  line-height: 1.36;
+	  letter-spacing: 0.04em;
+  }
+  
+  
