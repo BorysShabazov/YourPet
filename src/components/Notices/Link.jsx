@@ -8,7 +8,6 @@ export const Link = ({ to, children }) => (
         ? "bg-blue inline-block text-lightBlue px-4 py-2 text-sm h-[35px] rounded-[40px] leading-normal"
         : "inline-block text-blue px-4 py-2 text-sm h-[35px] bg-lightBlue rounded-[40px] leading-normal"
     }
-    // className="inline-block text-blue px-4 py-2 text-sm h-[35px] bg-lightBlue rounded-[40px] leading-normal"
   >
     {children}
   </NavLink>
