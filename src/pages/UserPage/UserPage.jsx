@@ -2,6 +2,7 @@ import MyPetsCard from '../../components/MyPetsCard/MyPetsCard';
 import UserCard from '../../components/UserCard/UserCard';
 
 const UserPage = () => {
+
   return (
     <section>
       <div className="relative container mx-auto xl:flex gap-[32px]">
@@ -16,6 +17,7 @@ const UserPage = () => {
       </div>
     </section>
   );
+
 };
 
 export default UserPage;
