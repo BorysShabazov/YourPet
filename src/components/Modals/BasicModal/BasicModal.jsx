@@ -1,7 +1,7 @@
 
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { CloseIcon } from '../../CloseIcon/CloseIcon';
+import Svg from '../../Svg/Svg';
 const modalRoot = document.querySelector('#modal-root');
 
 export function BasicModal({ isOpen, onCloseModal, children }) {
@@ -32,18 +32,17 @@ export function BasicModal({ isOpen, onCloseModal, children }) {
     }, [isOpen, onCloseModal]);
   return (
    <>
-         { isOpen && createPortal(  <div className="flex items-center justify-center min-h-screen bg-grey">
-        <div className="modal-overlay ">
+         { isOpen && createPortal(  
+        <div className="modal-overlay flex items-center justify-center fixed bg-black bg-opacity-50 top-0 left-0 w-full h-full">
           <div className="modal" ref={modalRef}>
             <div className="modal-content relative justify-center  bg-white w-full smOnly:p-3 md:p-6 rounded-3xl shadow-lg">
-           <div className=' ml-auto mb-2  absolute smOnly:right-3 md:right-6 '  onClick={onCloseModal}>
-           <CloseIcon  />
+           <div className=' ml-auto mb-2  absolute smOnly:right-3 md:right-6 cursor-pointer'  onClick={onCloseModal}>
+           <Svg id={'icon-cross'} size={'24px'} stroke={'#54ADFF'} />
            </div>
               <div>{children}</div>
             </div>
           </div>
-        </div>
-      </div>,
+        </div>,
           modalRoot
           )}
    </>
