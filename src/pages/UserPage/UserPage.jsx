@@ -2,7 +2,7 @@
 // import UserCard from "../../components/UserCard/UserCard";
 // import { ProfileContainer, ProfileWrapper } from "./UserPage.styled";
 
-// const UserPage = () => {
+const UserPage = () => {
 
 //   return (
 //     <ProfileContainer>
@@ -12,6 +12,6 @@
 //       </ProfileWrapper>
 //     </ProfileContainer>
 //   )
-// };
+};
 
-// export default UserPage;
+export default UserPage;
