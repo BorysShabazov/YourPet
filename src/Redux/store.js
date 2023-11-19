@@ -10,6 +10,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import { noticesStateReducer } from '../Redux/noticesSlise';
 
 const persistConfig = {
   key: 'root',
@@ -18,7 +19,7 @@ const persistConfig = {
 };
 
 const rootReduser = combineReducers({
-  // redusers
+  notices: noticesStateReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReduser);

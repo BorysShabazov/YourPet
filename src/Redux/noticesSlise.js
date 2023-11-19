@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { createNotice, deleteNotice, fetchNotices } from './operations/Notices';
 // import {} from './operations';
 
 const initialNotices = {
@@ -53,15 +54,15 @@ const noticesStateSlice = createSlice({
 
     // delete
 
-    builder.addCase(deleteContact.pending, pendingFunc);
-    builder.addCase(deleteContact.fulfilled, (state, action) => {
+    builder.addCase(deleteNotice.pending, pendingFunc);
+    builder.addCase(deleteNotice.fulfilled, (state, action) => {
       return {
         items: [...state.items.filter((el) => el.id !== action.payload)],
         isLoading: false,
         error: null,
       };
     });
-    builder.addCase(deleteContact.rejected, rejectFunc);
+    builder.addCase(deleteNotice.rejected, rejectFunc);
 
     // change
 

@@ -1,8 +1,4 @@
-import axios from 'axios';
-
-axios.defaults.baseURL = '';
-
-export const setToken = token => {
+export const setToken = (token) => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
