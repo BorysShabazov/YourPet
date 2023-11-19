@@ -40,8 +40,7 @@ function App() {
               path="/notices/favorite"
               element={<NoticesCategoriesNav />}
             />
-            <Route path="/notices/own" element={<NoticesCategoriesNav />} />
-
+            <Route path="/notices/own" element={<NoticesCategoriesNav />} /> */}
           </Route>
           <Route path="add-pet" element={<AddPetPage />} />
 

@@ -20,6 +20,7 @@ const MoreInfoForm = ({
 }) => {
   const [petImagePath, setPetImagePath] = useState('');
 
+  const hasPetImage = petImagePath !== '';
   return (
     <div className="flex flex-col mb-[24px] gap-[20px]">
       <div className="flex flex-col gap-[16px] mb-[16px]">
@@ -59,35 +60,42 @@ const MoreInfoForm = ({
           </label>
         </div>
       </div>
-      <label className="flex flex-col -mt-[16px] gap-[8px] items-center mx-auto">
-        <p className={labelStyles}>Add pet's photo</p>
-
-        <div
-          className={`w-[112px] h-[112px] bg-lightBlue ${
-            petImagePath === '' ? null : `bg-[url('${petImagePath}')]`
-          } bg-cover bg rounded-[20px]`}
+      <div className="flex flex-col items-center gap-[13px]">
+        <label
+          className={`flex flex-col -mt-[16px] gap-[8px] items-center mx-auto ${
+            hasPetImage ? 'pointer-events-none' : ''
+          }`}
         >
-          <input
-            id="petAvatarURL"
-            name="petAvatarURL"
-            type="file"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              const localPath = URL.createObjectURL(file);
-              setPhoto(file);
-              setPetImagePath(localPath);
-            }}
-            className="w-0 h-0 invisible"
-          />
-        </div>
+          {!hasPetImage && <p className={labelStyles}>Add pet's photo</p>}
 
-        <div className="flex flex-row items-center">
-          <div className="mr-[8px] w-[24px] h-[24px] bg-red"></div>
-          <p className="text-black text-xs font-normal font-manrope leading-snug tracking-wide">
-            Edit photo
-          </p>
-        </div>
-      </label>
+          <div
+            className={`w-[112px] h-[112px] bg-lightBlue ${
+              hasPetImage ? `bg-[url('${petImagePath}')]` : null
+            } bg-cover bg rounded-[20px]`}
+          >
+            <input
+              id="petAvatarURL"
+              name="petAvatarURL"
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                const localPath = URL.createObjectURL(file);
+                setPhoto(file);
+                setPetImagePath(localPath);
+              }}
+              className="w-0 h-0 invisible"
+            />
+          </div>
+        </label>
+        {hasPetImage && (
+          <label htmlFor="petAvatarURL" className="flex flex-row items-center">
+            <div className="mr-[8px] w-[24px] h-[24px] bg-red"></div>
+            <p className="text-black text-xs font-normal font-manrope leading-snug tracking-wide">
+              Edit photo
+            </p>
+          </label>
+        )}
+      </div>
       {category !== 'own' && (
         <label className={labelStyles}>
           <p className={inputTitleStyles}>Location</p>

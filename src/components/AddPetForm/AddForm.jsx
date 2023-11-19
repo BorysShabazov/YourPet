@@ -21,29 +21,18 @@ const AddForm = () => {
       comments: '',
     },
 
-    onSubmit: ({
-      category,
-      title,
-      name,
-      birth,
-      type,
-      sex,
-      petAvatarURL,
-      price,
-      location,
-      comments,
-    }) => {
+    onSubmit: (data) => {
       const formData = new FormData();
-      formData.append('category', category);
-      formData.append('title', title);
-      formData.append('name', name);
-      formData.append('birth', birth);
-      formData.append('type', type);
-      formData.append('sex', sex);
-      formData.append('image', petAvatarURL, 'petImage');
-      formData.append('price', price);
-      formData.append('location', location);
-      formData.append('comments', comments);
+      formData.append('category', data.category);
+      formData.append('title', data.title);
+      formData.append('name', data.name);
+      formData.append('birthDate', data.birth);
+      formData.append('type', data.type);
+      formData.append('sex', data.sex);
+      formData.append('image', data.petAvatarURL);
+      formData.append('price', data.price);
+      formData.append('location', data.location);
+      formData.append('comments', data.comments);
 
       fetch('https://httpbin.org/post', { method: 'POST', body: formData })
         .then((res) => res.json())
