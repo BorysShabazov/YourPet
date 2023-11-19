@@ -43,10 +43,6 @@
 <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2" d="M5.333 12l10.667 10.667 10.667-10.667"></path>
 </symbol>
 
-<symbol id="icon-cross" viewBox="0 0 32 32">
-<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2" d="M25.333 6.667l-18.667 18.667M6.667 6.667l18.667 18.667"></path>
-</symbol>
-
 <symbol id="icon-clock" viewBox="0 0 32 32">
 <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2" d="M16 9.333v6.667l4 4M28 16c0 6.627-5.373 12-12 12s-12-5.373-12-12c0-6.627 5.373-12 12-12s12 5.373 12 12z"></path>
 </symbol>
