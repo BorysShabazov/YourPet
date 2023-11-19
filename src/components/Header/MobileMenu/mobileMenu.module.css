@@ -1,0 +1,14 @@
+.wrapperMobileMenu {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: #fef9f9;
+  top:0;
+  left:0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+gap: 42px;
+  padding-top: 20px;
+
+}
