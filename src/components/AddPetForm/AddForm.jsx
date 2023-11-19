@@ -14,7 +14,10 @@ const AddForm = () => {
       name: '',
       birth: '',
       type: '',
+      sex: '',
       petAvatarURL: '',
+      price: '',
+      location: '',
       comments: '',
     },
 
@@ -58,6 +61,11 @@ const AddForm = () => {
         <MoreInfoForm
           callback={formik.handleChange}
           category={formik.values.category}
+          sex={formik.values.sex}
+          price={formik.values.sex}
+          location={formik.values.location}
+          petAvatarURL={formik.values.petAvatarURL}
+          comments={formik.values.comments}
         />
       )}
 

@@ -7,7 +7,7 @@ const AddPetForm = () => {
   return (
     <>
       <BackgroundContainer>
-        <div className="container mx-auto w-[280px] h-fit mb-[24px] px-[8px] py-[20px] bg-white rounded-[40px] shadow-default">
+        <div className="container mx-auto w-[280px] h-fit mb-[24px] px-[8px] pt-[20px] pb-[9px] bg-white rounded-[40px] shadow-default">
           <AddPetFormTitle text={'Add pet'} />
           <AddPetProgressBar />
           <AddForm />

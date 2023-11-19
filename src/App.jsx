@@ -9,33 +9,33 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegiserPage from './pages/RegiserPage/RegiserPage';
 import UserPage from './pages/UserPage/UserPage';
 import AddPetPage from './pages/AddPetPage/AddPetPage';
-import AddPetPage from './pages/AddPetPage/AddPetPage';
 
 // const test = import.meta.env.VITE_API_TEST;
 const { SharedLayout, Svg } = Components;
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<MainPage />} />
+    <AddPetPage />
+    // <>
+    //   <Routes>
+    //     <Route path="/" element={<SharedLayout />}>
+    //       <Route index element={<MainPage />} />
 
-          <Route path="/register" element={<RegiserPage />} />
-          <Route path="/login" element={<LoginPage />} />
+    //       <Route path="/register" element={<RegiserPage />} />
+    //       <Route path="/login" element={<LoginPage />} />
 
-          <Route path="/user" element={<UserPage />} />
+    //       <Route path="/user" element={<UserPage />} />
 
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/notices" element={<NoticesPage />} />
-          <Route path="/add-pet" element={<AddPetPage />} />
+    //       <Route path="/news" element={<NewsPage />} />
+    //       <Route path="/notices" element={<NoticesPage />} />
+    //       <Route path="/add-pet" element={<AddPetPage />} />
 
-          <Route path="/friends" element={<OurFriendsPage />} />
+    //       <Route path="/friends" element={<OurFriendsPage />} />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </>
+    //       <Route path="*" element={<NotFoundPage />} />
+    //     </Route>
+    //   </Routes>
+    // </>
   );
 }
 

@@ -1,6 +1,6 @@
 const baseButtonStyles =
   'px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm font-medium font-manrope tracking-wide';
-const regularButtonStyles = 'bg-lightBlue text-blue-400';
+const regularButtonStyles = 'bg-lightBlue text-blue';
 const hoveredButtonStyles = 'bg-blue text-background';
 
 const ChooseOptionSection = ({ callback, category }) => {
