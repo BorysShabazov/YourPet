@@ -25,11 +25,11 @@ export const Search = ({className = ''}) => {
           className="w-full md:w-[608px] h-11 bg-white rounded-[24px] md:rounded-[20px] pl-5 shadow"
         />
         <div className="right-[10px] top-[10px] absolute flex gap-2.5">
-          <div className="cursor-pointer"><Svg id="icon-search" size="24px"  /></div>
+          <div className="cursor-pointer"><Svg id="icon-search" size="24px"   /></div>
           
           {value &&
             <div onClick={handleClear} className="cursor-pointer ">
-              <Svg id="icon-clear" size="24px" />
+              <Svg id="icon-cross" size="24px" stroke='#FFC107' />
             </div>}
             
         </div>
