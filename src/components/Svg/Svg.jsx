@@ -1,15 +1,17 @@
 import sprite from '../../images/sprite.svg';
 
-const Svg = ({ id, size, color }) => {
+const Svg = ({ id, size, fill, stroke }) => {
   return (
-    <svg width={size} height={size} fill={color}>
-      <use href={`${sprite}#${id}`} />
-    </svg>
+    <div>
+      <svg width={size} height={size} fill={fill} stroke={stroke}>
+        <use href={`${sprite}#${id}`} />
+      </svg>
+    </div>
   );
 };
 
 Svg.defaultProps = {
-  size: 30,
+  size: 24,
   color: 'black',
 };
 
