@@ -1,9 +1,10 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import css from './nav.module.css';
+import css from "./nav.module.css"
+
 
 export default function Nav({ style, onClick }) {
   const location = useLocation();
-const navLinkArr=[{path:"/news",text:"news"},{path:"/news",text:"news"},{path:"/news",text:"news"}]
+  console.log('onClick ', onClick);
   return (
     <div className={style}>
       <ul className={`${css.listNav} `}>
@@ -13,7 +14,7 @@ const navLinkArr=[{path:"/news",text:"news"},{path:"/news",text:"news"},{path:"/
           </NavLink>
         </li>
         <li onClick={onClick}>
-          <NavLink to="/notices/sell" className="navLink" state={{ from: location }}>
+          <NavLink to="/notices" className="navLink" state={{ from: location }}>
             find pet
           </NavLink>
         </li>

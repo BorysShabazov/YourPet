@@ -8,13 +8,6 @@
   z-index: 5;
 }
 
-@media screen and (max-width: 767px) {
-  .listUserNavHidden {
-    display: none;
-  }
-}
-
-
 @media screen and (min-width: 768px) {
   .header {
     padding-top: 24px;

@@ -1,29 +1,18 @@
-.listNav {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 44px;
-  letter-spacing: 0.04em;
-
-  text-transform: capitalize;
+.listNav{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
 @media screen and (min-width: 768px) {
-  .listNav {
-    font-size: 48px;
-    line-height: 66px;
+    .listNav{
+        padding-top: 24px;
+    }
   }
-}
-
-@media screen and (min-width: 1280px) {
-  .listNav {
-    flex-direction: row;
-
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 27px;
+  
+  @media screen and (min-width: 1280px) {
+    .listNav{
+        flex-direction: row;
+    }
   }
-}
+  
