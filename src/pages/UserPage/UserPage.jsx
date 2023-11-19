@@ -8,7 +8,7 @@ const UserPage = () => {
 //     <ProfileContainer>
 //       <ProfileWrapper>
 //         <UserCard/>
-//         <MyPetsCard/>
+//         <PetsData/>
 //       </ProfileWrapper>
 //     </ProfileContainer>
 //   )
