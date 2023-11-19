@@ -10,7 +10,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { noticesStateReducer } from '../Redux/noticesSlise';
+import { noticesStateReducer } from './notices/noticesSlise';
 
 const persistConfig = {
   key: 'root',

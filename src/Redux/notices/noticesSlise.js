@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createNotice, deleteNotice, fetchNotices } from './operations/Notices';
+import { createNotice, deleteNotice, fetchNotices } from './Notices';
 // import {} from './operations';
 
 const initialNotices = {
