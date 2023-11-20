@@ -24,20 +24,17 @@ export default function MobileMenu({
     onToogleIsLogin();
   };
   return (
-    <Container>
-      <div className={css.wrapperMobileMenu}>
-        <div className={cssHeader.wrapperHeader}>
-          <NavLink to="/" className="navLink" state={{ from: location }}>
-            <Logo className={cssHeader.logo} onClick={onToogleMobileMenu} />
+    <div className={css.wrapperMobileMenu}>
+      <Container>
+        <div className="w-full flex items-centr justify-between">
+          <NavLink to="/" state={{ from: location }}>
+            <Logo
+              className="w-[116px] md:w-[162px]"
+              onClick={onToogleMobileMenu}
+            />
           </NavLink>
 
-          <div className={cssHeader.wrapperUser}>
-            {isLogin ? (
-              <BtnAuth path="/" onClick={onLogout}>
-                Logout
-              </BtnAuth>
-            ) : null}
-
+          <div>
             <ButtonBurger onClick={onToogleMobileMenu}>
               <Close />
             </ButtonBurger>
@@ -47,10 +44,18 @@ export default function MobileMenu({
         {!isLogin ? (
           <AuthNav isLogin={onToogleIsLogin} onClick={onToogleMobileMenu} />
         ) : (
-          <UserImg />
+          <NavLink to="/user" className="md:flex gap-[12px] text-yellow">
+            <UserImg />
+            <span className="hidden md:inline-block">Name</span>
+          </NavLink>
         )}
-        <Nav onClick={onToogleMobileMenu} />
-      </div>
-    </Container>
+        <Nav onClick={onToogleMobileMenu} styleLogo="hidden" />
+        {isLogin ? (
+          <BtnAuth path="/" onClick={onLogout}>
+            Logout
+          </BtnAuth>
+        ) : null}
+      </Container>
+    </div>
   );
 }

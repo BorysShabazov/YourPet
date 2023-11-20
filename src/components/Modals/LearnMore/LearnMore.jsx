@@ -1,3 +1,6 @@
+import { useState } from "react";
+import Svg from "../../Svg/Svg";
+
 const data = {
   group: 'In good hands',
   title: 'Сute dog looking for a home',
@@ -12,10 +15,26 @@ const data = {
     'Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too! ',
 };
 
-const LearnMore = () => {
-// Треба ще використати функцію для перевірки чи є користувач авторизований
+const LearnMore = ({onCloseModal, onOpenAtentionModal}) => {
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  const addToFavorites = () => {
+    // Перевірка залогіненості користувача
+    // setIsUserLoggedIn(true);
+    if (isUserLoggedIn) {
+      // Функція для додавання в улюблені
+      console.log('Додавання в улюблені');
+    } else {
+      // Відкриття модалки Atention для входу або реєстрації
+      console.log('Відкриття модалки Attention')
+      onCloseModal();
+      onOpenAtentionModal();
+        }
+  };
+
   return (
-    <div className=" smOnly:w-64 md:max-w-2xl">
+   <>
+     <div className=" smOnly:w-64 md:max-w-2xl">
       <div className="md:flex ">
         <div className="flex relative justify-center items-center smOnly:mt-8">
         <p className=" InGoodHands py-2 px-3 rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-5 smOnly: left-2 md:left-0 absolute">{data.group}</p>
@@ -83,25 +102,33 @@ const LearnMore = () => {
       <div className="button-container flex gap-4 smOnly:mt-3 md:mt-16 smOnly:flex-col md:justify-end">
         <a href={`tel:${data.phone}`}
           type="button"
-          className=" text-blue text-base font-bold font-['Manrope'] tracking-wide smOnly:w-64 smOnly:h-10 md:w-32 md:h-10 px-5 py-2 rounded-3xl border-2 border-blue justify-center items-center gap-2 inline-flex"
+          className=" hover:bg-gradient-to-l from-blue to-lightBlue hover:text-white text-blue text-base font-bold font-['Manrope'] tracking-wide smOnly:w-64 smOnly:h-10 md:w-32 md:h-10 px-5 py-2 rounded-3xl border-2 border-blue justify-center items-center gap-2 inline-flex"
         >
           Contact
         </a>
         <button
-          type="button"
-          className=" md:w-32 md:h-10 smOnly:w-64 smOnly:h-10 px-5 py-2 bg-blue rounded-3xl justify-center items-center gap-2 inline-flex text-stone-50 text-base font-bold font-['Manrope'] tracking-wide"
-        >
-          Add to<span>@</span>
+          type="button" onClick={addToFavorites}
+          className=" md:w-32 md:h-10 smOnly:w-64 smOnly:h-10 px-5 py-2 bg-blue hover:bg-gradient-to-l from-blue to-lightBlue rounded-3xl justify-center items-center gap-2 inline-flex text-stone-50 text-base font-bold font-['Manrope'] tracking-wide">
+          Add to<span><Svg id={'icon-heart'} size={'24px'} stroke={'white'} fill={'#54ADFF'}/></span>
         </button>
       </div>
     </div>
+   </>
   );
 };
 
 export default LearnMore;
 
 // const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
+// const [isAttentionModalOpen, setAttentionModalOpen] = useState(false);
 
+
+// const handleOpenAttentionModal = () => {
+//     setAttentionModalOpen(true);
+//   };
+//   const handleCloseAttentionModal = () => {
+//     setAttentionModalOpen(false);
+//   };
 // const handleOpenLearnMoreModal = () => {
 //     setLearnMoreModalOpen(true);
 
@@ -113,5 +140,11 @@ export default LearnMore;
 {/* <BasicModal 
 isOpen={isLearnMoreModalOpen}
         onCloseModal={handleCloseLearnMoreModal} >
+        onOpenAtentionModal={handleOpenAttentionModal} 
              <LearnMore onCloseModal={handleCloseLearnMoreModal} />
         </BasicModal> */}
+        // <BasicModal
+        // isOpen={isAttentionModalOpen}
+        //         onCloseModal={handleCloseAttentionModal}>
+        //        <AttentionModal  />
+        //       </BasicModal>
