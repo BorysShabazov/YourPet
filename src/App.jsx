@@ -42,10 +42,6 @@ function App() {
               element={<NoticesCategoriesNav />}
             />
             <Route path="/notices/own" element={<NoticesCategoriesNav />} />
-<<<<<<< HEAD
-=======
- */}
->>>>>>> dev
           </Route>
           <Route path="add-pet" element={<AddPetPage />} />
 
