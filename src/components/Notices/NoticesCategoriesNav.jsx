@@ -1,9 +1,9 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { Link } from './Link';
 
-const NoticesCategoriesNav = () => {
+const NoticesCategoriesNav = ({className=''}) => {
     return (
-        <div className='flex flex-wrap gap-2'>
+        <div className={`flex flex-wrap gap-2 ${className}`}>
             <Link to='/notices/sell' >sell</Link>
             <Link to='/notices/lost'>lost</Link>
             <Link to='/notices/found'>found</Link>
