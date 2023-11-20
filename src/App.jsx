@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Components from './components';
-import RegisterForm from './components/RegisterForm/RegisterForm';
+import RegisterForm from './components/AuthForm/AuthForm';
 import NoticesPage from './pages/NoticesPage/NoticesPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import NewsPage from './pages/NewsPage/NewsPage';
@@ -21,23 +21,15 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<MainPage />} />
-<<<<<<< HEAD
-          {/* <Route path="/singin" element={<AuthForma />} />
-    <Route path="/singup" element={<AuthForma isLogIn={false} />} /> */}
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/notices" element={<NoticesPage />} />
-          <Route path="/friends" element={<OurFriendsPage />} />
-=======
 
           <Route path="register" element={<RegiserPage />} />
           <Route path="login" element={<LoginPage />} />
 
           <Route path="user" element={<UserPage />} />
 
-          <Route path="news" element={<NewsPage />} />
+          {/* <Route path="news" element={<NewsPage />} />
           <Route path="notices/:categoryName" element={<NoticesPage />}>
-            {/* <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
+            <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
             <Route path="/notices/lost" element={<NoticesCategoriesNav />} />
             <Route path="/notices/found" element={<NoticesCategoriesNav />} />
 
@@ -50,12 +42,10 @@ function App() {
               element={<NoticesCategoriesNav />}
             />
             <Route path="/notices/own" element={<NoticesCategoriesNav />} />
-
           </Route>
           <Route path="add-pet" element={<AddPetPage />} />
 
-          <Route path="friends" element={<OurFriendsPage />} />
->>>>>>> dev
+          <Route path="friends" element={<OurFriendsPage />} /> */}
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

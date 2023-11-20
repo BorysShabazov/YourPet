@@ -1,11 +1,11 @@
 import * as Yup from 'yup';
 
-const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-// min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
+const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+// min 6 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
 
-const RegisterSchema = Yup.object().shape({
+const AuthFormSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Too Short')
+    .min(2, 'Too Short')
     .max(16, 'Too Long, max 16')
     .required('Name is Required'),
 
@@ -15,7 +15,7 @@ const RegisterSchema = Yup.object().shape({
 
   password: Yup.string()
     .matches(passwordRules, {
-      message: 'Min 8 character, including a number and a lowercase letter.',
+      message: '6+ chars, 1 UPPERCASE, 1 lowercase, 1 digit',
     })
     .required('Password is Required'),
 
@@ -24,4 +24,4 @@ const RegisterSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export default RegisterSchema;
+export default AuthFormSchema;

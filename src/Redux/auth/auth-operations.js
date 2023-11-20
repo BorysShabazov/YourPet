@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = 'http://localhost:5000/api/users';
+const BASE_URL = 'https://your-pet-server.onrender.com/api/users';
 
 export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
       const { data } = await axios.post(`${BASE_URL}/register`, credentials);
-      console.log(data);
+      return data;
     } catch (error) {
-      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.status);
     }
   },
 );

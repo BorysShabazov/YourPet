@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import sprite from './sprite.svg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../Redux/auth/auth-operations';
-import RegisterSchema from './RegisterSchema';
+import AuthFormSchema from './AuthFormSchema';
+import { getAuthError } from '../../Redux/auth/auth-selectors';
 
-const RegisterForm = () => {
+const AuthForm = () => {
   const dispatch = useDispatch();
+  const error = useSelector(getAuthError);
 
   const formik = useFormik({
     initialValues: {
@@ -19,13 +21,16 @@ const RegisterForm = () => {
     validateOnChange: false,
     validateOnBlur: false,
 
-    validationSchema: RegisterSchema,
+    validationSchema: AuthFormSchema,
 
     onSubmit: ({ name, email, password }, { resetForm }) => {
       dispatch(register({ name, email, password }));
       resetForm();
     },
   });
+
+  const formikErrors = formik.errors;
+  const formikValues = formik.values;
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -46,9 +51,17 @@ const RegisterForm = () => {
     }
   };
 
+  // clear field after press cross
+  const clearField = (name) => {
+    formik.values[name] = '';
+    formik.setFieldValue(name, '');
+    formik.setFieldError(name, '');
+  };
+
   return (
     <form
       noValidate
+      autoComplete="off"
       className="w-[280px] pt-10 pb-10 pl-3 pr-3 bg-white rounded-[20px] shadow"
       onSubmit={formik.handleSubmit}
     >
@@ -56,48 +69,89 @@ const RegisterForm = () => {
         Registration
       </h1>
 
-      <div className="mb-3">
+      {/* name */}
+      <div className="h-[70px]">
         <label htmlFor="name" className="sr-only">
           Name
         </label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Name"
-          className="w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none"
-          value={formik.values.name}
-          onChange={formik.handleChange}
-        />
+        <div className="flex relative items-center justify-between">
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Name"
+            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
+              formikErrors['name'] && 'border-rose-400'
+            }`}
+            value={formikValues['name']}
+            onChange={formik.handleChange}
+            onFocus={() => {
+              formik.setFieldError('name', '');
+            }}
+          />
+
+          {formik.errors.name && formik.values.name !== '' && (
+            <svg
+              className="w-6 h-6 right-3 absolute"
+              onClick={() => clearField('name')}
+            >
+              <use xlinkHref={`${sprite}#cross`} />
+            </svg>
+          )}
+        </div>
+
         {formik.errors.name && (
-          <div className="pl-4 mt-1 text-rose-500 text-xs font-normal">
+          <div className="pl-4 text-rose-500 text-xs font-normal">
             {formik.errors.name}
           </div>
         )}
       </div>
 
-      <div className="mb-3">
+      {/* email */}
+      <div className="h-[70px]">
         <label htmlFor="email" className="sr-only">
           Email
         </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          className="w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none"
-          placeholder="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-        />
+        <div className="flex relative items-center justify-between">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
+              formikErrors['email'] && 'border-rose-400'
+            }`}
+            placeholder="Email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onFocus={() => {
+              formik.setFieldError('email', '');
+            }}
+          />
+          {formik.errors.email && formik.values.email !== '' && (
+            <svg
+              className="w-6 h-6 right-3 absolute"
+              onClick={() => clearField('email')}
+            >
+              <use xlinkHref={`${sprite}#cross`} />
+            </svg>
+          )}
+        </div>
 
         {formik.errors.email && (
-          <div className="pl-4 mt-1 text-rose-500 text-xs font-normal">
+          <div className="pl-4 text-rose-500 text-xs font-normal">
             {formik.errors.email}
+          </div>
+        )}
+
+        {error === 409 && (
+          <div className="pl-4 text-rose-500 text-xs font-normal">
+            E-mail address already in use
           </div>
         )}
       </div>
 
-      <div className="mb-3">
+      {/* password */}
+      <div className="h-[70px]">
         <label htmlFor="password" className="sr-only">
           Password
         </label>
@@ -108,9 +162,14 @@ const RegisterForm = () => {
             name="password"
             type={passwordVisible ? 'text' : 'password'}
             placeholder="Password"
-            className="w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none"
+            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
+              formikErrors['password'] && 'border-rose-400'
+            }`}
             value={formik.values.password}
             onChange={formik.handleChange}
+            onFocus={() => {
+              formik.setFieldError('password', '');
+            }}
           />
           <svg
             className="w-6 h-6 right-3 absolute"
@@ -125,13 +184,14 @@ const RegisterForm = () => {
         </div>
 
         {formik.errors.password && (
-          <div className="pl-4 mt-1 text-rose-500 text-xs font-normal">
+          <div className="pl-4 text-rose-500 text-xs font-normal">
             {formik.errors.password}
           </div>
         )}
       </div>
 
-      <div className="mb-10">
+      {/* confirmPassword */}
+      <div className="h-[98px]">
         <label htmlFor="confirmPassword" className="sr-only">
           Repeat Password
         </label>
@@ -142,9 +202,14 @@ const RegisterForm = () => {
             name="confirmPassword"
             type={confirmPasswordVisible ? 'text' : 'password'}
             placeholder="Confirm password"
-            className="w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none"
+            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
+              formikErrors['confirmPassword'] && 'border-rose-400'
+            }`}
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
+            onFocus={() => {
+              formik.setFieldError('confirmPassword', '');
+            }}
           />
           <svg
             className="w-6 h-6 right-3 absolute"
@@ -160,9 +225,9 @@ const RegisterForm = () => {
           </svg>
         </div>
 
-        {formik.errors.confirmPassword && (
-          <div className="pl-4 mt-1 text-rose-500 text-xs font-normal">
-            {formik.errors.confirmPassword}
+        {formikErrors['confirmPassword'] && (
+          <div className="pl-4 text-rose-500 text-xs font-normal">
+            {formikErrors['confirmPassword']}
           </div>
         )}
       </div>
@@ -171,7 +236,9 @@ const RegisterForm = () => {
         type="submit"
         className="w-64 h-12 mb-2 bg-blue rounded-[40px] justify-center items-center gap-2.5 inline-flex"
       >
-        <p className="text-white text-xl tracking-wide font-semibold">Login</p>
+        <p className="text-white text-xl tracking-wide font-semibold">
+          Registration
+        </p>
       </button>
 
       <div className="text-center">
@@ -189,4 +256,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default AuthForm;
