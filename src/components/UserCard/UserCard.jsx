@@ -2,7 +2,8 @@ import { CloseIcon } from '../CloseIcon/CloseIcon';
 import { useState } from 'react';
 import { EditIcon } from '../EditIcon/EditIcon';
 import { PhotoIcon } from '../PhotoIcon/PhotoIcon';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, useFormik } from 'formik';
+import Svg from '../Svg/Svg';
 
 const UserCard = () => {
   const userData = {
@@ -16,9 +17,10 @@ const UserCard = () => {
   };
 
   const [user, setUser] = useState(userData || {});
+  const [userImagePath, setUserImagePath] = useState('');
   const [isEdit, setIsEdit] = useState(false);
 
-  const validate = (values) => {
+  const validate = values => {
     const errors = {};
 
     if (!values.user.name) {
@@ -52,103 +54,100 @@ const UserCard = () => {
   };
 
   return (
-    <div className="mb-[42px]">
-      <h2
-        onClick={() => {
-          console.log(user);
-        }}
-        className="text-black text-xl font-medium font-['Manrope'] tracking-wide mb-[18px] md:text-[28px]"
-      >
-        My information:
-      </h2>
-
-      <div className="relative w-[280px] bg-white rounded-[20px] shadow pt-[20px] pb-[24px] px-[8px] md:w-[704px] md:px-[20px] xl:w-[395px] rounded-[20px]">
-        <div className="mdOnly:flex flex-row-reverse justify-center items-center gap-[70px]">
-          <div className="flex justify-center mb-[14px]">
-            <img
-              className="w-[182px] h-[182px] rounded-[40px] object-cover"
-              src={user.avatar}
-              alt="User Avatar"
-            />
-          </div>
-          <Formik
-            initialValues={{
-              user: {
-                avatar: user.avatar,
-                name: user.name,
-                email: user.email,
-                birthday: user.birthday,
-                phone: user.phone,
-                city: user.city,
-              },
-            }}
-            validate={validate}
-            onSubmit={(values) => {
-              const updatedUser = {
-                avatar: values.user.avatar,
-                name: values.user.name,
-                email: values.user.email,
-                birthday: values.user.birthday,
-                phone: values.user.phone,
-                city: values.user.city,
-              };
-
-              setUser(updatedUser);
-              setIsEdit(false);
-            }}
-          >
-            {({ initialValues, setFieldValue }) => (
-              <Form className="flex flex-col flex-wrap-reverse">
-                <div className="absolute top-[14px] right-[14px]">
-                  {!isEdit ? (
-                    <div onClick={() => setIsEdit(true)}>
-                      <EditIcon />
+    <div className="relative w-[280px] bg-white rounded-[20px] shadow pt-[20px] pb-[24px] px-[8px] md:w-[704px] md:px-[20px] xl:w-[395px] rounded-[20px]">
+      <div className="mdOnly:flex flex-row-reverse justify-center items-center gap-[70px]">
+        <Formik
+          initialValues={{
+            user: {
+              avatar: user.avatar,
+              name: user.name,
+              email: user.email,
+              birthday: user.birthday,
+              phone: user.phone,
+              city: user.city,
+            },
+          }}
+          validate={validate}
+          onSubmit={values => {
+            const updatedUser = {
+              avatar: values.user.avatar,
+              name: values.user.name,
+              email: values.user.email,
+              birthday: values.user.birthday,
+              phone: values.user.phone,
+              city: values.user.city,
+            };
+            
+            console.log(userImagePath);
+            setUser(updatedUser);
+            setIsEdit(false);
+          }}
+        >
+          {({ initialValues, setFieldValue }) => (
+            <Form className="flex flex-col flex-wrap-reverse">
+              <div className="absolute top-[14px] right-[14px]">
+                {!isEdit ? (
+                  <div onClick={() => setIsEdit(true)}>
+                    <EditIcon />
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => {
+                      setIsEdit(false);
+                      setFieldValue('user.name', user.name);
+                      setFieldValue('user.email', user.email);
+                      setFieldValue('user.birthday', user.birthday);
+                      setFieldValue('user.phone', user.phone);
+                      setFieldValue('user.city', user.city);
+                      console.log(initialValues);
+                    }}
+                  >
+                    <CloseIcon />
+                  </div>
+                )}
+              </div>
+              <div className="mdOnly:flex flex-row-reverse gap-[71px]">
+                <div className="flex justify-center">
+                  <label
+                    htmlFor="user.avatar"
+                    className="flex justify-center flex-col gap-[5px]"
+                  >
+                    <div className="flex justify-center mb-[14px]">
+                      <img
+                        className="w-[182px] h-[182px] rounded-[40px] object-cover"
+                        src={user.avatar}
+                        alt="User Avatar"
+                      />
                     </div>
-                  ) : (
                     <div
-                      onClick={() => {
-                        setIsEdit(false);
-                        setFieldValue('user.avatar', user.avatar);
-                        setFieldValue('user.name', user.name);
-                        setFieldValue('user.email', user.email);
-                        setFieldValue('user.birthday', user.birthday);
-                        setFieldValue('user.phone', user.phone);
-                        setFieldValue('user.city', user.city);
-                        console.log(initialValues);
-                      }}
-                    >
-                      <CloseIcon />
-                    </div>
-                  )}
-                </div>
-                <div className="flex justify-center mb-[24px] h-[24px]  md:w-[355px]">
-                  {isEdit && (
-                    <label
-                      htmlFor="user.avatar"
-                      className="flex justify-center flex-row gap-[5px]"
+                      className={
+                        isEdit
+                          ? 'flex flex-row justify-center gap-[5px] mb-[21px]'
+                          : 'flex flex-row justify-center gap-[5px] mb-[21px] opacity-0'
+                      }
                     >
                       <PhotoIcon />
                       Edit photo
-                    </label>
-                  )}
-                  <input
-                    className="hidden"
-                    type="file"
-                    id="user.avatar"
-                    name="user.avatar"
-                    accept="image/*"
-                    onChange={(event) => {
-                      let formData = new FormData();
-                      formData.append('photo', event.target.files[0]);
-                      // setFieldValue('user.avatar', URL.createObjectURL(event.target.files[0]));
-                      // setUser({
-                      //   ...user,
-                      //   avatar: URL.createObjectURL(formData.get('photo')),
-                      // });
-                    }}
-                  />
+                    </div>
+                  </label>
+
+                  <div>
+                    <input
+                      className="hidden"
+                      type={isEdit ? 'file' : ''}
+                      id="user.avatar"
+                      name="user.avatar"
+                      accept="image/*"
+                      onChange={e => {
+                        const file = e.target.files[0];
+                        const localPath = URL.createObjectURL(file);
+                        setFieldValue('user.avatar', file);(file);
+                        setUserImagePath(localPath);
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="flex flex-col gap-[20px] mb-[26px]">
+                <div className="flex flex-col gap-[20px]">
                   <div className="flex justify-between">
                     <label
                       className="text-neutral-900 text-sm font-semibold font-['Manrope'] tracking-wide mdOnly:text-[16px] "
@@ -227,17 +226,31 @@ const UserCard = () => {
                       readOnly={!isEdit}
                     />
                   </div>
+                  {isEdit ? (
+                    <div className="w-full h-6 flex justify-end">
+                      <button
+                        className="flex justify-center w-[248px] text-stone-50 text-sm font-bold font-['Manrope'] tracking-wide h-[31px] px-[107px] py-1.5 bg-blue rounded-[40px] md:justify-center items-center gap-2 inline-flex md:w-[255px]  xl:w-[255px]"
+                        type="submit"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full flex text-zinc-500 text-base font-medium font-['Manrope'] tracking-wide gap-[12px]">
+                      <Svg
+                        id={'icon-logout'}
+                        size={24}
+                        stroke={'#54ADFF'}
+                        fill={'transparent'}
+                      />
+                      Log Out
+                    </div>
+                  )}
                 </div>
-                <button
-                  className="flex justify-center w-[248px] text-stone-50 text-sm font-bold font-['Manrope'] tracking-wide w-full h-[31px] px-[107px] py-1.5 bg-blue rounded-[40px] justify-center items-center gap-2 inline-flex md:w-[255px]  xl:w-[255px]"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </Form>
-            )}
-          </Formik>
-        </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );
