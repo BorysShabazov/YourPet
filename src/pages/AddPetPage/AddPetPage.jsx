@@ -1,7 +1,11 @@
 import AddPetForm from '../../components/AddPetForm';
 
 const AddPetPage = () => {
-  return <AddPetForm />;
+  return (
+    <>
+      <AddPetForm />
+    </>
+  );
 };
 
 export default AddPetPage;
