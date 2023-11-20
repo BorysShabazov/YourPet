@@ -20,6 +20,8 @@ export const createNotice = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       await axios.post('/notices', arg);
+      const response = await axios.get('/notices');
+      return response.data;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
     }
