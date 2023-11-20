@@ -11,6 +11,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import { noticesStateReducer } from './notices/noticesSlise';
 
 // auth persist config
 const authPersistConfig = {
@@ -20,8 +21,12 @@ const authPersistConfig = {
 };
 
 const rootReduser = combineReducers({
+<<<<<<< HEAD
   // redusers
   auth: persistReducer(authPersistConfig, authSlice.reducer),
+=======
+  notices: noticesStateReducer,
+>>>>>>> dev
 });
 
 export const store = configureStore({
