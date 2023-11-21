@@ -31,3 +31,25 @@ export const login = createAsyncThunk(
     }
   },
 );
+
+// current
+export const currentUser = createAsyncThunk(
+  'auth/current',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistToken = state.auth.token;
+
+    if (persistToken === null) {
+      thunkAPI.rejectWithValue();
+    }
+
+    setToken(persistToken);
+
+    try {
+      const { data } = await axios.get(`${BASE_URL}/current`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.status);
+    }
+  },
+);
