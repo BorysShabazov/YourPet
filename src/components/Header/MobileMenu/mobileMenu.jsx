@@ -1,33 +1,31 @@
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+
+import { ReactComponent as Close } from '../../../images/svg/cross-small.svg';
+import { ReactComponent as Logo } from '../../../images/svg/logo.svg';
+import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
+import Svg from '../../Svg/Svg';
 
 import { Container } from '../../../ui/index';
 import Nav from '../Nav/nav';
 import ButtonBurger from '../ButtonBurger/buttonBurger';
 
-import { ReactComponent as Close } from '../../../images/svg/cross-small.svg';
-import { ReactComponent as Logo } from '../../../images/svg/logo.svg';
-import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
-
 import AuthNav from '../AuthNav/AuthNav';
 import BtnAuth from '../BtnAuth/BtnAuth';
-import Svg from '../../Svg/Svg';
-import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../Redux/auth/auth-selectors';
+
 import { BasicModal } from '../../Modals/BasicModal/BasicModal';
 import Leaving from '../../Modals/Leaving/Leaving';
-import { useState } from 'react';
 
-export default function MobileMenu({
-  isLogin,
-  onToogleMobileMenu,
-  onToogleIsLogin,
-}) {
+export default function MobileMenu({ onToogleMobileMenu }) {
   const user = {
     name: '',
     avatarUrl: '',
   };
 
   const { token } = useSelector(selectAuth);
+  // const token = false;
 
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
@@ -38,14 +36,9 @@ export default function MobileMenu({
     setLeavingModalOpen(false);
   };
 
-  const onLogout = () => {
-    onToogleMobileMenu();
-
-    onToogleIsLogin();
-  };
   return (
     <>
-      <div className="absolute top-0 left-0  h-screen w-screen pt-[22px] md:pt-[24px] bg-white xl:hidden">
+      <div className="absolute top-0 left-0  h-screen w-screen pt-[20px] md:pt-[24px] bg-white xl:hidden">
         <Container className="flex flex-col gap-[42px] md:gap-[92px] items-centr justify-center">
           <div className="w-full flex items-center justify-between">
             <NavLink to="/" state={{ from: location }}>
@@ -72,21 +65,19 @@ export default function MobileMenu({
                 </BtnAuth>
               ) : (
                 <AuthNav
-                  isLogin={onToogleIsLogin}
                   onClick={onToogleMobileMenu}
-                  style="hidden md:flex gap-[12px]"
+                  style="hidden md:flex gap-[20px]"
                 />
               )}
 
               <ButtonBurger onClick={onToogleMobileMenu}>
-                <Close />
+                <Close className="stroke-current text-yellow" />
               </ButtonBurger>
             </div>
           </div>
 
           {!token ? (
             <AuthNav
-              isLogin={onToogleIsLogin}
               onClick={onToogleMobileMenu}
               style="flex-col  gap-[12px] items-center md:hidden "
             />
@@ -94,11 +85,9 @@ export default function MobileMenu({
             <NavLink
               to="/user"
               className={`flex items-center justify-center gap-[12px] ${
-                isLogin ? 'pb-[44px]' : ''
+                token ? 'pb-[44px]' : ''
               } text-yellow md:hidden`}
             >
-              {/* <UserImg />
-            <span className="inline-block">Name</span> */}
               {!user.avatarUrl ? (
                 <UserImg />
               ) : (

@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
 import { ReactComponent as BurgerMenu } from '../../../images/svg/menu-hamburger.svg';
@@ -17,6 +17,9 @@ import { useSelector } from 'react-redux';
 import { BasicModal } from '../../Modals/BasicModal/BasicModal';
 import Leaving from '../../Modals/Leaving/Leaving';
 
+import { createPortal } from 'react-dom';
+const mobileMenuRoot = document.querySelector('#mobile-menu');
+
 export default function Header() {
   const user = {
     name: '',
@@ -26,29 +29,25 @@ export default function Header() {
   const { token } = useSelector(selectAuth);
 
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
+  const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
+
+  useEffect(() => {
+    if (isMobilMenuActive) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }, [isMobilMenuActive]);
+
+  const onToogleMobileMenu = () => {
+    setIsMobilMenuActive(!isMobilMenuActive);
+  };
 
   const handleOpenLeavingModal = () => {
     setLeavingModalOpen(true);
   };
   const handleCloseLeavingModal = () => {
     setLeavingModalOpen(false);
-  };
-
-  const location = useLocation();
-
-  const [isLogin, setIsLogin] = useState(false);
-
-  const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
-  const onToogleIsLogin = () => {
-    setIsLogin(!isLogin);
-  };
-  const onToogleMobileMenu = () => {
-    setIsMobilMenuActive(!isMobilMenuActive);
-  };
-
-  const onLogout = () => {
-    setIsMobilMenuActive(true);
-    onToogleIsLogin(false);
   };
 
   return (
@@ -70,7 +69,7 @@ export default function Header() {
                     onClick={handleOpenLeavingModal}
                     style="hidden xl:flex bg-blue border-blue text-white"
                   >
-                    <span>Logout</span>{' '}
+                    <span>Logout</span>
                     <Svg
                       size="24px"
                       id="icon-logout"
@@ -87,7 +86,7 @@ export default function Header() {
                     ) : (
                       <img
                         src={user.avatarUrl}
-                        className="block w-[28px]h-[28px] rounded-full object-cover"
+                        className="block w-[28px]h-[28px] rounded-full border-yellow object-cover"
                       />
                     )}
                     <span className="hidden md:inline-block">
@@ -96,10 +95,7 @@ export default function Header() {
                   </NavLink>
                 </div>
               ) : (
-                <AuthNav
-                  onClick={onToogleIsLogin}
-                  style="hidden md:flex  gap-[20px]"
-                />
+                <AuthNav style="hidden md:flex  gap-[20px]" />
               )}
               <ButtonBurger onClick={onToogleMobileMenu}>
                 <BurgerMenu className="stroke-current text-yellow" />
@@ -107,13 +103,11 @@ export default function Header() {
             </div>
           </div>
 
-          {isMobilMenuActive && (
-            <MobileMenu
-              onToogleMobileMenu={onToogleMobileMenu}
-              isLogin={token}
-              onToogleIsLogin={onToogleIsLogin}
-            />
-          )}
+          {isMobilMenuActive &&
+            createPortal(
+              <MobileMenu onToogleMobileMenu={onToogleMobileMenu} />,
+              mobileMenuRoot,
+            )}
         </Container>
       </header>
       <BasicModal
