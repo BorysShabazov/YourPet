@@ -83,13 +83,15 @@ const LoginForm = () => {
               formik.setFieldError('email', '');
             }}
           />
-          {formikErrors['email'] && formikValues['email'] !== '' && (
-            <Svg
-              id="cross"
-              className="right-3 absolute cursor-pointer"
-              onClick={() => clearField('email')}
-            />
-          )}
+          {formikErrors['email'] ||
+            (formikValues['email'] !== '' && (
+              <Svg
+                id="icon-cross"
+                className="right-3 absolute cursor-pointer"
+                onClick={() => clearField('email')}
+                stroke="#F43F5E"
+              />
+            ))}
         </div>
 
         {formik.errors.email && (
@@ -124,7 +126,9 @@ const LoginForm = () => {
           <Svg
             className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('password')}
-            id={`${passwordVisible ? `eye-open` : `eye-closed`}`}
+            id={`${passwordVisible ? `icon-eye-open` : `icon-eye-closed`}`}
+            fill="transparent"
+            stroke="#54ADFF"
           />
         </div>
 
