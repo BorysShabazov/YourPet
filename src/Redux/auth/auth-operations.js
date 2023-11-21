@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setToken, delToken } from '../operations/handleToken';
-import { getIsLoggedIn } from './auth-selectors';
-import { useSelector } from 'react-redux';
 
 const BASE_URL = 'https://your-pet-server.onrender.com/api/users';
 

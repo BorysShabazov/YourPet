@@ -14,8 +14,6 @@ import RegiserPage from './pages/RegiserPage/RegiserPage';
 import UserPage from './pages/UserPage/UserPage';
 import AddPetPage from './pages/AddPetPage/AddPetPage';
 import PrivateRoute from './components/PrivateRoute/privateRoute';
-import { useSelector } from 'react-redux';
-import { getIsLoggedIn } from './Redux/auth/auth-selectors';
 import PublicRoute from './PublicRoute';
 
 // import PrivateRoute from './components/PrivateRoute/privateRoute';
