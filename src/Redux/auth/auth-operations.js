@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setToken } from '../operations/handleToken';
+import { setToken, delToken } from '../operations/handleToken';
 
 const BASE_URL = 'https://your-pet-server.onrender.com/api/users';
 
@@ -24,8 +24,9 @@ export const login = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const { data } = await axios.post(`${BASE_URL}/login`, credentials);
-      setToken(data.token);
-      return data.token;
+      const { token } = data;
+      setToken(token);
+      return token;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.status);
     }
@@ -53,3 +54,13 @@ export const currentUser = createAsyncThunk(
     }
   },
 );
+
+// logout
+export const logout = createAsyncThunk('auth/logout', async (thunkAPI) => {
+  try {
+    const result = await axios.post(`${BASE_URL}/logout`);
+    delToken();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.status);
+  }
+});
