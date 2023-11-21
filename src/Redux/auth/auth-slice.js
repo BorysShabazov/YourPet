@@ -74,7 +74,11 @@ export const authSlice = createSlice({
       state.isRefresh = false;
     });
     builder.addCase(logout.rejected, (state, action) => {
-      state = { ...initialState };
+      state.user = null;
+      state.error = null;
+      state.token = null;
+      state.isLoggedIn = false;
+      state.isRefresh = false;
     });
   },
 });
