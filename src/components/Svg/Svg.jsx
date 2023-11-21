@@ -2,7 +2,7 @@ import sprite from '../../images/sprite.svg';
 
 const Svg = ({ id, size, fill, stroke, className = '', onClick }) => {
   return (
-    <div className={className} onClick={onClick}>
+    <div onClick={onClick}>
       <svg width={size} height={size} fill={fill} stroke={stroke}>
         <use href={`${sprite}#${id}`} />
       </svg>
