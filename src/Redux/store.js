@@ -12,6 +12,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { noticesStateReducer } from './notices/noticesSlise';
+import { petsStateReducer } from './pets/petsSlice';
 
 // auth persist config
 const authPersistConfig = {
@@ -24,6 +25,7 @@ const rootReduser = combineReducers({
   // redusers
   auth: persistReducer(authPersistConfig, authSlice.reducer),
   notices: noticesStateReducer,
+  pets: petsStateReducer,
 });
 
 export const store = configureStore({

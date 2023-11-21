@@ -28,9 +28,10 @@ function App() {
           <Route path="user" element={<UserPage />} />
           <Route path="notices/:categoryName" element={<NoticesPage />}/>
 
-          {/* <Route path="news" element={<NewsPage />} />
-          <Route path="notices/:categoryName" element={<NoticesPage />}>
-            <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
+          <Route path="news" element={<NewsPage />} />
+          <Route path="notices/:categoryName" element={<NoticesPage />} />
+
+          {/* <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
             <Route path="/notices/lost" element={<NoticesCategoriesNav />} />
             <Route path="/notices/found" element={<NoticesCategoriesNav />} />
 
@@ -42,11 +43,11 @@ function App() {
               path="/notices/favorite"
               element={<NoticesCategoriesNav />}
             />
-            <Route path="/notices/own" element={<NoticesCategoriesNav />} />
-          </Route>
+            <Route path="/notices/own" element={<NoticesCategoriesNav />} /> */}
+
           <Route path="add-pet" element={<AddPetPage />} />
 
-          <Route path="friends" element={<OurFriendsPage />} /> */}
+          <Route path="friends" element={<OurFriendsPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

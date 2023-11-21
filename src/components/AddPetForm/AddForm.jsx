@@ -3,6 +3,11 @@ import { useFormik } from 'formik';
 import ChooseOptionSection from './ChooseOptionForm';
 import PersonalDetailsForm from './PersonalDetailsForm';
 import MoreInfoForm from './MoreInfoForm';
+import {
+  firstValidationSchema,
+  secondValidationSchema,
+  lastValidationSchema,
+} from './AddPetFormSchemas';
 
 const AddForm = () => {
   const [step, setStep] = useState(1);
@@ -20,44 +25,29 @@ const AddForm = () => {
       location: '',
       comments: '',
     },
+    validateOnChange: false,
+    validationSchema:
+      (step === 1 && firstValidationSchema) ||
+      (step === 2 && secondValidationSchema) ||
+      (step === 3 && lastValidationSchema),
 
-    onSubmit: ({
-      category,
-      title,
-      name,
-      birth,
-      type,
-      sex,
-      petAvatarURL,
-      price,
-      location,
-      comments,
-    }) => {
-      const formData = new FormData();
-      formData.append('category', category);
-      formData.append('title', title);
-      formData.append('name', name);
-      formData.append('birth', birth);
-      formData.append('type', type);
-      formData.append('sex', sex);
-      formData.append('image', petAvatarURL, 'petImage');
-      formData.append('price', price);
-      formData.append('location', location);
-      formData.append('comments', comments);
+    onSubmit: (values) => {
+      if (step === 3) {
+        const formData = createFormData(values);
 
-      fetch('https://httpbin.org/post', { method: 'POST', body: formData })
-        .then((res) => res.json())
-        .then(console.log);
+        fetch('https://httpbin.org/post', {
+          method: 'POST',
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then(console.log);
+
+        return;
+      }
+
+      step < 3 && setStep((prevStep) => prevStep + 1);
     },
   });
-
-  const goNext = () => {
-    if (step === 3) {
-      formik.handleSubmit();
-      return;
-    }
-    step < 3 && setStep((prevStep) => prevStep + 1);
-  };
 
   const goBack = () => {
     step > 1
@@ -65,8 +55,26 @@ const AddForm = () => {
       : console.log('This is the end!');
   };
 
+  const createFormData = (data) => {
+    const formData = new FormData();
+
+    formData.append('category', data.category);
+    formData.append('title', data.title);
+    formData.append('name', data.name);
+    formData.append('birthDate', data.birth);
+    formData.append('type', data.type);
+    formData.append('sex', data.sex);
+    formData.append('image', data.petAvatarURL);
+    formData.append('price', data.price);
+    formData.append('location', data.location);
+    formData.append('comments', data.comments);
+
+    return formData;
+  };
+
   const {
     category,
+    title,
     name,
     birth,
     type,
@@ -83,12 +91,15 @@ const AddForm = () => {
         <ChooseOptionSection
           callback={formik.handleChange}
           category={category}
+          errors={formik.errors}
         />
       )}
       {step === 2 && (
         <PersonalDetailsForm
           callback={formik.handleChange}
+          errors={formik.errors}
           category={category}
+          title={title}
           name={name}
           birth={birth}
           type={type}
@@ -101,6 +112,7 @@ const AddForm = () => {
             formik.setFieldValue('petAvatarURL', file);
           }}
           category={category}
+          errors={formik.errors}
           sex={sex}
           price={price}
           location={location}
@@ -113,7 +125,7 @@ const AddForm = () => {
         <button
           type="button"
           className="px-[16px] py-[8px] rounded-[40px] justify-center items-center w-[100%] text-sm font-medium font-manrope tracking-wide bg-blue text-background"
-          onClick={goNext}
+          onClick={formik.handleSubmit}
         >
           Next
         </button>
