@@ -2,7 +2,6 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
 import { ReactComponent as BurgerMenu } from '../../../images/svg/menu-hamburger.svg';
-import { ReactComponent as Logo } from '../../../images/svg/logo.svg';
 
 import ButtonBurger from '../ButtonBurger/buttonBurger';
 import { useState } from 'react';
@@ -12,11 +11,33 @@ import { Container } from '../../../ui/index';
 import AuthNav from '../AuthNav/AuthNav';
 import BtnAuth from '../BtnAuth/BtnAuth';
 import Svg from '../../Svg/Svg';
+import { selectAuth } from '../../../Redux/auth/auth-selectors';
+import { useSelector } from 'react-redux';
+
+import { BasicModal } from '../../Modals/BasicModal/BasicModal';
+import Leaving from '../../Modals/Leaving/Leaving';
 
 export default function Header() {
+  const user = {
+    name: '',
+    avatarUrl: '',
+  };
+
+  const { token } = useSelector(selectAuth);
+
+  const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
+
+  const handleOpenLeavingModal = () => {
+    setLeavingModalOpen(true);
+  };
+  const handleCloseLeavingModal = () => {
+    setLeavingModalOpen(false);
+  };
+
   const location = useLocation();
 
   const [isLogin, setIsLogin] = useState(false);
+
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
   const onToogleIsLogin = () => {
     setIsLogin(!isLogin);
@@ -24,50 +45,83 @@ export default function Header() {
   const onToogleMobileMenu = () => {
     setIsMobilMenuActive(!isMobilMenuActive);
   };
-  const onLogout = () => {
-    setIsMobilMenuActive(false);
 
+  const onLogout = () => {
+    setIsMobilMenuActive(true);
     onToogleIsLogin(false);
   };
 
   return (
-    <header className="pt-[20px] md:pt-[24px] xl:pt-[20px] ">
-      <Container>
-        <div className="flex items-centr justify-between">
-          <NavLink to="/" state={{ from: location }} className="md:hidden">
-            <Logo className="w-[116px] md:w-[162px]" />
-          </NavLink>
+    <>
+      <header className="pt-[20px] md:pt-[24px] xl:pt-[20px] relative">
+        <Container>
+          <div className="flex items-center justify-between">
+            <Nav
+              style="flex gap-[160px]"
+              styleLogo="block"
+              styleNavList="hidden xl:flex"
+            />
 
-          <Nav style="hidden xl:flex gap-[159px] items-center" />
-
-          <div className="flex gap-[8px] md:gap-[38px] xl:gap=[24px]">
-            {isLogin ? (
-              <div className="hoidden md:flex gap-6 items-center">
-                <BtnAuth path="/" onClick={onLogout} style="hidden xl:flex">
-                  <span>Logout</span> <Svg size="24px" id="icon-logout" />
-                </BtnAuth>
-                <NavLink to="/user" className="md:flex gap-[12px] text-yellow">
-                  <UserImg />
-                  <span className="hidden md:inline-block">Name</span>
-                </NavLink>
-              </div>
-            ) : (
-              <AuthNav onClick={onToogleIsLogin} style="hidden md:flex " />
-            )}
-            <ButtonBurger onClick={onToogleMobileMenu}>
-              <BurgerMenu className="stroke-current text-yellow" />
-            </ButtonBurger>
+            <div className="flex gap-[8px] md:gap-[24px]">
+              {token ? (
+                <div className="hoidden md:flex gap-6 items-center">
+                  <BtnAuth
+                    path="/"
+                    onClick={handleOpenLeavingModal}
+                    style="hidden xl:flex bg-blue border-blue text-white"
+                  >
+                    <span>Logout</span>{' '}
+                    <Svg
+                      size="24px"
+                      id="icon-logout"
+                      stroke="white"
+                      fill="#54ADFF"
+                    />
+                  </BtnAuth>
+                  <NavLink
+                    to="/user"
+                    className="md:flex gap-[12px] text-yellow"
+                  >
+                    {!user.avatarUrl ? (
+                      <UserImg />
+                    ) : (
+                      <img
+                        src={user.avatarUrl}
+                        className="block w-[28px]h-[28px] rounded-full object-cover"
+                      />
+                    )}
+                    <span className="hidden md:inline-block">
+                      {user.name ? user.name : 'Name'}
+                    </span>
+                  </NavLink>
+                </div>
+              ) : (
+                <AuthNav
+                  onClick={onToogleIsLogin}
+                  style="hidden md:flex  gap-[20px]"
+                />
+              )}
+              <ButtonBurger onClick={onToogleMobileMenu}>
+                <BurgerMenu className="stroke-current text-yellow" />
+              </ButtonBurger>
+            </div>
           </div>
-        </div>
 
-        {isMobilMenuActive && (
-          <MobileMenu
-            onToogleMobileMenu={onToogleMobileMenu}
-            isLogin={isLogin}
-            onToogleIsLogin={onToogleIsLogin}
-          />
-        )}
-      </Container>
-    </header>
+          {isMobilMenuActive && (
+            <MobileMenu
+              onToogleMobileMenu={onToogleMobileMenu}
+              isLogin={token}
+              onToogleIsLogin={onToogleIsLogin}
+            />
+          )}
+        </Container>
+      </header>
+      <BasicModal
+        isOpen={isLeavingModalOpen}
+        onCloseModal={handleCloseLeavingModal}
+      >
+        <Leaving onCloseModal={handleCloseLeavingModal} />
+      </BasicModal>
+    </>
   );
 }

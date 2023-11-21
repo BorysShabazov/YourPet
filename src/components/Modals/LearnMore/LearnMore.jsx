@@ -1,5 +1,11 @@
-import { useState } from "react";
-import Svg from "../../Svg/Svg";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getIsLoggedIn } from "../../../Redux/auth/auth-selectors";
+import ButtonAddToFavorites from "./ButtonAddToFavorites";
+import ListOfNotice from "./ListInfoOfNotice";
+import ButtonContact from "./ButtonContact";
+import { getNoticeById } from "../../../Redux/notices/noticesOperation";
+import { getSelectedNotice } from "../../../Redux/notices/noticesSelectors";
 
 const data = {
   group: 'In good hands',
@@ -11,18 +17,31 @@ const data = {
   the_sex: 'male',
   email: 'user@mail.com',
   phone: '+380123456789',
-  comments:
-    'Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too! ',
-};
+  price: '$250',
+  comments: ' Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too!',
+ };
 
-const LearnMore = ({onCloseModal, onOpenAtentionModal}) => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+const LearnMore = ({ onCloseModal, onOpenAtentionModal}) => {
+  const [isAddToFavorite, setAddToFavorite] = useState(false);
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  // const data = useSelector(getSelectedNotice);
+
+  console.log('isLoggedIn: ', isLoggedIn);
+
 
   const addToFavorites = () => {
-    // Перевірка залогіненості користувача
-    // setIsUserLoggedIn(true);
-    if (isUserLoggedIn) {
+
+    if (isLoggedIn) {
+      if(isAddToFavorite) {
+        // Функція для видалення з улюблені
+
+        setAddToFavorite(false);
+        console.log('Видалення з улюблених');
+        return;
+      }
       // Функція для додавання в улюблені
+      setAddToFavorite(true);
       console.log('Додавання в улюблені');
     } else {
       // Відкриття модалки Atention для входу або реєстрації
@@ -34,83 +53,27 @@ const LearnMore = ({onCloseModal, onOpenAtentionModal}) => {
 
   return (
    <>
-     <div className=" smOnly:w-64 md:max-w-2xl">
+     <div className=" smOnly:w-64 md:w-[633px]">
       <div className="md:flex ">
         <div className="flex relative justify-center items-center smOnly:mt-8">
-        <p className=" InGoodHands py-2 px-3 rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-5 smOnly: left-2 md:left-0 absolute">{data.group}</p>
+        <p className=" InGoodHands py-2 px-3 rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4 smOnly: left-2 md:left-0 absolute">{data.group}</p>
           <img
             src="/src/images/Rectangle24.png"
             alt="dog"
-            className="Rectangle303 smOnly:w-60 smOnly:h-60 md:w-64 md:h-72 rounded-bl-3xl rounded-br-3xl"
+            className="Rectangle303 smOnly:w-60 smOnly:h-60 md:w-[262px] md:h-[298px] rounded-bl-3xl rounded-br-3xl"
           />
         </div>
  <div className="md:ml-6">
- <h2 className=" text-black text-2xl sm: w-52 font-bold font-['Manrope']">
+ <h2 className=" text-black text-2xl smOnly:mt-3 sm: w-52 font-bold font-['Manrope']">
           {data.title}
         </h2>
-        <div className="flex ">
-          <ul className="text-justify justify-center inline-flex gap-2 flex-col text-black text-[16px] font-semibold font-['Manrope']">
-            <li>
-              <p>Name:</p>
-            </li>
-            <li>
-              <p>Birthday:</p>
-            </li>
-            <li>
-              <p>Type:</p>
-            </li>
-            <li>
-              <p>Place:</p>
-            </li>
-            <li>
-              <p>The sex:</p>
-            </li>
-            <li>
-              <p>Email:</p>
-            </li>
-            <li>
-              <p>Phone:</p>
-            </li>
-          </ul>
-          <ul className=" inline-flex gap-3 justify-center flex-col ml-5 text-black text-[14px] font-medium font-['Manrope']">
-            <li>
-              <p>{data.name}</p>
-            </li>
-            <li>
-              <p>{data.birthday}</p>
-            </li>
-            <li>
-              <p>{data.type}</p>
-            </li>
-            <li>
-              <p>{data.place}</p>
-            </li>
-            <li>
-              <p>{data.the_sex}</p>
-            </li>
-            <li className="text-yellow text-xs font-medium font-['Manrope'] underline">
-              <a href="#">{data.email}</a>
-            </li>
-            <li className="text-yellow text-xs font-medium font-['Manrope'] underline">
-              <a href="#">{data.phone}</a>
-            </li>
-          </ul>
-        </div>
+ <ListOfNotice data={data}/>
  </div>
       </div>
-      <p className=" mt-3">Comments: {data.comments}</p>
+      <p className=" mt-3 text-black text-sm font-semibold font-['Manrope'] tracking-wide">Comments: <span className="text-black text-sm font-medium font-['Manrope'] tracking-wide">{data.comments}</span></p>
       <div className="button-container flex gap-4 smOnly:mt-3 md:mt-16 smOnly:flex-col md:justify-end">
-        <a href={`tel:${data.phone}`}
-          type="button"
-          className=" hover:bg-gradient-to-l from-blue to-lightBlue hover:text-white text-blue text-base font-bold font-['Manrope'] tracking-wide smOnly:w-64 smOnly:h-10 md:w-32 md:h-10 px-5 py-2 rounded-3xl border-2 border-blue justify-center items-center gap-2 inline-flex"
-        >
-          Contact
-        </a>
-        <button
-          type="button" onClick={addToFavorites}
-          className=" md:w-32 md:h-10 smOnly:w-64 smOnly:h-10 px-5 py-2 bg-blue hover:bg-gradient-to-l from-blue to-lightBlue rounded-3xl justify-center items-center gap-2 inline-flex text-stone-50 text-base font-bold font-['Manrope'] tracking-wide">
-          Add to<span><Svg id={'icon-heart'} size={'24px'} stroke={'white'} fill={'#54ADFF'}/></span>
-        </button>
+      <ButtonAddToFavorites isAddToFavorite={isAddToFavorite} addToFavorites={addToFavorites}/>
+      <ButtonContact data={data}/>
       </div>
     </div>
    </>
@@ -118,10 +81,12 @@ const LearnMore = ({onCloseModal, onOpenAtentionModal}) => {
 };
 
 export default LearnMore;
+//повісити на кнопку LearnMore та передати id 
+// onClick={()=>handleOpenLearnMoreModal(el.id)}
 
+// const dispatch = useDispatch();
 // const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
 // const [isAttentionModalOpen, setAttentionModalOpen] = useState(false);
-
 
 // const handleOpenAttentionModal = () => {
 //     setAttentionModalOpen(true);
@@ -129,9 +94,10 @@ export default LearnMore;
 //   const handleCloseAttentionModal = () => {
 //     setAttentionModalOpen(false);
 //   };
-// const handleOpenLearnMoreModal = () => {
-//     setLearnMoreModalOpen(true);
 
+// const handleOpenLearnMoreModal = (id) => {
+//     setLearnMoreModalOpen(true);
+//     dispatch(getNoticeById(id));
 //   };
 //   const handleCloseLearnMoreModal = () => {
 //     setLearnMoreModalOpen(false);
@@ -139,9 +105,8 @@ export default LearnMore;
 
 {/* <BasicModal 
 isOpen={isLearnMoreModalOpen}
-        onCloseModal={handleCloseLearnMoreModal} >
-        onOpenAtentionModal={handleOpenAttentionModal} 
-             <LearnMore onCloseModal={handleCloseLearnMoreModal} />
+        onCloseModal={handleCloseLearnMoreModal}>
+             <LearnMore onOpenAtentionModal={handleOpenAttentionModal} onCloseModal={handleCloseLearnMoreModal} />
         </BasicModal> */}
         // <BasicModal
         // isOpen={isAttentionModalOpen}

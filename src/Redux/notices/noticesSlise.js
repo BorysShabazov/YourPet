@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createNotice, deleteNotice, fetchNotices } from './noticesOperation';
+import { createNotice, deleteNotice, fetchNotices, getNoticeById } from './noticesOperation';
 
 const initialNotices = {
   items: [],
   isLoading: false,
   error: null,
+  selectedNotice: null,
 };
 
 const rejectFunc = (state, action) => {
@@ -39,6 +40,20 @@ const noticesStateSlice = createSlice({
     });
     builder.addCase(fetchNotices.rejected, rejectFunc);
 
+//getNoticeById
+
+builder.addCase(getNoticeById.pending, pendingFunc);
+builder.addCase(getNoticeById.fulfilled, (state, action) => {
+  return {
+    ...state,
+    selectedNotice: action.payload,
+    isLoading: false,
+    error: null,
+  };
+});
+builder.addCase(getNoticeById.rejected, rejectFunc);
+
+
     // create
 
     builder.addCase(createNotice.pending, pendingFunc);
@@ -66,3 +81,14 @@ const noticesStateSlice = createSlice({
 });
 
 export const noticesStateReducer = noticesStateSlice.reducer;
+
+
+// builder.addCase(getNoticeById.pending, pendingFunc);
+// builder.addCase(getNoticeById.fulfilled, (_, action) => {
+//   return {
+//     items: [...action.payload],
+//     isLoading: false,
+//     error: null,
+//   };
+// });
+// builder.addCase(getNoticeById.rejected, rejectFunc);
