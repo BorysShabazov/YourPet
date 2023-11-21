@@ -34,11 +34,11 @@ export default function Header() {
     <header className="pt-[20px] md:pt-[24px] xl:pt-[20px] ">
       <Container>
         <div className="flex items-center justify-between">
-          <NavLink to="/" state={{ from: location }} className="">
-            <Logo className="w-[116px] md:w-[162px]" />
-          </NavLink>
-
-          <Nav style="hidden xl:flex gap-[159px] items-center" />
+          <Nav
+            style="flex gap-[160px]"
+            styleLogo="block"
+            styleNavList="hidden xl:flex"
+          />
 
           <div className="flex gap-[8px] md:gap-[38px] xl:gap=[24px]">
             {isLogin ? (

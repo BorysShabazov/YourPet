@@ -25,9 +25,11 @@ export default function MobileMenu({
     onToogleIsLogin();
   };
   return (
-    <div className={css.wrapperMobileMenu}>
-      <Container>
-        <div className="w-full flex items-centr justify-between">
+
+    <div className="absolute z-50 top-0 left-0  h-screen w-screen pt-[22px] md:pt-[24px] bg-white xl:hidden">
+
+      <Container className="flex flex-col gap-[42px] md:gap-[92px] items-centr justify-center">
+        <div className="w-full flex items-center justify-between">
           <NavLink to="/" state={{ from: location }}>
             <Logo
               className="w-[116px] md:w-[162px]"
@@ -40,7 +42,7 @@ export default function MobileMenu({
               <BtnAuth
                 path="/"
                 onClick={onLogout}
-                style="hidden md:flex bg-blue border-blue text-white"
+                style="absolute bottom-[20px] left-[20px] md:static flex bg-blue border-blue text-white"
               >
                 <span>Logout</span>
                 <Svg
@@ -54,7 +56,7 @@ export default function MobileMenu({
               <AuthNav
                 isLogin={onToogleIsLogin}
                 onClick={onToogleMobileMenu}
-                style="hidden md:flex   text-centr gap-[12px]"
+                style="hidden md:flex gap-[12px]"
               />
             )}
 
@@ -68,10 +70,15 @@ export default function MobileMenu({
           <AuthNav
             isLogin={onToogleIsLogin}
             onClick={onToogleMobileMenu}
-            style="flex-col w-full text-centr gap-[12px] md:hidden "
+            style="flex-col  gap-[12px] items-center md:hidden "
           />
         ) : (
-          <NavLink to="/user" className="flex items-center justify-center gap-[12px] text-yellow md:hidden">
+          <NavLink
+            to="/user"
+            className={`flex items-center justify-center gap-[12px] ${
+              isLogin ? 'pb-[44px]' : ''
+            } text-yellow md:hidden`}
+          >
             <UserImg />
             <span className="inline-block">Name</span>
           </NavLink>

@@ -6,7 +6,7 @@ export default function AuthNav({ onClick, isLogin, style = "" }) {
   return (
     <ul className={`flex ${style}`}>
       <li onClick={onClick} className='text-centr'>
-        <BtnAuth path="/login" onClick={isLogin} isActive={isActive} style=" border-yellow">
+        <BtnAuth path="/login" onClick={isLogin} isActive={isActive} style="border-yellow">
           Login
         </BtnAuth>
       </li>

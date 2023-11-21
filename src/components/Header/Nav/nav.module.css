@@ -13,6 +13,7 @@
 }
 @media screen and (min-width: 768px) {
   .listNav {
+    gap: 60px;
     font-size: 48px;
     line-height: 66px;
   }
@@ -21,7 +22,7 @@
 @media screen and (min-width: 1280px) {
   .listNav {
     flex-direction: row;
-
+    gap: 40px;
     font-size: 20px;
     font-weight: 500;
     line-height: 27px;
