@@ -1,5 +1,5 @@
 import { CloseIcon } from '../CloseIcon/CloseIcon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { EditIcon } from '../EditIcon/EditIcon';
 import { PhotoIcon } from '../PhotoIcon/PhotoIcon';
 import { Formik, Form, Field, useFormik } from 'formik';
@@ -19,6 +19,14 @@ const UserCard = () => {
   const [user, setUser] = useState(userData || {});
   const [userImagePath, setUserImagePath] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+  const [previewAvatar, setPreviewAvatar] = useState('');
+  
+  useEffect(() => {
+    if(!isEdit) {
+      setPreviewAvatar('')
+    }
+  }, [isEdit])
+  
 
   const validate = values => {
     const errors = {};
@@ -53,6 +61,20 @@ const UserCard = () => {
     return errors;
   };
 
+  function previewFile(file) {
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+      setPreviewAvatar(reader.result);
+    };
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      return
+    }
+  }
+
   return (
     <div className="relative w-[280px] bg-white rounded-[20px] shadow pt-[20px] pb-[24px] px-[8px] md:w-[704px] md:px-[20px] xl:w-[395px] rounded-[20px]">
       <div className="mdOnly:flex flex-row-reverse justify-center items-center gap-[70px]">
@@ -78,7 +100,7 @@ const UserCard = () => {
               city: values.user.city,
             };
             
-            console.log(userImagePath);
+            console.log(previewAvatar);
             setUser(updatedUser);
             setIsEdit(false);
           }}
@@ -115,7 +137,7 @@ const UserCard = () => {
                     <div className="flex justify-center mb-[14px]">
                       <img
                         className="w-[182px] h-[182px] rounded-[40px] object-cover"
-                        src={user.avatar}
+                        src={previewAvatar}
                         alt="User Avatar"
                       />
                     </div>
@@ -143,6 +165,7 @@ const UserCard = () => {
                         const localPath = URL.createObjectURL(file);
                         setFieldValue('user.avatar', file);(file);
                         setUserImagePath(localPath);
+                        previewFile(file)
                       }}
                     />
                   </div>

@@ -2,9 +2,16 @@ import { Link, useLocation} from 'react-router-dom';
 import MyPetsCard from '../../components/MyPetsCard/MyPetsCard';
 import UserCard from '../../components/UserCard/UserCard';
 import AddPetButton from '../../components/AddPetButton/AddPetButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPets } from '../../Redux/pets/petsSelectors';
+import { useEffect } from 'react';
+import { fetchPets } from '../../Redux/pets/petsOperation';
 
 
 const UserPage = () => {
+  // const dispatch = useDispatch();
+  // const petsList = useSelector(getPets)
+  // console.log(petsList);
   const location = useLocation(); 
   const pets = [
     {
@@ -28,6 +35,10 @@ const UserPage = () => {
         " Max is a white Persian cat with green eyes. He loves to be pampered and groomed, and enjoys playing with toys. Although a bitshy, he's a loyal and affectionate lap cat.",
     },
   ];
+
+  // useEffect(() => {
+  //   dispatch(fetchPets());
+  // }, [dispatch]);
 
 
   return (
