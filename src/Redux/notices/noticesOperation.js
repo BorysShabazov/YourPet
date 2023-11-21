@@ -15,6 +15,18 @@ export const fetchNotices = createAsyncThunk(
   },
 );
 
+export const getNoticeById = createAsyncThunk(
+  'notices/getNoticeById',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.get(`/notices/${id}`);
+      return response.data;
+    } catch (evt) {
+      return thunkAPI.rejectWithValue(evt.message);
+    }
+  },
+);
+
 export const createNotice = createAsyncThunk(
   'notices/postNotice',
   async (arg, thunkAPI) => {
