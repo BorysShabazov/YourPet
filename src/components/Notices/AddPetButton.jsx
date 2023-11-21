@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import Svg from "../Svg/Svg";
 
 export const AddPetButton = () => {
-  return (
-    <div className="w-20 h-20 bg-blue relative rounded-full shadow blue-gradient">
+    return (
+        <div>
+            <div className="w-20 h-20 bg-blue relative rounded-full shadow blue-gradient">
       <Link className="absolute left-0 top-0 w-full h-full">
           <Svg id="icon-plus" size="24px" stroke="white" className="left-[28px] top-[20px] absolute"/>
           <p className="text-white font-semibold text-xs absolute left-[18px] top-[48px]">
@@ -11,6 +12,8 @@ export const AddPetButton = () => {
           </p>
       </Link>
     </div>
+      </div>
+    
   );
 };
 
