@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Svg from '../Svg/Svg';
 
-export const Search = ({className = ''}) => {
-  const [value, setValue] = useState("");
+export const Search = ({ className = '' }) => {
+  const [value, setValue] = useState('');
 
   const handleChange = ({ target }) => {
     setValue(target.value);
@@ -33,8 +33,13 @@ export const Search = ({className = ''}) => {
             </div>}
             
         </div>
+
+        {value && (
+          <div onClick={handleClear} className="cursor-pointer">
+            <Svg id="icon-cross" size="24px" stroke="#FFC107" fill="#54ADFF" />
+          </div>
+        )}
       </div>
-    
+    </div>
   );
 };
-

@@ -90,13 +90,15 @@ const AuthForm = () => {
             }}
           />
 
-          {formik.errors.name && formik.values.name !== '' && (
-            <Svg
-              id="cross"
-              className="right-3 absolute cursor-pointer"
-              onClick={() => clearField('name')}
-            />
-          )}
+          {formik.errors.name ||
+            (formik.values.name !== '' && (
+              <Svg
+                id="icon-cross"
+                className="right-3 absolute cursor-pointer"
+                onClick={() => clearField('name')}
+                stroke="#F43F5E"
+              />
+            ))}
         </div>
 
         {formik.errors.name && (
@@ -126,13 +128,15 @@ const AuthForm = () => {
               formik.setFieldError('email', '');
             }}
           />
-          {formik.errors.email && formik.values.email !== '' && (
-            <Svg
-              id="cross"
-              className="right-3 absolute cursor-pointer"
-              onClick={() => clearField('email')}
-            />
-          )}
+          {formik.errors.email ||
+            (formik.values.email !== '' && (
+              <Svg
+                id="icon-cross"
+                className="right-3 absolute cursor-pointer"
+                onClick={() => clearField('email')}
+                stroke="#F43F5E"
+              />
+            ))}
         </div>
 
         {formik.errors.email && (
@@ -172,7 +176,9 @@ const AuthForm = () => {
           <Svg
             className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('password')}
-            id={`${passwordVisible ? `eye-open` : `eye-closed`}`}
+            id={`${passwordVisible ? `icon-eye-open` : `icon-eye-closed`}`}
+            fill="transparent"
+            stroke="#54ADFF"
           />
         </div>
 
@@ -207,7 +213,11 @@ const AuthForm = () => {
           <Svg
             className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('confirmPassword')}
-            id={`${confirmPasswordVisible ? `eye-open` : `eye-closed`}`}
+            id={`${
+              confirmPasswordVisible ? `icon-eye-open` : `icon-eye-closed`
+            }`}
+            fill="transparent"
+            stroke="#54ADFF"
           />
         </div>
 

@@ -12,7 +12,6 @@ const Svg = ({ id, size, fill, stroke, className = '', onClick }) => {
 
 Svg.defaultProps = {
   size: 24,
-  color: 'black',
 };
 
 export default Svg;
