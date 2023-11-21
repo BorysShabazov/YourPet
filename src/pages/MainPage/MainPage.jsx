@@ -1,5 +1,6 @@
-const MainPage = () => {return <p>Main page</p>
-    
+import PetCardList from "../../components/PetCard/PetCardList";
+
+const MainPage = () => {return 
 }
 
 export default MainPage;
