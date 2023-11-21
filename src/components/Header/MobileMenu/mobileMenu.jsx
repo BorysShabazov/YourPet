@@ -8,17 +8,24 @@ import { ReactComponent as Close } from '../../../images/svg/cross-small.svg';
 import { ReactComponent as Logo } from '../../../images/svg/logo.svg';
 import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
 
-import css from './mobileMenu.module.css';
 import AuthNav from '../AuthNav/AuthNav';
 import BtnAuth from '../BtnAuth/BtnAuth';
 import Svg from '../../Svg/Svg';
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../../../Redux/auth/auth-selectors';
 
 export default function MobileMenu({
   isLogin,
   onToogleMobileMenu,
-  cssHeader,
   onToogleIsLogin,
 }) {
+  const user = {
+    name: '',
+    avatarUrl: '',
+  };
+
+  const { token } = useSelector(selectAuth);
+
   const onLogout = () => {
     onToogleMobileMenu();
 
@@ -38,7 +45,7 @@ export default function MobileMenu({
           </NavLink>
 
           <div className="flex gap-[24px] ">
-            {isLogin ? (
+            {token ? (
               <BtnAuth
                 path="/"
                 onClick={onLogout}
@@ -66,7 +73,7 @@ export default function MobileMenu({
           </div>
         </div>
 
-        {!isLogin ? (
+        {!token ? (
           <AuthNav
             isLogin={onToogleIsLogin}
             onClick={onToogleMobileMenu}
@@ -79,8 +86,20 @@ export default function MobileMenu({
               isLogin ? 'pb-[44px]' : ''
             } text-yellow md:hidden`}
           >
-            <UserImg />
-            <span className="inline-block">Name</span>
+            {/* <UserImg />
+            <span className="inline-block">Name</span> */}
+             {!user.avatarUrl ? (
+                    <UserImg />
+                  ) : (
+                    <img
+                      src={user.avatarUrl}
+                      className="block w-[28px]h-[28px] rounded-full object-cover"
+                    />
+                  )}
+                  <span >
+                    {user.name ? user.name : "Name"}
+                  </span>
+            
           </NavLink>
         )}
         <Nav onClick={onToogleMobileMenu} styleLogo="hidden" />

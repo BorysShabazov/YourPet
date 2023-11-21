@@ -10,8 +10,8 @@ export default function AuthNav({ onClick, isLogin, style = "" }) {
           Login
         </BtnAuth>
       </li>
-      <li>
-        <BtnAuth path="/register" onClick ={()=>setIsActive(!isActive)} isActive={!isActive} style="border-yellow">Register</BtnAuth>
+      <li onClick={onClick}>
+        <BtnAuth path="/register" onClick ={()=>{setIsActive(!isActive)}} isActive={!isActive} style="border-yellow">Register</BtnAuth>
       </li>
     </ul>
   );

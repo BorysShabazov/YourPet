@@ -1,8 +1,7 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
 import { ReactComponent as BurgerMenu } from '../../../images/svg/menu-hamburger.svg';
-import { ReactComponent as Logo } from '../../../images/svg/logo.svg';
 
 import ButtonBurger from '../ButtonBurger/buttonBurger';
 import { useState } from 'react';
@@ -12,12 +11,20 @@ import { Container } from '../../../ui/index';
 import AuthNav from '../AuthNav/AuthNav';
 import BtnAuth from '../BtnAuth/BtnAuth';
 import Svg from '../../Svg/Svg';
+import { selectAuth } from '../../../Redux/auth/auth-selectors';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
-  const location = useLocation();
+  const user = {
+    name: '',
+    avatarUrl: '',
+  };
+
+  const { token } = useSelector(selectAuth);
 
   const [isLogin, setIsLogin] = useState(false);
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
+
   const onToogleIsLogin = () => {
     setIsLogin(!isLogin);
   };
@@ -40,8 +47,8 @@ export default function Header() {
             styleNavList="hidden xl:flex"
           />
 
-          <div className="flex gap-[8px] md:gap-[38px] xl:gap=[24px]">
-            {isLogin ? (
+          <div className="flex gap-[8px] md:gap-[24px]">
+            {token ? (
               <div className="hoidden md:flex gap-6 items-center">
                 <BtnAuth
                   path="/"
@@ -57,8 +64,17 @@ export default function Header() {
                   />
                 </BtnAuth>
                 <NavLink to="/user" className="md:flex gap-[12px] text-yellow">
-                  <UserImg />
-                  <span className="hidden md:inline-block">Name</span>
+                  {!user.avatarUrl ? (
+                    <UserImg />
+                  ) : (
+                    <img
+                      src={user.avatarUrl}
+                      className="block w-[28px]h-[28px] rounded-full object-cover"
+                    />
+                  )}
+                  <span className="hidden md:inline-block">
+                    {user.name ? user.name : "Name"}
+                  </span>
                 </NavLink>
               </div>
             ) : (
@@ -76,7 +92,7 @@ export default function Header() {
         {isMobilMenuActive && (
           <MobileMenu
             onToogleMobileMenu={onToogleMobileMenu}
-            isLogin={isLogin}
+            isLogin={token}
             onToogleIsLogin={onToogleIsLogin}
           />
         )}
