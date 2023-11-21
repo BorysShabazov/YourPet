@@ -103,9 +103,9 @@ const MoreInfoForm = ({
             } bg-cover bg rounded-[20px]`}
           >
             <Svg
-              id="icon-plus"
-              className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
-              stroke="#54ADFF"
+              id="icon-add-cross"
+              className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[24px] "
+              fill="#54ADFF"
             />
             <input
               id="petAvatarURL"
@@ -123,7 +123,12 @@ const MoreInfoForm = ({
         </label>
         {hasPetImage && (
           <label htmlFor="petAvatarURL" className="flex flex-row items-center">
-            <div className="mr-[8px] w-[24px] h-[24px] bg-red"></div>
+            <Svg
+              id="icon-camera"
+              className="flex items-center w-fit mr-[8px]"
+              fill="transparent"
+              stroke="#54ADFF"
+            />
             <p className="text-black text-xs font-normal font-manrope leading-snug tracking-wide">
               Edit photo
             </p>

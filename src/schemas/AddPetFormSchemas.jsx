@@ -47,48 +47,7 @@ export const secondValidationSchema = yup.object({
     .required("You have to write the pet's type"),
 });
 
-export const lastValidationSchema = yup.object().shape({
-  category: yup
-    .string()
-    .oneOf(['own', 'sell', 'lost', 'found', 'good-hands'], 'Invalid category')
-    .required('You have to choose the category'),
-
-  title: yup
-    .string('Title must be a sting')
-    .max(20)
-    .when('category', {
-      is: 'own', // alternatively: (val) => val == true
-      then: (schema) => schema.notRequired(),
-      otherwise: (schema) => schema.required('You have to write the title'),
-    }),
-
-  name: yup
-    .string('Name must be a sting')
-    .min(2)
-    .max(16)
-    .when('category', {
-      is: 'found',
-      then: (schema) => schema.notRequired(),
-      otherwise: (schema) =>
-        schema.required("You have to write the pet's name"),
-    }),
-
-  birth: yup
-    .string('Birthdate must be a sting')
-    .matches(datePattern, { message: 'Date must have DD-MM-YYYY format' })
-    .when('category', {
-      is: 'found',
-      then: (schema) => schema.notRequired(),
-      otherwise: (schema) =>
-        schema.required("You have to write the pet's birthdate"),
-    }),
-
-  type: yup
-    .string('Type must be a string')
-    .min(2)
-    .max(16)
-    .required("You have to write the pet's type"),
-
+export const lastValidationSchema = yup.object({
   sex: yup
     .string()
     .oneOf(['male', 'female'], 'Invalid sex')
@@ -111,7 +70,11 @@ export const lastValidationSchema = yup.object().shape({
       otherwise: (schema) => schema.notRequired(),
     }),
 
-  location: yup.string().required('You have to write location'),
+  location: yup.string().when('category', {
+    is: 'own',
+    then: (schema) => schema.notRequired(),
+    otherwise: (schema) => schema.required('You have to write location'),
+  }),
 
   comments: yup.string().max(120),
 });

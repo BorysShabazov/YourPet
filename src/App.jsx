@@ -63,9 +63,9 @@ function App() {
           <Route
             path="add-pet"
             element={
-              <PrivateRoute>
-                <AddPetPage />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <AddPetPage />
+              // </PrivateRoute>
             }
           />
 
