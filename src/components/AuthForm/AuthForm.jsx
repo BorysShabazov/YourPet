@@ -1,30 +1,30 @@
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../Redux/auth/auth-operations';
-import { useState } from 'react';
+import { register } from '../../Redux/auth/auth-operations';
 import { getAuthError } from '../../Redux/auth/auth-selectors';
-import { NavLink } from 'react-router-dom';
-import LoginFormSchema from '../../schemas/LoginFormSchema';
+import AuthFormSchema from '../../schemas/AuthFormSchema';
 import Svg from '../Svg/Svg';
 
-const LoginForm = () => {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+const AuthForm = () => {
   const dispatch = useDispatch();
-  let error = useSelector(getAuthError);
+  const error = useSelector(getAuthError);
 
   const formik = useFormik({
     initialValues: {
+      name: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
     validateOnChange: false,
     validateOnBlur: false,
 
-    validationSchema: LoginFormSchema,
+    validationSchema: AuthFormSchema,
 
-    onSubmit: ({ email, password }, { resetForm }) => {
-      error = null;
-      dispatch(login({ email, password }));
+    onSubmit: ({ name, email, password }, { resetForm }) => {
+      dispatch(register({ name, email, password }));
       resetForm();
     },
   });
@@ -32,24 +32,30 @@ const LoginForm = () => {
   const formikErrors = formik.errors;
   const formikValues = formik.values;
 
-  // clear field after press cross
-  const clearField = (name) => {
-    formik.values[name] = '';
-    formik.setFieldValue(name, '');
-    formik.setFieldError(name, '');
-  };
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   // toggle password
   const togglePasswordVisibility = (value) => {
-    console.log(value);
     switch (value) {
       case 'password':
         setPasswordVisible(!passwordVisible);
         break;
 
+      case 'confirmPassword':
+        setConfirmPasswordVisible(!confirmPasswordVisible);
+        break;
+
       default:
         break;
     }
+  };
+
+  // clear field after press cross
+  const clearField = (name) => {
+    formik.values[name] = '';
+    formik.setFieldValue(name, '');
+    formik.setFieldError(name, '');
   };
 
   return (
@@ -60,8 +66,45 @@ const LoginForm = () => {
       onSubmit={formik.handleSubmit}
     >
       <h1 className="text-center text-neutral-900 text-2xl font-medium mb-5">
-        Login
+        Registration
       </h1>
+
+      {/* name */}
+      <div className="h-[70px]">
+        <label htmlFor="name" className="sr-only">
+          Name
+        </label>
+        <div className="flex relative items-center justify-between">
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Name"
+            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
+              formikErrors['name'] && 'border-rose-400'
+            }`}
+            value={formikValues['name']}
+            onChange={formik.handleChange}
+            onFocus={() => {
+              formik.setFieldError('name', '');
+            }}
+          />
+
+          {formik.errors.name && formik.values.name !== '' && (
+            <Svg
+              id="cross"
+              className="right-3 absolute cursor-pointer"
+              onClick={() => clearField('name')}
+            />
+          )}
+        </div>
+
+        {formik.errors.name && (
+          <div className="pl-4 text-rose-500 text-xs font-normal">
+            {formik.errors.name}
+          </div>
+        )}
+      </div>
 
       {/* email */}
       <div className="h-[70px]">
@@ -83,7 +126,7 @@ const LoginForm = () => {
               formik.setFieldError('email', '');
             }}
           />
-          {formikErrors['email'] && formikValues['email'] !== '' && (
+          {formik.errors.email && formik.values.email !== '' && (
             <Svg
               id="cross"
               className="right-3 absolute cursor-pointer"
@@ -95,6 +138,12 @@ const LoginForm = () => {
         {formik.errors.email && (
           <div className="pl-4 text-rose-500 text-xs font-normal">
             {formik.errors.email}
+          </div>
+        )}
+
+        {error === 409 && (
+          <div className="pl-4 text-rose-500 text-xs font-normal">
+            E-mail address already in use
           </div>
         )}
       </div>
@@ -120,7 +169,6 @@ const LoginForm = () => {
               formik.setFieldError('password', '');
             }}
           />
-
           <Svg
             className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('password')}
@@ -133,10 +181,39 @@ const LoginForm = () => {
             {formik.errors.password}
           </div>
         )}
+      </div>
 
-        {error === 401 && (
+      {/* confirmPassword */}
+      <div className="h-[98px]">
+        <label htmlFor="confirmPassword" className="sr-only">
+          Repeat Password
+        </label>
+
+        <div className="flex relative items-center justify-between">
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type={confirmPasswordVisible ? 'text' : 'password'}
+            placeholder="Confirm password"
+            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
+              formikErrors['confirmPassword'] && 'border-rose-400'
+            }`}
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            onFocus={() => {
+              formik.setFieldError('confirmPassword', '');
+            }}
+          />
+          <Svg
+            className="absolute right-3 cursor-pointer"
+            onClick={() => togglePasswordVisibility('confirmPassword')}
+            id={`${confirmPasswordVisible ? `eye-open` : `eye-closed`}`}
+          />
+        </div>
+
+        {formikErrors['confirmPassword'] && (
           <div className="pl-4 text-rose-500 text-xs font-normal">
-            Email or password is invalid
+            {formikErrors['confirmPassword']}
           </div>
         )}
       </div>
@@ -145,22 +222,24 @@ const LoginForm = () => {
         type="submit"
         className="w-64 h-12 mb-2 bg-blue rounded-[40px] justify-center items-center gap-2.5 inline-flex"
       >
-        <p className="text-white text-xl tracking-wide font-semibold">Login</p>
+        <p className="text-white text-xl tracking-wide font-semibold">
+          Registration
+        </p>
       </button>
 
-      <div className="text-center ">
+      <div className="text-center">
         <span className="text-zinc-500 text-xs font-normal tracking-wide">
-          Don`t have an account?&nbsp;
+          Already have an account?&nbsp;
         </span>
         <NavLink
           className="text-blue-400 text-xs font-normal underline tracking-wide"
-          to={'/register'}
+          to={'/login'}
         >
-          Register
+          Login
         </NavLink>
       </div>
     </form>
   );
 };
 
-export default LoginForm;
+export default AuthForm;
