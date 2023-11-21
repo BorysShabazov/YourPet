@@ -13,13 +13,22 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegiserPage from './pages/RegiserPage/RegiserPage';
 import UserPage from './pages/UserPage/UserPage';
 import AddPetPage from './pages/AddPetPage/AddPetPage';
-import NoticesCategoriesNav from './components/Notices/NoticesCategoriesNav';
-
+import PrivateRoute from './components/PrivateRoute/privateRoute';
+// import PrivateRoute from './components/PrivateRoute/privateRoute';
+// import NoticesCategoriesNav from './components/Notices/NoticesCategoriesNav';
+// import { useSelector } from 'react-redux';
+// import { selectAuth } from './Redux/auth/auth-selectors';
 // const test = import.meta.env.VITE_API_TEST;
-const { SharedLayout, Svg } = Components;
+const { SharedLayout } = Components;
+
+// const { token } = useSelector(selectAuth);
+// const navigate = useNavigate();
+// const onLogin = () => navigate('/login');
 
 function App() {
-
+  // const { token } = useSelector(selectAuth);
+  // const navigate = useNavigate();
+  // const onLogin = () => navigate('/login');
   return (
     <>
       <Routes>
@@ -29,11 +38,18 @@ function App() {
           <Route path="register" element={<RegiserPage />} />
           <Route path="login" element={<LoginPage />} />
 
-          <Route path="user" element={<UserPage />} />
+          <Route
+            path="user"
+            element={
+              <PrivateRoute>
+                <UserPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="news" element={<NewsPage />} />
+          <Route path="notices/:categoryName" element={<NoticesPage />} />
 
-          {/* <Route path="news" element={<NewsPage />} />
-          <Route path="notices/:categoryName" element={<NoticesPage />}>
-            <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
+          {/* <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
             <Route path="/notices/lost" element={<NoticesCategoriesNav />} />
             <Route path="/notices/found" element={<NoticesCategoriesNav />} />
 
@@ -45,11 +61,18 @@ function App() {
               path="/notices/favorite"
               element={<NoticesCategoriesNav />}
             />
-            <Route path="/notices/own" element={<NoticesCategoriesNav />} />
-          </Route>
-          <Route path="add-pet" element={<AddPetPage />} />
+            <Route path="/notices/own" element={<NoticesCategoriesNav />} /> */}
 
-          <Route path="friends" element={<OurFriendsPage />} /> */}
+          <Route
+            path="add-pet"
+            element={
+              <PrivateRoute>
+                <AddPetPage />
+              </PrivateRoute>
+            }
+          />
+
+          <Route path="friends" element={<OurFriendsPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

@@ -1,11 +1,11 @@
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import LoginFormSchema from './LoginFormSchema';
 import { login } from '../../Redux/auth/auth-operations';
 import { useState } from 'react';
 import { getAuthError } from '../../Redux/auth/auth-selectors';
-import sprite from './sprite.svg';
 import { NavLink } from 'react-router-dom';
+import LoginFormSchema from '../../schemas/LoginFormSchema';
+import Svg from '../Svg/Svg';
 
 const LoginForm = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -41,6 +41,7 @@ const LoginForm = () => {
 
   // toggle password
   const togglePasswordVisibility = (value) => {
+    console.log(value);
     switch (value) {
       case 'password':
         setPasswordVisible(!passwordVisible);
@@ -82,14 +83,15 @@ const LoginForm = () => {
               formik.setFieldError('email', '');
             }}
           />
-          {formikErrors['email'] && formikValues['email'] !== '' && (
-            <svg
-              className="w-6 h-6 right-3 absolute"
-              onClick={() => clearField('email')}
-            >
-              <use xlinkHref={`${sprite}#cross`} />
-            </svg>
-          )}
+          {formikErrors['email'] ||
+            (formikValues['email'] !== '' && (
+              <Svg
+                id="icon-cross"
+                className="right-3 absolute cursor-pointer"
+                onClick={() => clearField('email')}
+                stroke="#F43F5E"
+              />
+            ))}
         </div>
 
         {formik.errors.email && (
@@ -120,16 +122,14 @@ const LoginForm = () => {
               formik.setFieldError('password', '');
             }}
           />
-          <svg
-            className="w-6 h-6 right-3 absolute"
+
+          <Svg
+            className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('password')}
-          >
-            <use
-              xlinkHref={
-                passwordVisible ? `${sprite}#eye-open` : `${sprite}#eye-closed`
-              }
-            />
-          </svg>
+            id={`${passwordVisible ? `icon-eye-open` : `icon-eye-closed`}`}
+            fill="transparent"
+            stroke="#54ADFF"
+          />
         </div>
 
         {formik.errors.password && (

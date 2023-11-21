@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createNotice, deleteNotice, fetchNotices } from './Notices';
-// import {} from './operations';
+import { createNotice, deleteNotice, fetchNotices } from './noticesOperation';
 
 const initialNotices = {
   items: [],
@@ -63,18 +62,6 @@ const noticesStateSlice = createSlice({
       };
     });
     builder.addCase(deleteNotice.rejected, rejectFunc);
-
-    // change
-
-    // builder.addCase(changeContact.pending, pendingFunc);
-    // builder.addCase(changeContact.fulfilled, (state, action) => {
-    //   return {
-    //     items: state.items,
-    //     isLoading: false,
-    //     error: null,
-    //   };
-    // });
-    // builder.addCase(changeContact.rejected, rejectFunc);
   },
 });
 

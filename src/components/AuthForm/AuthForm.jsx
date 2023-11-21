@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
-import sprite from './sprite.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../Redux/auth/auth-operations';
-import AuthFormSchema from './AuthFormSchema';
 import { getAuthError } from '../../Redux/auth/auth-selectors';
+import AuthFormSchema from '../../schemas/AuthFormSchema';
+import Svg from '../Svg/Svg';
 
 const AuthForm = () => {
   const dispatch = useDispatch();
@@ -90,14 +90,15 @@ const AuthForm = () => {
             }}
           />
 
-          {formik.errors.name && formik.values.name !== '' && (
-            <svg
-              className="w-6 h-6 right-3 absolute"
-              onClick={() => clearField('name')}
-            >
-              <use xlinkHref={`${sprite}#cross`} />
-            </svg>
-          )}
+          {formik.errors.name ||
+            (formik.values.name !== '' && (
+              <Svg
+                id="icon-cross"
+                className="right-3 absolute cursor-pointer"
+                onClick={() => clearField('name')}
+                stroke="#F43F5E"
+              />
+            ))}
         </div>
 
         {formik.errors.name && (
@@ -127,14 +128,15 @@ const AuthForm = () => {
               formik.setFieldError('email', '');
             }}
           />
-          {formik.errors.email && formik.values.email !== '' && (
-            <svg
-              className="w-6 h-6 right-3 absolute"
-              onClick={() => clearField('email')}
-            >
-              <use xlinkHref={`${sprite}#cross`} />
-            </svg>
-          )}
+          {formik.errors.email ||
+            (formik.values.email !== '' && (
+              <Svg
+                id="icon-cross"
+                className="right-3 absolute cursor-pointer"
+                onClick={() => clearField('email')}
+                stroke="#F43F5E"
+              />
+            ))}
         </div>
 
         {formik.errors.email && (
@@ -171,16 +173,13 @@ const AuthForm = () => {
               formik.setFieldError('password', '');
             }}
           />
-          <svg
-            className="w-6 h-6 right-3 absolute"
+          <Svg
+            className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('password')}
-          >
-            <use
-              xlinkHref={
-                passwordVisible ? `${sprite}#eye-open` : `${sprite}#eye-closed`
-              }
-            />
-          </svg>
+            id={`${passwordVisible ? `icon-eye-open` : `icon-eye-closed`}`}
+            fill="transparent"
+            stroke="#54ADFF"
+          />
         </div>
 
         {formik.errors.password && (
@@ -211,18 +210,15 @@ const AuthForm = () => {
               formik.setFieldError('confirmPassword', '');
             }}
           />
-          <svg
-            className="w-6 h-6 right-3 absolute"
+          <Svg
+            className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('confirmPassword')}
-          >
-            <use
-              xlinkHref={
-                confirmPasswordVisible
-                  ? `${sprite}#eye-open`
-                  : `${sprite}#eye-closed`
-              }
-            />
-          </svg>
+            id={`${
+              confirmPasswordVisible ? `icon-eye-open` : `icon-eye-closed`
+            }`}
+            fill="transparent"
+            stroke="#54ADFF"
+          />
         </div>
 
         {formikErrors['confirmPassword'] && (

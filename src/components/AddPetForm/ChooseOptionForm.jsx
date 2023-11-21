@@ -3,9 +3,9 @@ const baseButtonStyles =
 const regularButtonStyles = 'bg-lightBlue text-blue';
 const hoveredButtonStyles = 'bg-blue text-background';
 
-const ChooseOptionSection = ({ callback, category }) => {
+const ChooseOptionSection = ({ callback, category, errors }) => {
   return (
-    <div className="flex flex-col mb-[45px] gap-[12px]">
+    <div className="relative flex flex-col mb-[45px] gap-[12px]">
       <label
         className={`${baseButtonStyles} ${
           category === 'own' ? hoveredButtonStyles : regularButtonStyles
@@ -81,6 +81,12 @@ const ChooseOptionSection = ({ callback, category }) => {
         />
         in good hands
       </label>
+
+      {errors.category && (
+        <p className="absolute -bottom-[20px] text-red text-xs font-normal">
+          {errors.category}
+        </p>
+      )}
     </div>
   );
 };

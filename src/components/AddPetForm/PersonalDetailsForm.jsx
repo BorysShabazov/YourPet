@@ -1,9 +1,13 @@
-const labelStyles = 'flex flex-col text-black text-sm font-medium font-manrope';
+const labelStyles =
+  'relative flex flex-col text-black text-sm font-medium font-manrope';
 const inputStyles =
   'w-[100%] h-[40px] px-[16px] py-[8px] rounded-[40px] border border-blue justify-start items-center';
-
+const errorInputStyle = 'border-red';
+const errorMessageStyles =
+  'absolute -bottom-[18px] ml-4 text-red text-xs font-normal';
 const PersonalDetailsForm = ({
   callback,
+  errors,
   category,
   title,
   name,
@@ -22,8 +26,11 @@ const PersonalDetailsForm = ({
             value={title}
             placeholder="Title of add"
             onChange={callback}
-            className={inputStyles}
+            className={`${inputStyles} ${
+              errors.title && errors.title !== '' ? errorInputStyle : ''
+            }`}
           />
+          {errors.title && <p className={errorMessageStyles}>{errors.title}</p>}
         </label>
       )}
       {category !== 'found' && (
@@ -37,8 +44,11 @@ const PersonalDetailsForm = ({
               value={name}
               placeholder="Type name pet"
               onChange={callback}
-              className={inputStyles}
+              className={`${inputStyles} ${
+                errors.name && errors.name !== '' ? errorInputStyle : ''
+              }`}
             />
+            {errors.name && <p className={errorMessageStyles}>{errors.name}</p>}
           </label>
           <label className={labelStyles}>
             Date of birth
@@ -49,8 +59,13 @@ const PersonalDetailsForm = ({
               value={birth}
               placeholder="Type date of birth"
               onChange={callback}
-              className={inputStyles}
+              className={`${inputStyles} ${
+                errors.birth && errors.birth !== '' ? errorInputStyle : ''
+              }`}
             />
+            {errors.birth && (
+              <p className={errorMessageStyles}>{errors.birth}</p>
+            )}
           </label>
         </>
       )}
@@ -64,8 +79,11 @@ const PersonalDetailsForm = ({
           value={type}
           placeholder="Type of pet"
           onChange={callback}
-          className={inputStyles}
+          className={`${inputStyles} ${
+            errors.type && errors.type !== '' ? errorInputStyle : ''
+          }`}
         />
+        {errors.type && <p className={errorMessageStyles}>{errors.type}</p>}
       </label>
     </div>
   );
