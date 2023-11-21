@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
-import sprite from './sprite.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../Redux/auth/auth-operations';
-import AuthFormSchema from './AuthFormSchema';
 import { getAuthError } from '../../Redux/auth/auth-selectors';
+import AuthFormSchema from '../../schemas/AuthFormSchema';
+import Svg from '../Svg/Svg';
 
 const AuthForm = () => {
   const dispatch = useDispatch();
@@ -91,12 +91,11 @@ const AuthForm = () => {
           />
 
           {formik.errors.name && formik.values.name !== '' && (
-            <svg
-              className="w-6 h-6 right-3 absolute"
+            <Svg
+              id="cross"
+              className="right-3 absolute cursor-pointer"
               onClick={() => clearField('name')}
-            >
-              <use xlinkHref={`${sprite}#cross`} />
-            </svg>
+            />
           )}
         </div>
 
@@ -128,12 +127,11 @@ const AuthForm = () => {
             }}
           />
           {formik.errors.email && formik.values.email !== '' && (
-            <svg
-              className="w-6 h-6 right-3 absolute"
+            <Svg
+              id="cross"
+              className="right-3 absolute cursor-pointer"
               onClick={() => clearField('email')}
-            >
-              <use xlinkHref={`${sprite}#cross`} />
-            </svg>
+            />
           )}
         </div>
 
@@ -171,16 +169,11 @@ const AuthForm = () => {
               formik.setFieldError('password', '');
             }}
           />
-          <svg
-            className="w-6 h-6 right-3 absolute"
+          <Svg
+            className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('password')}
-          >
-            <use
-              xlinkHref={
-                passwordVisible ? `${sprite}#eye-open` : `${sprite}#eye-closed`
-              }
-            />
-          </svg>
+            id={`${passwordVisible ? `eye-open` : `eye-closed`}`}
+          />
         </div>
 
         {formik.errors.password && (
@@ -211,18 +204,11 @@ const AuthForm = () => {
               formik.setFieldError('confirmPassword', '');
             }}
           />
-          <svg
-            className="w-6 h-6 right-3 absolute"
+          <Svg
+            className="absolute right-3 cursor-pointer"
             onClick={() => togglePasswordVisibility('confirmPassword')}
-          >
-            <use
-              xlinkHref={
-                confirmPasswordVisible
-                  ? `${sprite}#eye-open`
-                  : `${sprite}#eye-closed`
-              }
-            />
-          </svg>
+            id={`${confirmPasswordVisible ? `eye-open` : `eye-closed`}`}
+          />
         </div>
 
         {formikErrors['confirmPassword'] && (
