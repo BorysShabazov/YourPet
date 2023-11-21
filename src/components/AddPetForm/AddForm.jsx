@@ -7,7 +7,8 @@ import {
   firstValidationSchema,
   secondValidationSchema,
   lastValidationSchema,
-} from './AddPetFormSchemas';
+} from '../../schemas/AddPetFormSchemas';
+import Svg from '../Svg/Svg';
 
 const AddForm = () => {
   const [step, setStep] = useState(1);
@@ -15,10 +16,10 @@ const AddForm = () => {
   const formik = useFormik({
     initialValues: {
       category: 'own',
-      title: '',
-      name: '',
-      birth: '',
-      type: '',
+      title: 'ф',
+      name: 'фв',
+      birth: '12-12-1212',
+      type: 'фв',
       sex: '',
       petAvatarURL: null,
       price: '',
@@ -124,16 +125,18 @@ const AddForm = () => {
       <div className="flex flex-col px-[4px] w-[100%] gap-[4px]">
         <button
           type="button"
-          className="px-[16px] py-[8px] rounded-[40px] justify-center items-center w-[100%] text-sm font-medium font-manrope tracking-wide bg-blue text-background"
+          className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide bg-blue text-background"
           onClick={formik.handleSubmit}
         >
-          Next
+          <p>Next</p>
+          <Svg id="icon-pawprint" className="w-fit" fill="white" />
         </button>
         <button
           type="button"
-          className="px-[16px] py-[8px] rounded-[40px] justify-center items-center w-[100%]  text-sm font-medium font-manrope tracking-wide text-blue"
+          className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%]  text-sm font-medium font-manrope tracking-wide text-blue"
           onClick={goBack}
         >
+          <Svg id="icon-arrow-left" className="w-fit" stroke="#54ADFF" />
           Back
         </button>
       </div>

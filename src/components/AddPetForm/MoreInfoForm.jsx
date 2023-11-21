@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Svg from '../Svg/Svg';
 
 const baseButtonStyles =
   'flex flex-row align-center  px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm font-medium font-manrope tracking-wide';
@@ -44,7 +45,14 @@ const MoreInfoForm = ({
               onChange={callback}
               className="w-0 h-0 invisible"
             />
-            <div className="mr-[12px] w-[24px] h-[24px] bg-red"></div>
+            <Svg
+              id="icon-female"
+              className="flex items-center w-fit"
+              fill="transparent"
+              stroke={
+                sex !== '' ? (sex === 'female' ? '#FFF' : '#888888') : '#F43F5E'
+              }
+            />
             Female
           </label>
           <label
@@ -60,7 +68,14 @@ const MoreInfoForm = ({
               onChange={callback}
               className="w-0 h-0 invisible"
             />
-            <div className="mr-[12px] w-[24px] h-[24px] bg-grey"></div>
+            <Svg
+              id="icon-male"
+              className="flex items-center w-fit"
+              fill="transparent"
+              stroke={
+                sex !== '' ? (sex === 'male' ? '#FFF' : '#888888') : '#54ADFF'
+              }
+            />
             Male
           </label>
         </div>
@@ -83,10 +98,15 @@ const MoreInfoForm = ({
           )}
 
           <div
-            className={`w-[112px] h-[112px] bg-lightBlue ${
+            className={`relative w-[112px] h-[112px] bg-lightBlue ${
               hasPetImage ? `bg-[url('${petImagePath}')]` : null
             } bg-cover bg rounded-[20px]`}
           >
+            <Svg
+              id="icon-plus"
+              className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"
+              stroke="#54ADFF"
+            />
             <input
               id="petAvatarURL"
               name="petAvatarURL"
@@ -100,11 +120,6 @@ const MoreInfoForm = ({
               className="w-0 h-0 invisible"
             />
           </div>
-          {errors.petAvatarURL && (
-            <p className="absolute -bottom-[18px] break-keep text-red text-xs font-normal">
-              {errors.petAvatarURL}
-            </p>
-          )}
         </label>
         {hasPetImage && (
           <label htmlFor="petAvatarURL" className="flex flex-row items-center">
@@ -113,6 +128,11 @@ const MoreInfoForm = ({
               Edit photo
             </p>
           </label>
+        )}
+        {errors.petAvatarURL && (
+          <p className="absolute -bottom-[18px] break-keep text-red text-xs font-normal">
+            {errors.petAvatarURL}
+          </p>
         )}
       </div>
       {category !== 'own' && (
