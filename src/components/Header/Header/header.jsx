@@ -4,7 +4,7 @@ import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
 import { ReactComponent as BurgerMenu } from '../../../images/svg/menu-hamburger.svg';
 
 import ButtonBurger from '../ButtonBurger/buttonBurger';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MobileMenu from '../MobileMenu/mobileMenu';
 import Nav from '../Nav/nav';
 import { Container } from '../../../ui/index';
