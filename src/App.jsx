@@ -1,6 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import Components from './components';
+
+import PetCardList from './components/PetCard/PetCardList';
 import RegisterForm from './components/AuthForm/AuthForm';
+
 import NoticesPage from './pages/NoticesPage/NoticesPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import NewsPage from './pages/NewsPage/NewsPage';
