@@ -33,8 +33,8 @@ export default function Header() {
   return (
     <header className="pt-[20px] md:pt-[24px] xl:pt-[20px] ">
       <Container>
-        <div className="flex items-centr justify-between">
-          <NavLink to="/" state={{ from: location }} className="md:hidden">
+        <div className="flex items-center justify-between">
+          <NavLink to="/" state={{ from: location }} className="">
             <Logo className="w-[116px] md:w-[162px]" />
           </NavLink>
 
@@ -43,8 +43,18 @@ export default function Header() {
           <div className="flex gap-[8px] md:gap-[38px] xl:gap=[24px]">
             {isLogin ? (
               <div className="hoidden md:flex gap-6 items-center">
-                <BtnAuth path="/" onClick={onLogout} style="hidden xl:flex">
-                  <span>Logout</span> <Svg size="24px" id="icon-logout" />
+                <BtnAuth
+                  path="/"
+                  onClick={onLogout}
+                  style="hidden xl:flex bg-blue border-blue text-white"
+                >
+                  <span>Logout</span>{' '}
+                  <Svg
+                    size="24px"
+                    id="icon-logout"
+                    stroke="white"
+                    fill="#54ADFF"
+                  />
                 </BtnAuth>
                 <NavLink to="/user" className="md:flex gap-[12px] text-yellow">
                   <UserImg />
@@ -52,7 +62,10 @@ export default function Header() {
                 </NavLink>
               </div>
             ) : (
-              <AuthNav onClick={onToogleIsLogin} style="hidden md:flex " />
+              <AuthNav
+                onClick={onToogleIsLogin}
+                style="hidden md:flex  gap-[20px]"
+              />
             )}
             <ButtonBurger onClick={onToogleMobileMenu}>
               <BurgerMenu className="stroke-current text-yellow" />

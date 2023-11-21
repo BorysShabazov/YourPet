@@ -11,6 +11,7 @@ import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
 import css from './mobileMenu.module.css';
 import AuthNav from '../AuthNav/AuthNav';
 import BtnAuth from '../BtnAuth/BtnAuth';
+import Svg from '../../Svg/Svg';
 
 export default function MobileMenu({
   isLogin,
@@ -34,7 +35,29 @@ export default function MobileMenu({
             />
           </NavLink>
 
-          <div>
+          <div className="flex gap-[24px] ">
+            {isLogin ? (
+              <BtnAuth
+                path="/"
+                onClick={onLogout}
+                style="hidden md:flex bg-blue border-blue text-white"
+              >
+                <span>Logout</span>
+                <Svg
+                  size="24px"
+                  id="icon-logout"
+                  stroke="white"
+                  fill="#54ADFF"
+                />
+              </BtnAuth>
+            ) : (
+              <AuthNav
+                isLogin={onToogleIsLogin}
+                onClick={onToogleMobileMenu}
+                style="hidden md:flex   text-centr gap-[12px]"
+              />
+            )}
+
             <ButtonBurger onClick={onToogleMobileMenu}>
               <Close />
             </ButtonBurger>
@@ -42,19 +65,18 @@ export default function MobileMenu({
         </div>
 
         {!isLogin ? (
-          <AuthNav isLogin={onToogleIsLogin} onClick={onToogleMobileMenu} />
+          <AuthNav
+            isLogin={onToogleIsLogin}
+            onClick={onToogleMobileMenu}
+            style="flex-col w-full text-centr gap-[12px] md:hidden "
+          />
         ) : (
-          <NavLink to="/user" className="md:flex gap-[12px] text-yellow">
+          <NavLink to="/user" className="flex items-center justify-center gap-[12px] text-yellow md:hidden">
             <UserImg />
-            <span className="hidden md:inline-block">Name</span>
+            <span className="inline-block">Name</span>
           </NavLink>
         )}
         <Nav onClick={onToogleMobileMenu} styleLogo="hidden" />
-        {isLogin ? (
-          <BtnAuth path="/" onClick={onLogout}>
-            Logout
-          </BtnAuth>
-        ) : null}
       </Container>
     </div>
   );
