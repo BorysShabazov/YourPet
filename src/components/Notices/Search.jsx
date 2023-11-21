@@ -29,7 +29,7 @@ export const Search = ({className = ''}) => {
           
           {value &&
             <div onClick={handleClear} className="cursor-pointer ">
-              <Svg id="icon-cross" size="24px" stroke='#FFC107' />
+              <Svg id="icon-cross" size="24px" stroke="#FFC107" />
             </div>}
             
         </div>
