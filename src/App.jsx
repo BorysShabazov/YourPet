@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Components from './components';
 
 import PetCardList from './components/PetCard/PetCardList';
@@ -14,9 +14,12 @@ import RegiserPage from './pages/RegiserPage/RegiserPage';
 import UserPage from './pages/UserPage/UserPage';
 import AddPetPage from './pages/AddPetPage/AddPetPage';
 import PrivateRoute from './components/PrivateRoute/privateRoute';
+import { useSelector } from 'react-redux';
+import { getIsLoggedIn } from './Redux/auth/auth-selectors';
+import PublicRoute from './PublicRoute';
+
 // import PrivateRoute from './components/PrivateRoute/privateRoute';
 // import NoticesCategoriesNav from './components/Notices/NoticesCategoriesNav';
-// import { useSelector } from 'react-redux';
 // import { selectAuth } from './Redux/auth/auth-selectors';
 // const test = import.meta.env.VITE_API_TEST;
 const { SharedLayout } = Components;
@@ -34,10 +37,24 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<MainPage />} />
+          <Route
+            path="register"
+            element={
+              <PublicRoute restricted>
+                <RegiserPage />
+              </PublicRoute>
+            }
+          />
 
-          <Route path="register" element={<RegiserPage />} />
-          <Route path="login" element={<LoginPage />} />
-
+          <Route
+            path="login"
+            index
+            element={
+              <PublicRoute restricted>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
           <Route
             path="user"
             element={
@@ -48,7 +65,6 @@ function App() {
           />
           <Route path="news" element={<NewsPage />} />
           <Route path="notices/:categoryName" element={<NoticesPage />} />
-
           {/* <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
             <Route path="/notices/lost" element={<NoticesCategoriesNav />} />
             <Route path="/notices/found" element={<NoticesCategoriesNav />} />
@@ -62,7 +78,6 @@ function App() {
               element={<NoticesCategoriesNav />}
             />
             <Route path="/notices/own" element={<NoticesCategoriesNav />} /> */}
-
           <Route
             path="add-pet"
             element={
@@ -71,9 +86,7 @@ function App() {
               </PrivateRoute>
             }
           />
-
           <Route path="friends" element={<OurFriendsPage />} />
-
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

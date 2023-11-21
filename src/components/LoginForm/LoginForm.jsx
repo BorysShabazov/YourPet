@@ -1,8 +1,8 @@
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../Redux/auth/auth-operations';
-import { useState } from 'react';
-import { getAuthError } from '../../Redux/auth/auth-selectors';
+import { useEffect, useState } from 'react';
+import { getAuthError, getIsLoggedIn } from '../../Redux/auth/auth-selectors';
 import LoginFormSchema from '../../schemas/LoginFormSchema';
 import Svg from '../Svg/Svg';
 import AuthHeader from '../AuthComponents/AuthHeader';
