@@ -81,9 +81,10 @@ const LoginForm = () => {
             />
             {errors['email'] && values['email'] !== '' && (
               <Svg
-                id="cross"
+                id="icon-cross"
                 className="right-3 absolute cursor-pointer"
-                onClick={() => clearField('email')}
+                onClick={() => clearField('name')}
+                stroke="#F43F5E"
               />
             )}
           </div>
@@ -118,7 +119,9 @@ const LoginForm = () => {
             <Svg
               className="absolute right-3 cursor-pointer"
               onClick={() => togglePasswordVisibility('password')}
-              id={`${passwordVisible ? `eye-open` : `eye-closed`}`}
+              id={`${passwordVisible ? `icon-eye-open` : `icon-eye-closed`}`}
+              fill="transparent"
+              stroke="#54ADFF"
             />
           </div>
 
