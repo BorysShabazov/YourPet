@@ -22,8 +22,6 @@ const NoticesPage = () => {
                      <NoticesCategoriesNav className="mt-[20px] md:mt-[40px]" />
                 <AddPetButton />
                 </div>
-                   
-                
                 </div>):
             (<NotFoundPage/>)
             }

@@ -24,20 +24,3 @@ export const AddPetButton = () => {
     </div>
   );
 };
-
-{
-  /* <div class="w-[129px] h-10 px-5 py-2 bg-blue-400 rounded-[40px] justify-center items-center gap-2 inline-flex">
-  <div class="text-stone-50 text-base font-bold font-['Manrope'] tracking-wide">Add Pet</div>
-  <div class="w-6 h-6 relative"></div>
-</div> */
-}
-
-{
-  /* <div class="w-20 h-20 bg-gradient-to-l from-blue-500 to-blue-300 rounded-full shadow"></div>
-
-<div class="w-20 h-20 relative">
-  <div class="w-20 h-20 left-0 top-0 absolute bg-blue-400 rounded-full shadow"></div>
-  <div class="left-[18px] top-[48px] absolute text-white text-xs font-semibold font-['Manrope']">Add pet</div>
-  <div class="w-6 h-6 left-[28px] top-[20px] absolute"></div>
-</div> */
-}
