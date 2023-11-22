@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../Redux/auth/auth-operations';
 import { getAuthError } from '../../Redux/auth/auth-selectors';
 import AuthFormSchema from '../../schemas/AuthFormSchema';
 import Svg from '../Svg/Svg';
+import AuthHeader from '../AuthComponents/AuthHeader';
+import AuthButton from '../AuthComponents/AuthButton';
+import AuthFooter from '../AuthComponents/AuthFooter';
+import AuthLabel from '../AuthComponents/AuthLabel';
+import AuthWrapper from '../AuthComponents/AuthWrapper';
 
 const AuthForm = () => {
   const dispatch = useDispatch();
-  const error = useSelector(getAuthError);
+  let httpError = useSelector(getAuthError);
 
   const formik = useFormik({
     initialValues: {
@@ -24,13 +28,14 @@ const AuthForm = () => {
     validationSchema: AuthFormSchema,
 
     onSubmit: ({ name, email, password }, { resetForm }) => {
+      httpError = null;
       dispatch(register({ name, email, password }));
       resetForm();
     },
   });
 
-  const formikErrors = formik.errors;
-  const formikValues = formik.values;
+  const errors = formik.errors;
+  const values = formik.values;
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -59,186 +64,168 @@ const AuthForm = () => {
   };
 
   return (
-    <form
-      noValidate
-      autoComplete="off"
-      className="w-[280px] pt-10 pb-10 pl-3 pr-3 bg-white rounded-[20px] shadow"
-      onSubmit={formik.handleSubmit}
-    >
-      <h1 className="text-center text-neutral-900 text-2xl font-medium mb-5">
-        Registration
-      </h1>
+    <AuthWrapper handleSubmit={formik.handleSubmit}>
+      <AuthHeader header="Registration" />
 
-      {/* name */}
-      <div className="h-[70px]">
-        <label htmlFor="name" className="sr-only">
-          Name
-        </label>
-        <div className="flex relative items-center justify-between">
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Name"
-            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
-              formikErrors['name'] && 'border-rose-400'
-            }`}
-            value={formikValues['name']}
-            onChange={formik.handleChange}
-            onFocus={() => {
-              formik.setFieldError('name', '');
-            }}
-          />
+      <div className="flex flex-col gap-9 w-full">
+        {/* name */}
+        <div className="relative">
+          <AuthLabel htmlFor="name" />
 
-          {formik.errors.name && formik.values.name !== '' && (
-            <Svg
-              id="cross"
-              className="right-3 absolute cursor-pointer"
-              onClick={() => clearField('name')}
+          <div className="flex relative items-center justify-between">
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Name"
+              className={`w-full h-12 px-4 py-3 rounded-[40px] border border-blue outline-none ${
+                errors['name'] && 'border-rose-400'
+              }`}
+              value={values['name']}
+              onChange={formik.handleChange}
+              onFocus={() => {
+                formik.setFieldError('name', '');
+              }}
             />
+
+            {errors['name'] && values['name'] !== '' && (
+              <Svg
+                id="icon-cross"
+                className="right-3 absolute cursor-pointer"
+                onClick={() => clearField('name')}
+                stroke="#F43F5E"
+              />
+            )}
+          </div>
+
+          {errors['name'] && (
+            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+              {errors['name']}
+            </p>
           )}
         </div>
 
-        {formik.errors.name && (
-          <div className="pl-4 text-rose-500 text-xs font-normal">
-            {formik.errors.name}
-          </div>
-        )}
-      </div>
-
-      {/* email */}
-      <div className="h-[70px]">
-        <label htmlFor="email" className="sr-only">
-          Email
-        </label>
-        <div className="flex relative items-center justify-between">
-          <input
-            id="email"
-            name="email"
-            type="email"
-            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
-              formikErrors['email'] && 'border-rose-400'
-            }`}
-            placeholder="Email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onFocus={() => {
-              formik.setFieldError('email', '');
-            }}
-          />
-          {formik.errors.email && formik.values.email !== '' && (
-            <Svg
-              id="cross"
-              className="right-3 absolute cursor-pointer"
-              onClick={() => clearField('email')}
+        {/* email */}
+        <div className="relative">
+          <AuthLabel htmlFor="email" />
+          <div className="flex relative items-center justify-between">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              className={`w-full h-12 px-4 py-3 rounded-[40px] border border-blue outline-none ${
+                errors['email'] && 'border-rose-400'
+              }`}
+              placeholder="Email"
+              value={values['email']}
+              onChange={formik.handleChange}
+              onFocus={() => {
+                formik.setFieldError('email', '');
+              }}
             />
+
+            {errors['email'] && values['email'] !== '' && (
+              <Svg
+                id="icon-cross"
+                className="right-3 absolute cursor-pointer"
+                onClick={() => clearField('email')}
+                stroke="#F43F5E"
+              />
+            )}
+          </div>
+
+          {errors['email'] && (
+            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+              {errors['email']}
+            </p>
+          )}
+
+          {httpError === 409 && (
+            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+              E-mail address already in use
+            </p>
           )}
         </div>
 
-        {formik.errors.email && (
-          <div className="pl-4 text-rose-500 text-xs font-normal">
-            {formik.errors.email}
+        {/* password */}
+        <div className="relative">
+          <AuthLabel htmlFor="password" />
+
+          <div className="flex relative items-center justify-between">
+            <input
+              id="password"
+              name="password"
+              type={passwordVisible ? 'text' : 'password'}
+              placeholder="Password"
+              className={`w-full h-12 px-4 py-3 rounded-[40px] border border-blue outline-none ${
+                errors['password'] && 'border-rose-400'
+              }`}
+              value={values['password']}
+              onChange={formik.handleChange}
+              onFocus={() => {
+                formik.setFieldError('password', '');
+              }}
+            />
+            <Svg
+              className="absolute right-3 cursor-pointer"
+              onClick={() => togglePasswordVisibility('password')}
+              id={`${passwordVisible ? `icon-eye-open` : `icon-eye-closed`}`}
+              fill="transparent"
+              stroke="#54ADFF"
+            />
           </div>
-        )}
 
-        {error === 409 && (
-          <div className="pl-4 text-rose-500 text-xs font-normal">
-            E-mail address already in use
-          </div>
-        )}
-      </div>
-
-      {/* password */}
-      <div className="h-[70px]">
-        <label htmlFor="password" className="sr-only">
-          Password
-        </label>
-
-        <div className="flex relative items-center justify-between">
-          <input
-            id="password"
-            name="password"
-            type={passwordVisible ? 'text' : 'password'}
-            placeholder="Password"
-            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
-              formikErrors['password'] && 'border-rose-400'
-            }`}
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onFocus={() => {
-              formik.setFieldError('password', '');
-            }}
-          />
-          <Svg
-            className="absolute right-3 cursor-pointer"
-            onClick={() => togglePasswordVisibility('password')}
-            id={`${passwordVisible ? `eye-open` : `eye-closed`}`}
-          />
+          {errors['password'] && (
+            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+              {errors['password']}
+            </p>
+          )}
         </div>
 
-        {formik.errors.password && (
-          <div className="pl-4 text-rose-500 text-xs font-normal">
-            {formik.errors.password}
+        {/* confirmPassword */}
+        <div className="relative">
+          <AuthLabel htmlFor="confirmPassword" />
+
+          <div className="flex relative items-center justify-between">
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type={confirmPasswordVisible ? 'text' : 'password'}
+              placeholder="Confirm password"
+              className={`w-full h-12 px-4 py-3 rounded-[40px] border border-blue outline-none ${
+                errors['confirmPassword'] && 'border-rose-400'
+              }`}
+              value={values['confirmPassword']}
+              onChange={formik.handleChange}
+              onFocus={() => {
+                formik.setFieldError('confirmPassword', '');
+              }}
+            />
+            <Svg
+              className="absolute right-3 cursor-pointer"
+              onClick={() => togglePasswordVisibility('confirmPassword')}
+              id={`${
+                confirmPasswordVisible ? `icon-eye-open` : `icon-eye-closed`
+              }`}
+              fill="transparent"
+              stroke="#54ADFF"
+            />
           </div>
-        )}
-      </div>
 
-      {/* confirmPassword */}
-      <div className="h-[98px]">
-        <label htmlFor="confirmPassword" className="sr-only">
-          Repeat Password
-        </label>
-
-        <div className="flex relative items-center justify-between">
-          <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type={confirmPasswordVisible ? 'text' : 'password'}
-            placeholder="Confirm password"
-            className={`w-64 h-12 px-4 py-3 rounded-[40px] border border-blue-400 outline-none ${
-              formikErrors['confirmPassword'] && 'border-rose-400'
-            }`}
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
-            onFocus={() => {
-              formik.setFieldError('confirmPassword', '');
-            }}
-          />
-          <Svg
-            className="absolute right-3 cursor-pointer"
-            onClick={() => togglePasswordVisibility('confirmPassword')}
-            id={`${confirmPasswordVisible ? `eye-open` : `eye-closed`}`}
-          />
+          {errors['confirmPassword'] && (
+            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+              {errors['confirmPassword']}
+            </p>
+          )}
         </div>
-
-        {formikErrors['confirmPassword'] && (
-          <div className="pl-4 text-rose-500 text-xs font-normal">
-            {formikErrors['confirmPassword']}
-          </div>
-        )}
       </div>
 
-      <button
-        type="submit"
-        className="w-64 h-12 mb-2 bg-blue rounded-[40px] justify-center items-center gap-2.5 inline-flex"
-      >
-        <p className="text-white text-xl tracking-wide font-semibold">
-          Registration
-        </p>
-      </button>
-
-      <div className="text-center">
-        <span className="text-zinc-500 text-xs font-normal tracking-wide">
-          Already have an account?&nbsp;
-        </span>
-        <NavLink
-          className="text-blue-400 text-xs font-normal underline tracking-wide"
-          to={'/login'}
-        >
-          Login
-        </NavLink>
+      <div className="w-full flex justify-center mt-[40px] mb-[20px] ">
+        <AuthButton name="Registration" />
       </div>
-    </form>
+
+      <AuthFooter pathName="Login" />
+    </AuthWrapper>
   );
 };
 

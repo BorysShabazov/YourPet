@@ -50,7 +50,7 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(currentUser.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.user = action.payload.data;
       state.isLoggedIn = true;
       state.isRefresh = false;
     });
@@ -74,7 +74,11 @@ export const authSlice = createSlice({
       state.isRefresh = false;
     });
     builder.addCase(logout.rejected, (state, action) => {
-      state = { ...initialState };
+      state.user = null;
+      state.error = null;
+      state.token = null;
+      state.isLoggedIn = false;
+      state.isRefresh = false;
     });
   },
 });
