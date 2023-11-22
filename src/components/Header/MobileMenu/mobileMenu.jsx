@@ -32,6 +32,7 @@ export default function MobileMenu({ onToogleMobileMenu }) {
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
   const handleOpenLeavingModal = () => {
+    onToogleMobileMenu(false);
     setLeavingModalOpen(true);
   };
   const handleCloseLeavingModal = () => {
