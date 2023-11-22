@@ -28,7 +28,6 @@ export default function Header() {
 
   const { token } = useSelector(selectAuth);
   const { name } = useSelector((state) => state.auth.user || '');
-  console.log(name);
 
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);

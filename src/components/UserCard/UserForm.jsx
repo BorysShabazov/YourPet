@@ -40,7 +40,7 @@ export const UserForm = ({ user }) => {
 
     onSubmit: (
       { avatar, name, email, birthday, phone, city },
-      { resetForm }
+      { resetForm },
     ) => {
       setChangeAvatar(false);
 
@@ -57,7 +57,7 @@ export const UserForm = ({ user }) => {
         updateUser.avatar = userImagePath;
       }
 
-      const formData = createUserFormData(updateUser)
+      const formData = createUserFormData(updateUser);
 
       fetch('https://your-pet-server.onrender.com/api/users/', {
         method: 'PATCH',
@@ -74,7 +74,7 @@ export const UserForm = ({ user }) => {
   const formikErrors = formik.errors;
   const formikValues = formik.values;
 
-  const validate = values => {
+  const validate = (values) => {
     const errors = {};
 
     if (!values.user.name) {
@@ -107,7 +107,7 @@ export const UserForm = ({ user }) => {
     return errors;
   };
 
-  const createUserFormData = data => {
+  const createUserFormData = (data) => {
     const formData = new FormData();
 
     formData.append('avatar', data.avatar);
@@ -199,7 +199,7 @@ export const UserForm = ({ user }) => {
             ) : (
               <div className="flex justify-center mb-[14px] gap-2">
                 <div
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     setChangeAvatar(false);
                     setConfirmChangeAvatar(true);
@@ -214,7 +214,7 @@ export const UserForm = ({ user }) => {
                 </div>
                 Confirm
                 <div
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     setChangeAvatar(false);
                     setPreviewAvatar(null);
@@ -238,7 +238,7 @@ export const UserForm = ({ user }) => {
               id="avatar"
               name="avatar"
               accept="image/*"
-              onChange={e => {
+              onChange={(e) => {
                 const file = e.target.files[0];
                 const localPath = URL.createObjectURL(file);
                 formik.setFieldValue('user.avatar', file);

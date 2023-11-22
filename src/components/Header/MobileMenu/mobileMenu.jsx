@@ -24,7 +24,6 @@ export default function MobileMenu({ onToogleMobileMenu }) {
     avatarUrl: '',
   };
   const { name } = useSelector((state) => state.auth.user || '');
-  console.log(name);
 
   const { token } = useSelector(selectAuth);
   // const token = false;
@@ -32,7 +31,7 @@ export default function MobileMenu({ onToogleMobileMenu }) {
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
   const handleOpenLeavingModal = () => {
-    onToogleMobileMenu(false);
+    // onToogleMobileMenu(false);
     setLeavingModalOpen(true);
   };
   const handleCloseLeavingModal = () => {
