@@ -7,45 +7,42 @@ import LearnMore from '../Modals/LearnMore/LearnMore';
 import AttentionModal from '../Modals/Attention/Attention';
 import DeleteModal from '../Modals/DeleteModal/DeleteModal';
 
-
 export default function SharedLayout() {
+  const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
+  const [isAttentionModalOpen, setAttentionModalOpen] = useState(false);
 
-
-const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
-const [isAttentionModalOpen, setAttentionModalOpen] = useState(false);
-
-
-const handleOpenAttentionModal = () => {
+  const handleOpenAttentionModal = () => {
     setAttentionModalOpen(true);
   };
   const handleCloseAttentionModal = () => {
     setAttentionModalOpen(false);
   };
-const handleOpenLearnMoreModal = () => {
+  const handleOpenLearnMoreModal = () => {
     setLearnMoreModalOpen(true);
-
   };
   const handleCloseLearnMoreModal = () => {
     setLearnMoreModalOpen(false);
   };
 
-
-
   return (
     <>
       <Header />
       <main>
-      <button type="button" onClick={handleOpenLearnMoreModal}>Open Modal</button>
- <BasicModal 
-isOpen={isLearnMoreModalOpen}
-        onCloseModal={handleCloseLearnMoreModal}>
-             <LearnMore  onOpenAtentionModal={handleOpenAttentionModal} onCloseModal={handleCloseLearnMoreModal} />
-        </BasicModal> 
         <BasicModal
-        isOpen={isAttentionModalOpen}
-                onCloseModal={handleCloseAttentionModal}>
-               <AttentionModal onCloseModal={handleCloseAttentionModal}/>
-              </BasicModal>
+          isOpen={isLearnMoreModalOpen}
+          onCloseModal={handleCloseLearnMoreModal}
+        >
+          <LearnMore
+            onOpenAtentionModal={handleOpenAttentionModal}
+            onCloseModal={handleCloseLearnMoreModal}
+          />
+        </BasicModal>
+        <BasicModal
+          isOpen={isAttentionModalOpen}
+          onCloseModal={handleCloseAttentionModal}
+        >
+          <AttentionModal onCloseModal={handleCloseAttentionModal} />
+        </BasicModal>
 
         <Suspense fallback={<h2>Loading...</h2>}>{<Outlet />}</Suspense>
       </main>

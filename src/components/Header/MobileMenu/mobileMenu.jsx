@@ -23,6 +23,8 @@ export default function MobileMenu({ onToogleMobileMenu }) {
     name: '',
     avatarUrl: '',
   };
+  const { name } = useSelector((state) => state.auth.user || '');
+  console.log(name);
 
   const { token } = useSelector(selectAuth);
   // const token = false;
@@ -96,7 +98,7 @@ export default function MobileMenu({ onToogleMobileMenu }) {
                   className="block w-[28px]h-[28px] rounded-full object-cover"
                 />
               )}
-              <span>{user.name ? user.name : 'Name'}</span>
+              <span>{name ? name : 'Name'}</span>
             </NavLink>
           )}
           <Nav onClick={onToogleMobileMenu} styleLogo="hidden" />

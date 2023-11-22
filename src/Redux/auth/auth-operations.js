@@ -26,6 +26,7 @@ export const login = createAsyncThunk(
       const { data } = await axios.post(`${BASE_URL}/login`, credentials);
       const { token } = data;
       setToken(token);
+      //Додадуться дані то повертати не лише token але й інфу про юзера
       return token;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.status);
