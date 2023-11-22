@@ -2,9 +2,8 @@ import MyPetsCard from '../../components/MyPetsCard/MyPetsCard';
 import UserCard from '../../components/UserCard/UserCard';
 
 const UserPage = () => {
-
   return (
-    <section>
+    <section className="mt-11 md:mt-14 xl:mt-[62px]">
       <div className="relative container mx-auto xl:flex gap-[32px]">
         <UserCard />
         <MyPetsCard />
@@ -17,7 +16,6 @@ const UserPage = () => {
       </div>
     </section>
   );
-
 };
 
 export default UserPage;
