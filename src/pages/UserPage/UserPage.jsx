@@ -66,7 +66,7 @@ const UserPage = () => {
         My pets:
       </h2>
 
-      <Link to={'/add-pet'} state={location} className="fixed right-[20px] bottom-[20px] z-10 md:absolute md:top-0 md:right-0 md:bottom-full" onClick={()=>{console.log(1)}}>
+      <Link to={'/add-pet'} state={location} className="fixed right-[20px] bottom-[20px] z-1 md:absolute md:top-0 md:right-0 md:bottom-full" onClick={()=>{console.log(1)}}>
         <AddPetButton/>
       </Link>
 
