@@ -27,11 +27,17 @@ export const Search = ({ className = '' }) => {
         </div>
 
         {value && (
-          <div onClick={handleClear} className="cursor-pointer">
-            <Svg id="icon-cross" size="24px" stroke="#FFC107" fill="#54ADFF" />
+          <div onClick={handleClear} className="cursor-pointer ">
+            <Svg id="icon-cross" size="24px" stroke="#FFC107" />
           </div>
         )}
       </div>
+
+      {value && (
+        <div onClick={handleClear} className="cursor-pointer">
+          <Svg id="icon-cross" size="24px" stroke="#FFC107" fill="#54ADFF" />
+        </div>
+      )}
     </div>
   );
 };

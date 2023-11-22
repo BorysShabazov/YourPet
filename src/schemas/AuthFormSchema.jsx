@@ -21,7 +21,7 @@ const AuthFormSchema = Yup.object().shape({
 
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Required'),
+    .required('Confirm Password is Required'),
 });
 
 export default AuthFormSchema;
