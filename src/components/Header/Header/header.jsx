@@ -27,6 +27,8 @@ export default function Header() {
   };
 
   const { token } = useSelector(selectAuth);
+  const { name } = useSelector((state) => state.auth.user || '');
+  console.log(name);
 
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
@@ -90,7 +92,7 @@ export default function Header() {
                       />
                     )}
                     <span className="hidden md:inline-block">
-                      {user.name ? user.name : 'Name'}
+                      {name ? name : 'Name'}
                     </span>
                   </NavLink>
                 </div>
