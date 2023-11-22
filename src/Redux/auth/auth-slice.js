@@ -50,7 +50,7 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(currentUser.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.user = action.payload.data;
       state.isLoggedIn = true;
       state.isRefresh = false;
     });

@@ -168,9 +168,7 @@ const AuthForm = () => {
             />
             <Svg
               className="absolute right-3 cursor-pointer"
-              onClick={() =>
-                togglePasswordVisibility('passwordVisiblepassword')
-              }
+              onClick={() => togglePasswordVisibility('password')}
               id={`${passwordVisible ? `icon-eye-open` : `icon-eye-closed`}`}
               fill="transparent"
               stroke="#54ADFF"

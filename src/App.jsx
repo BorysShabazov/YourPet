@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Components from './components';
 
 import PetCardList from './components/PetCard/PetCardList';
@@ -13,8 +13,12 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegiserPage from './pages/RegiserPage/RegiserPage';
 import UserPage from './pages/UserPage/UserPage';
 import AddPetPage from './pages/AddPetPage/AddPetPage';
-import PrivateRoute from './components/PrivateRoute/privateRoute';
-import PublicRoute from './PublicRoute';
+import PublicRoute from './components/Route/PublicRoute';
+import PrivateRoute from './components/Route/PrivateRoute';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRefresh } from './Redux/auth/auth-selectors';
+import { useEffect } from 'react';
+import { currentUser } from './Redux/auth/auth-operations';
 
 // import PrivateRoute from './components/PrivateRoute/privateRoute';
 // import NoticesCategoriesNav from './components/Notices/NoticesCategoriesNav';
@@ -27,43 +31,49 @@ const { SharedLayout } = Components;
 // const onLogin = () => navigate('/login');
 
 function App() {
-  // const { token } = useSelector(selectAuth);
-  // const navigate = useNavigate();
-  // const onLogin = () => navigate('/login');
+  const dispatch = useDispatch();
+  const isRefresh = useSelector(getRefresh);
+
+  // handle refresh page
+  useEffect(() => {
+    dispatch(currentUser());
+  }, [dispatch]);
+
   return (
     <>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<MainPage />} />
-          <Route
-            path="register"
-            element={
-              <PublicRoute restricted>
-                <RegiserPage />
-              </PublicRoute>
-            }
-          />
+      {!isRefresh && (
+        <Routes>
+          <Route path="/" element={<SharedLayout />}>
+            <Route index element={<MainPage />} />
+            <Route
+              path="register"
+              element={
+                <PublicRoute restricted>
+                  <RegiserPage />
+                </PublicRoute>
+              }
+            />
 
-          <Route
-            path="login"
-            index
-            element={
-              <PublicRoute restricted>
-                <LoginPage />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="user"
-            element={
-              <PrivateRoute>
-                <UserPage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="news" element={<NewsPage />} />
-          <Route path="notices/:categoryName" element={<NoticesPage />} />
-          {/* <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
+            <Route
+              path="login"
+              index
+              element={
+                <PublicRoute restricted>
+                  <LoginPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="user"
+              element={
+                <PrivateRoute>
+                  <UserPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="news" element={<NewsPage />} />
+            <Route path="notices/:categoryName" element={<NoticesPage />} />
+            {/* <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
             <Route path="/notices/lost" element={<NoticesCategoriesNav />} />
             <Route path="/notices/found" element={<NoticesCategoriesNav />} />
 
@@ -76,18 +86,19 @@ function App() {
               element={<NoticesCategoriesNav />}
             />
             <Route path="/notices/own" element={<NoticesCategoriesNav />} /> */}
-          <Route
-            path="add-pet"
-            element={
-              <PrivateRoute>
-                <AddPetPage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="friends" element={<OurFriendsPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
+            <Route
+              path="add-pet"
+              element={
+                <PrivateRoute>
+                  <AddPetPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="friends" element={<OurFriendsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      )}
     </>
   );
 }

@@ -83,7 +83,7 @@ const LoginForm = () => {
               <Svg
                 id="icon-cross"
                 className="right-3 absolute cursor-pointer"
-                onClick={() => clearField('name')}
+                onClick={() => clearField('email')}
                 stroke="#F43F5E"
               />
             )}
