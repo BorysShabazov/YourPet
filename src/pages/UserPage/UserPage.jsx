@@ -3,7 +3,7 @@ import UserCard from '../../components/UserCard/UserCard';
 
 const UserPage = () => {
   return (
-    <section className="mt-11 md:mt-14 xl:mt-[62px]">
+    <section>
       <div className="relative container mx-auto xl:flex gap-[32px]">
         <UserCard />
         <MyPetsCard />
