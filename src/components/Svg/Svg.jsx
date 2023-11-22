@@ -1,8 +1,8 @@
 import sprite from '../../images/sprite.svg';
 
-const Svg = ({ id, size, fill, stroke }) => {
+const Svg = ({ id, size, fill, stroke, className = '', onClick }) => {
   return (
-    <div>
+    <div onClick={onClick} className={className}>
       <svg width={size} height={size} fill={fill} stroke={stroke}>
         <use href={`${sprite}#${id}`} />
       </svg>
@@ -12,7 +12,6 @@ const Svg = ({ id, size, fill, stroke }) => {
 
 Svg.defaultProps = {
   size: 24,
-  color: 'black',
 };
 
 export default Svg;

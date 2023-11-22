@@ -8,9 +8,9 @@ import Modals from './Modals';
 import MyPetsCard from './MyPetsCard/MyPetsCard';
 import NewsCard from './NewsCard/NewsCard';
 import PetCard from './PetCard/PetCard';
-import RegisterForm from './RegisterForm/RegisterForm';
+import RegisterForm from './AuthForm/AuthForm';
 import SharedLayout from './SharedLayout/SharedLayout';
-import NoticesCategoriesNav from './Notices/NoticesCategoriesNav'
+import NoticesCategoriesNav from './Notices/NoticesCategoriesNav';
 // import UserCard from './UserCard/UserCard';
 import Svg from './Svg/Svg';
 
