@@ -8,7 +8,7 @@ const AuthFormSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short')
     .max(16, 'Too Long, max 16')
-    .matches(nameRules, 'First Name must contain only alphabetical characters')
+    .matches(nameRules, 'Name must contain only characters')
     .required('Name is Required'),
 
   email: Yup.string()
