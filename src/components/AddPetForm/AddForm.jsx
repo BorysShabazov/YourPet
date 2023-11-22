@@ -127,10 +127,10 @@ const AddForm = () => {
         />
       )}
 
-      <div className="flex flex-col px-[4px] w-[100%] gap-[4px]">
+      <div className="flex flex-col justify-center px-[4px] w-[100%] gap-[4px] md:flex-row-reverse md">
         <button
           type="button"
-          className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide bg-blue text-background"
+          className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide bg-blue text-background md:px-[28px] md:w-[248px] border border-blue"
           onClick={formik.handleSubmit}
         >
           {step === 3 ? 'Done' : 'Next'}
@@ -138,7 +138,7 @@ const AddForm = () => {
         </button>
         <button
           type="button"
-          className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%]  text-sm font-medium font-manrope tracking-wide text-blue"
+          className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%]  text-sm font-medium font-manrope tracking-wide text-blue hover:border hover:border-blue md:w-[116px]"
           onClick={goBack}
         >
           <Svg id="icon-arrow-left" className="w-fit" stroke="#54ADFF" />
