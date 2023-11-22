@@ -35,6 +35,7 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
+      // state.user = action.payload.data.user;
       state.isLoggedIn = true;
       state.token = action.payload;
     });
