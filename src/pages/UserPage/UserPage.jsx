@@ -40,7 +40,6 @@ const UserPage = () => {
   //   dispatch(fetchPets());
   // }, [dispatch]);
 
-
   return (
     <section className='py-[20px] md:py-[60px] '>   
       <div className="relative container mx-auto xl:flex gap-[32px]">
@@ -85,7 +84,6 @@ const UserPage = () => {
       </div>
     </section>
   );
-
 };
 
 export default UserPage;
