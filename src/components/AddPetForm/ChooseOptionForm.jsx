@@ -5,7 +5,7 @@ const hoveredButtonStyles = 'bg-blue text-background';
 
 const ChooseOptionSection = ({ callback, category, errors }) => {
   return (
-    <div className="relative flex flex-col mb-[45px] gap-[12px]">
+    <div className="relative flex flex-col mb-[45px] gap-[12px] md:mb-[87px]">
       <label
         className={`${baseButtonStyles} ${
           category === 'own' ? hoveredButtonStyles : regularButtonStyles

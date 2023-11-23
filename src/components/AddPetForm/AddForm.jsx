@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import ChooseOptionSection from './ChooseOptionForm';
 import PersonalDetailsForm from './PersonalDetailsForm';
@@ -7,18 +7,23 @@ import {
   firstValidationSchema,
   secondValidationSchema,
   lastValidationSchema,
-} from './AddPetFormSchemas';
+} from '../../schemas/AddPetFormSchemas';
+import Svg from '../Svg/Svg';
+import { useLocation, useNavigate } from 'react-router';
 
 const AddForm = () => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
+  const previousLocation = useLocation();
+  const backLinkLocationRef = useRef(previousLocation.state ?? '/');
 
   const formik = useFormik({
     initialValues: {
       category: 'own',
-      title: '',
-      name: '',
-      birth: '',
-      type: '',
+      title: 'ф',
+      name: 'фв',
+      birth: '12-12-1212',
+      type: 'фв',
       sex: '',
       petAvatarURL: null,
       price: '',
@@ -42,6 +47,7 @@ const AddForm = () => {
           .then((res) => res.json())
           .then(console.log);
 
+        navigate(backLinkLocationRef.current);
         return;
       }
 
@@ -52,7 +58,7 @@ const AddForm = () => {
   const goBack = () => {
     step > 1
       ? setStep((prevStep) => prevStep - 1)
-      : console.log('This is the end!');
+      : navigate(backLinkLocationRef.current);
   };
 
   const createFormData = (data) => {
@@ -121,20 +127,22 @@ const AddForm = () => {
         />
       )}
 
-      <div className="flex flex-col px-[4px] w-[100%] gap-[4px]">
+      <div className="flex flex-col justify-center px-[4px] w-[100%] gap-[4px] md:flex-row-reverse md">
         <button
           type="button"
-          className="px-[16px] py-[8px] rounded-[40px] justify-center items-center w-[100%] text-sm font-medium font-manrope tracking-wide bg-blue text-background"
+          className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide bg-blue text-background md:px-[28px] md:w-[248px] border border-blue"
           onClick={formik.handleSubmit}
         >
-          Next
+          {step === 3 ? 'Done' : 'Next'}
+          <Svg id="icon-pawprint" className="w-fit" fill="white" />
         </button>
         <button
           type="button"
-          className="px-[16px] py-[8px] rounded-[40px] justify-center items-center w-[100%]  text-sm font-medium font-manrope tracking-wide text-blue"
+          className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%]  text-sm font-medium font-manrope tracking-wide text-blue hover:border hover:border-blue md:w-[116px]"
           onClick={goBack}
         >
-          Back
+          <Svg id="icon-arrow-left" className="w-fit" stroke="#54ADFF" />
+          {step === 1 ? 'Сancel' : 'Back'}
         </button>
       </div>
     </form>
