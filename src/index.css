@@ -4,7 +4,7 @@
 
 @import './assets/fonts/custom-fonts.css';
 
-@layer {
+@layer components{
   .blue-gradient:hover {
     background: linear-gradient(290deg, #419ef1 0%, #9bd0ff 107.89%);
   }

@@ -10,24 +10,30 @@ import AuthButton from '../AuthComponents/AuthButton';
 import AuthFooter from '../AuthComponents/AuthFooter';
 import AuthLabel from '../AuthComponents/AuthLabel';
 import AuthWrapper from '../AuthComponents/AuthWrapper';
+import { authSlice } from '../../Redux/auth/auth-slice';
 
 const LoginForm = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const dispatch = useDispatch();
-  let httpError = useSelector(getAuthError);
+  const httpError = useSelector(getAuthError);
 
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
+
+    validate: (values) => {
+      //reset httpError before press button. Fix stack messages
+      dispatch(authSlice.actions.resetHttpError());
+    },
+
     validateOnChange: false,
     validateOnBlur: false,
 
     validationSchema: LoginFormSchema,
 
     onSubmit: ({ email, password }, { resetForm }) => {
-      httpError = null;
       dispatch(login({ email, password }));
       resetForm();
     },

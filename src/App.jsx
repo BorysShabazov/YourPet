@@ -41,39 +41,38 @@ function App() {
 
   return (
     <>
-      {!isRefresh && (
-        <Routes>
-          <Route path="/" element={<SharedLayout />}>
-            <Route index element={<MainPage />} />
-            <Route
-              path="register"
-              element={
-                <PublicRoute restricted>
-                  <RegiserPage />
-                </PublicRoute>
-              }
-            />
+      <Routes>
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<MainPage />} />
+          <Route
+            path="register"
+            element={
+              <PublicRoute restricted>
+                <RegiserPage />
+              </PublicRoute>
+            }
+          />
 
-            <Route
-              path="login"
-              index
-              element={
-                <PublicRoute restricted>
-                  <LoginPage />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="user"
-              element={
-                <PrivateRoute>
-                  <UserPage />
-                </PrivateRoute>
-              }
-            />
-            <Route path="news" element={<NewsPage />} />
-            <Route path="notices/:categoryName" element={<NoticesPage />} />
-            {/* <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
+          <Route
+            path="login"
+            index
+            element={
+              <PublicRoute restricted>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="user"
+            element={
+              <PrivateRoute>
+                <UserPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="news" element={<NewsPage />} />
+          <Route path="notices/:categoryName" element={<NoticesPage />} />
+          {/* <Route path="/notices/sell" element={<NoticesCategoriesNav />} />
             <Route path="/notices/lost" element={<NoticesCategoriesNav />} />
             <Route path="/notices/found" element={<NoticesCategoriesNav />} />
 
@@ -86,19 +85,21 @@ function App() {
               element={<NoticesCategoriesNav />}
             />
             <Route path="/notices/own" element={<NoticesCategoriesNav />} /> */}
-            <Route
-              path="add-pet"
-              element={
-                <PrivateRoute>
-                  <AddPetPage />
-                </PrivateRoute>
-              }
-            />
-            <Route path="friends" element={<OurFriendsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      )}
+
+          <Route
+            path="add-pet"
+            element={
+              // <PrivateRoute>
+              <AddPetPage />
+              // </PrivateRoute>
+            }
+          />
+
+          <Route path="friends" element={<OurFriendsPage />} />
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </>
   );
 }
