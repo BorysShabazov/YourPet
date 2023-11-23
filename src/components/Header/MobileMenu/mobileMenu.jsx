@@ -20,7 +20,6 @@ import Leaving from '../../Modals/Leaving/Leaving';
 
 
 export default function MobileMenu({ onToogleMobileMenu }) {
-  // const { name } = useSelector((state) => state.auth.user || '');
   const { name = '', avatarURL = '' } = useSelector(getUser) ?? {};
 
   const { token } = useSelector(selectAuth);
@@ -48,7 +47,7 @@ export default function MobileMenu({ onToogleMobileMenu }) {
                 <BtnAuth
                   path="/"
                   onClick={onToogleLeavingModal}
-                  style="absolute bottom-[20px] left-[20px] md:static flex bg-blue border-blue text-white"
+                  style="absolute bottom-[20px] left-[20px] md:static flex bg-blue border-blue text-white hover:blue-gradient"
                 >
                   <span>Logout</span>
                   <Svg

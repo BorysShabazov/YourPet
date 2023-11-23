@@ -33,7 +33,7 @@ export default function Nav({
               to={path}
               id={text}
               state={{ from: location }}
-              className={`${path === pathPage ? 'text-yellow' : ''}`}
+              className={`opacity-80 hover:opacity-100 ${path === pathPage ? 'text-yellow' : ''}`}
             >
               {firstLetterUp(text)}
             </NavLink>

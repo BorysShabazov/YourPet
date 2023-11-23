@@ -61,7 +61,7 @@ export default function Header() {
                   <BtnAuth
                     path="/"
                     onClick={onToogleLeavingModal}
-                    style="hidden xl:flex bg-blue border-blue text-white"
+                    style="hidden xl:flex bg-blue border-blue text-white hover:blue-gradient"
                   >
                     <span>Logout</span>
                     <Svg
