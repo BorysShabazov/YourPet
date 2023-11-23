@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Form, Formik, useFormik } from 'formik';
+import { Form, Formik } from 'formik';
 import ChooseOptionSection from './ChooseOptionForm';
 import PersonalDetailsForm from './PersonalDetailsForm';
 import MoreInfoForm from './MoreInfoForm';
@@ -7,6 +7,7 @@ import {
   firstValidationSchema,
   secondValidationSchema,
   lastValidationSchema,
+  individualSchemas,
 } from '../../schemas/AddPetFormSchemas';
 import Svg from '../Svg/Svg';
 import { useLocation, useNavigate } from 'react-router';
@@ -32,7 +33,7 @@ const AddForm = () => {
     formData.append('birthDate', data.birth);
     formData.append('type', data.type);
     formData.append('sex', data.sex);
-    formData.append('image', data.petAvatarURL);
+    formData.append('image', data.petImage);
     formData.append('price', data.price);
     formData.append('location', data.location);
     formData.append('comments', data.comments);
@@ -44,15 +45,15 @@ const AddForm = () => {
     <Formik
       initialValues={{
         category: 'own',
-        title: 'aa',
-        name: 'aaa',
-        birth: '12-12-1212',
-        type: 'male',
+        title: '',
+        name: '',
+        birth: '',
+        type: '',
         sex: '',
-        petAvatarURL: null,
-        price: '2',
-        location: 'sdcsdv',
-        comments: 'ascasc',
+        petImage: null,
+        price: '',
+        location: '',
+        comments: '',
       }}
       validationSchema={
         (step === 1 && firstValidationSchema) ||
@@ -89,7 +90,7 @@ const AddForm = () => {
           birth,
           type,
           sex,
-          petAvatarURL,
+          petImage,
           price,
           location,
           comments,
@@ -112,14 +113,14 @@ const AddForm = () => {
           {step === 3 && (
             <MoreInfoForm
               setPhoto={(file) => {
-                setFieldValue('petAvatarURL', file);
+                setFieldValue('petImage', file);
               }}
               category={category}
               errors={errors}
               sex={sex}
               price={price}
               location={location}
-              petAvatarURL={petAvatarURL}
+              petImage={petImage}
               comments={comments}
             />
           )}

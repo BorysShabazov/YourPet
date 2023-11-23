@@ -6,7 +6,7 @@ const baseButtonStyles =
 const regularButtonStyles = 'bg-lightBlue text-blue';
 const hoveredButtonStyles = 'bg-blue text-background';
 
-const ChooseOptionSection = ({ callback, category }) => {
+const ChooseOptionSection = ({ category, schemas }) => {
   return (
     <div className="relative flex flex-col mb-[45px] gap-[12px] md:mb-[87px]">
       <label
@@ -15,11 +15,9 @@ const ChooseOptionSection = ({ callback, category }) => {
         }`}
       >
         <Field
-          id="category"
           name="category"
           type="radio"
           value="own"
-          onChange={callback}
           className="w-0 h-0 invisible"
         />
         your pet
@@ -30,11 +28,9 @@ const ChooseOptionSection = ({ callback, category }) => {
         }`}
       >
         <Field
-          id="category"
           name="category"
           type="radio"
           value="sell"
-          onChange={callback}
           className="w-0 h-0 invisible"
         />
         sell
@@ -45,11 +41,9 @@ const ChooseOptionSection = ({ callback, category }) => {
         }`}
       >
         <Field
-          id="category"
           name="category"
           type="radio"
           value="lost"
-          onChange={callback}
           className="w-0 h-0 invisible"
         />
         lost
@@ -60,11 +54,9 @@ const ChooseOptionSection = ({ callback, category }) => {
         }`}
       >
         <Field
-          id="category"
           name="category"
           type="radio"
           value="found"
-          onChange={callback}
           className="w-0 h-0 invisible"
         />
         found
@@ -75,11 +67,9 @@ const ChooseOptionSection = ({ callback, category }) => {
         }`}
       >
         <Field
-          id="category"
           name="category"
           type="radio"
           value="good-hands"
-          onChange={callback}
           className="w-0 h-0 invisible"
         />
         in good hands

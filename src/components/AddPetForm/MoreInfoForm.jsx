@@ -118,8 +118,8 @@ const MoreInfoForm = ({
               )}
 
               <input
-                id="petAvatarURL"
-                name="petAvatarURL"
+                id="petImage"
+                name="petImage"
                 type="file"
                 onChange={(e) => {
                   const file = e.target.files[0];
@@ -132,10 +132,7 @@ const MoreInfoForm = ({
             </div>
           </label>
           {hasPetImage && (
-            <label
-              htmlFor="petAvatarURL"
-              className="flex flex-row items-center"
-            >
+            <label htmlFor="petImage" className="flex flex-row items-center">
               <Svg
                 id="icon-camera"
                 className="flex items-center w-fit mr-[8px]"
@@ -147,9 +144,9 @@ const MoreInfoForm = ({
               </p>
             </label>
           )}
-          {errors.petAvatarURL && (
+          {errors.petImage && (
             <p className="absolute -bottom-[18px] break-keep text-red text-xs font-normal">
-              {errors.petAvatarURL}
+              {errors.petImage}
             </p>
           )}
         </div>
