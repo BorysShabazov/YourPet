@@ -1,5 +1,11 @@
 import { createSlice, current } from '@reduxjs/toolkit';
-import { register, login, currentUser, logout } from './auth-operations';
+import {
+  register,
+  login,
+  currentUser,
+  logout,
+  update,
+} from './auth-operations';
 
 const initialState = {
   user: null,
@@ -12,6 +18,11 @@ const initialState = {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    resetHttpError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     // register
     builder.addCase(register.pending, (state, action) => {
@@ -19,10 +30,13 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(register.fulfilled, (state, action) => {
-      state.user = action.payload.data.user;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      if (!action.payload.user.birthday) {
+        state.user.birthday = '00.00.0000';
+      }
       state.isLoggedIn = true;
       state.error = null;
-      state.token = action.payload.data.token;
     });
 
     builder.addCase(register.rejected, (state, action) => {
@@ -37,6 +51,9 @@ export const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
+      // if (!action.payload.user.birthday) {
+      //   state.user.birthday = '04.06.1995';
+      // }
       state.isLoggedIn = true;
     });
 
@@ -51,7 +68,10 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(currentUser.fulfilled, (state, action) => {
-      state.user = action.payload.data;
+      state.user = action.payload.data.user;
+      // if (!action.payload.user?.birthday) {
+      //   state.user.birthday = '04.06.2000';
+      // }
       state.isLoggedIn = true;
       state.isRefresh = false;
     });
@@ -80,6 +100,21 @@ export const authSlice = createSlice({
       state.token = null;
       state.isLoggedIn = false;
       state.isRefresh = false;
+    });
+
+    // update
+    builder.addCase(update.pending, (state, action) => {
+      state.error = null;
+    });
+
+    builder.addCase(update.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.isLoggedIn = true;
+      state.error = null;
+    });
+
+    builder.addCase(update.rejected, (state, action) => {
+      state.error = action.payload; //409
     });
   },
 });

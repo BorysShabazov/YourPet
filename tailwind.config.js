@@ -40,6 +40,17 @@ module.exports = {
         default: '3px 8px 14px 0px rgba(136, 198, 253, 0.19)',
         focus: '7px 13px 14px rgba(116, 177, 232, 0.24)',
       },
+      backgroundImage: {
+        'main-page-mobi': "url('./src/images/main_img/bg_main_mobi.png')",
+        'main-page-tablet': "url('./src/images/main_img/bg_main_tablet.png')",
+        'main-page-desctop': "url('./src/images/main_img/bg_main_desctop.png')",
+        'not-found-page-mobi':
+          "url('./src/images/not_found_page/not_found_page_mobi.png')",
+        'not-found-page-tablet':
+          "url('./src/images/not_found_page/not_found_page_tablet.png')",
+        'not-found-page-desctop':
+          "url('./src/images/not_found_page/not_found_page_desctop.png')",
+      },
     },
   },
   plugins: [],

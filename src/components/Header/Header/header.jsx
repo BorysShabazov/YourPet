@@ -11,7 +11,7 @@ import { Container } from '../../../ui/index';
 import AuthNav from '../AuthNav/AuthNav';
 import BtnAuth from '../BtnAuth/BtnAuth';
 import Svg from '../../Svg/Svg';
-import { selectAuth } from '../../../Redux/auth/auth-selectors';
+import { getUser, selectAuth } from '../../../Redux/auth/auth-selectors';
 import { useSelector } from 'react-redux';
 
 import { BasicModal } from '../../Modals/BasicModal/BasicModal';
@@ -21,17 +21,12 @@ import { createPortal } from 'react-dom';
 const mobileMenuRoot = document.querySelector('#mobile-menu');
 
 export default function Header() {
-  const user = {
-    name: '',
-    avatarUrl: '',
-  };
-
+  
   const { token } = useSelector(selectAuth);
-  const { name } = useSelector((state) => state.auth.user || '');
-  console.log(name);
+  const { name = '', avatarURL = '' } = useSelector(getUser) ?? {};
 
-  const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
+  const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
   useEffect(() => {
     if (isMobilMenuActive) {
@@ -45,16 +40,13 @@ export default function Header() {
     setIsMobilMenuActive(!isMobilMenuActive);
   };
 
-  const handleOpenLeavingModal = () => {
-    setLeavingModalOpen(true);
-  };
-  const handleCloseLeavingModal = () => {
-    setLeavingModalOpen(false);
+  const onToogleLeavingModal = () => {
+    setLeavingModalOpen(!isLeavingModalOpen);
   };
 
   return (
     <>
-      <header className="pt-[20px] md:pt-[24px] xl:pt-[20px] relative">
+      <header className="relative pt-[20px] md:pt-[24px] xl:pt-[20px] bg-wihte">
         <Container>
           <div className="flex items-center justify-between">
             <Nav
@@ -68,8 +60,8 @@ export default function Header() {
                 <div className="hoidden md:flex gap-6 items-center">
                   <BtnAuth
                     path="/"
-                    onClick={handleOpenLeavingModal}
-                    style="hidden xl:flex bg-blue border-blue text-white"
+                    onClick={onToogleLeavingModal}
+                    style="hidden xl:flex bg-blue border-blue text-white hover:blue-gradient"
                   >
                     <span>Logout</span>
                     <Svg
@@ -83,12 +75,12 @@ export default function Header() {
                     to="/user"
                     className="md:flex gap-[12px] text-yellow"
                   >
-                    {!user.avatarUrl ? (
+                    {!avatarURL ? (
                       <UserImg />
                     ) : (
                       <img
-                        src={user.avatarUrl}
-                        className="block w-[28px]h-[28px] rounded-full border-yellow object-cover"
+                        src={avatarURL}
+                        className="block w-[28px] h-[28px] border-[1px] rounded-full border-yellow object-cover"
                       />
                     )}
                     <span className="hidden md:inline-block">
@@ -114,9 +106,9 @@ export default function Header() {
       </header>
       <BasicModal
         isOpen={isLeavingModalOpen}
-        onCloseModal={handleCloseLeavingModal}
+        onCloseModal={onToogleLeavingModal}
       >
-        <Leaving onCloseModal={handleCloseLeavingModal} />
+        <Leaving onCloseModal={onToogleLeavingModal} />
       </BasicModal>
     </>
   );
