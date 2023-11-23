@@ -7,7 +7,6 @@ import {
   firstValidationSchema,
   secondValidationSchema,
   lastValidationSchema,
-  individualSchemas,
 } from '../../schemas/AddPetFormSchemas';
 import Svg from '../Svg/Svg';
 import { useLocation, useNavigate } from 'react-router';
@@ -55,6 +54,8 @@ const AddForm = () => {
         location: '',
         comments: '',
       }}
+      validateOnChange={false}
+      validateOnBlur={false}
       validationSchema={
         (step === 1 && firstValidationSchema) ||
         (step === 2 && secondValidationSchema) ||
