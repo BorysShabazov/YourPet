@@ -20,10 +20,10 @@ const AddForm = () => {
   const formik = useFormik({
     initialValues: {
       category: 'own',
-      title: 'ф',
-      name: 'фв',
-      birth: '12-12-1212',
-      type: 'фв',
+      title: '',
+      name: '',
+      birth: '',
+      type: '',
       sex: '',
       petAvatarURL: null,
       price: '',
