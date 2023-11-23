@@ -1,43 +1,40 @@
-import { NavLink } from 'react-router-dom';
-
-import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
-import { ReactComponent as BurgerMenu } from '../../../images/svg/menu-hamburger.svg';
-
-import ButtonBurger from '../ButtonBurger/buttonBurger';
 import { useEffect, useState } from 'react';
-import MobileMenu from '../MobileMenu/mobileMenu';
-import Nav from '../Nav/nav';
-import { Container } from '../../../ui/index';
-import AuthNav from '../AuthNav/AuthNav';
-import BtnAuth from '../BtnAuth/BtnAuth';
-import Svg from '../../Svg/Svg';
-import { getUser, selectAuth } from '../../../Redux/auth/auth-selectors';
 import { useSelector } from 'react-redux';
+import { createPortal } from 'react-dom';
 
+import BtnLogout from '../BtnLogout/BtnLogout';
+
+import MobileMenu from '../MobileMenu/mobileMenu';
 import { BasicModal } from '../../Modals/BasicModal/BasicModal';
 import Leaving from '../../Modals/Leaving/Leaving';
 
-import { createPortal } from 'react-dom';
+import Nav from '../Nav/nav';
+import { Container } from '../../../ui/index';
+import AuthNav from '../AuthNav/AuthNav';
+
+import { selectAuth } from '../../../Redux/auth/auth-selectors';
+import UserInfo from '../UserInfo/userInfo';
+import BtnBurgerClose from '../BtnBurgerClose/btnBurgerClose';
+
 const mobileMenuRoot = document.querySelector('#mobile-menu');
 
 export default function Header() {
-  
   const { token } = useSelector(selectAuth);
-  const { name = '', avatarURL = '' } = useSelector(getUser) ?? {};
 
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
   useEffect(() => {
-    if (isMobilMenuActive) {
+    if (isMobilMenuActive || isLeavingModalOpen) {
       document.body.classList.add('overflow-hidden');
     } else {
       document.body.classList.remove('overflow-hidden');
     }
-  }, [isMobilMenuActive]);
+  }, [isMobilMenuActive, isLeavingModalOpen]);
 
   const onToogleMobileMenu = () => {
     setIsMobilMenuActive(!isMobilMenuActive);
+    console.log("toggle")
   };
 
   const onToogleLeavingModal = () => {
@@ -57,43 +54,21 @@ export default function Header() {
 
             <div className="flex gap-[8px] md:gap-[24px]">
               {token ? (
-                <div className="hoidden md:flex gap-6 items-center">
-                  <BtnAuth
-                    path="/"
-                    onClick={onToogleLeavingModal}
-                    style="hidden xl:flex bg-blue border-blue text-white hover:blue-gradient"
-                  >
-                    <span>Logout</span>
-                    <Svg
-                      size="24px"
-                      id="icon-logout"
-                      stroke="white"
-                      fill="#54ADFF"
-                    />
-                  </BtnAuth>
-                  <NavLink
-                    to="/user"
-                    className="md:flex gap-[12px] text-yellow"
-                  >
-                    {!avatarURL ? (
-                      <UserImg />
-                    ) : (
-                      <img
-                        src={avatarURL}
-                        className="block w-[28px] h-[28px] border-[1px] rounded-full border-yellow object-cover"
-                      />
-                    )}
-                    <span className="hidden md:inline-block">
-                      {name ? name : 'Name'}
-                    </span>
-                  </NavLink>
+                <div className="hidden md:flex gap-6 items-center">
+                  <BtnLogout style="hidden xl:flex">Logout</BtnLogout>
+                  <UserInfo
+                    style="md:flex gap-[12px] text-yellow"
+                    styleName="hidden md:inline-block"
+                  />
                 </div>
               ) : (
                 <AuthNav style="hidden md:flex  gap-[20px]" />
               )}
-              <ButtonBurger onClick={onToogleMobileMenu}>
-                <BurgerMenu className="stroke-current text-yellow" />
-              </ButtonBurger>
+              <BtnBurgerClose
+                style
+                id="icon-menu-hamburger"
+                onClick={onToogleMobileMenu}
+              />
             </div>
           </div>
 
