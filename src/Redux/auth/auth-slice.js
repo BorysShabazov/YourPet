@@ -1,5 +1,11 @@
 import { createSlice, current } from '@reduxjs/toolkit';
-import { register, login, currentUser, logout, update } from './auth-operations';
+import {
+  register,
+  login,
+  currentUser,
+  logout,
+  update,
+} from './auth-operations';
 
 const initialState = {
   user: null,
@@ -27,6 +33,9 @@ export const authSlice = createSlice({
     builder.addCase(register.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
+      if (!action.payload.user.birthday) {
+        state.user.birthday = '00.00.0000';
+      }
       state.isLoggedIn = true;
       state.error = null;
     });
@@ -44,6 +53,9 @@ export const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
+      // if (!action.payload.user.birthday) {
+      //   state.user.birthday = '04.06.1995';
+      // }
       state.isLoggedIn = true;
       state.isRequestActive = false;
     });
@@ -61,6 +73,9 @@ export const authSlice = createSlice({
 
     builder.addCase(currentUser.fulfilled, (state, action) => {
       state.user = action.payload.data.user;
+      // if (!action.payload.user?.birthday) {
+      //   state.user.birthday = '04.06.2000';
+      // }
       state.isLoggedIn = true;
       state.isRefresh = false;
     });

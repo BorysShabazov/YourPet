@@ -22,26 +22,26 @@ const inputStyle =
 export const UserForm = () => {
   const [userImagePath, setUserImagePath] = useState('');
   const [isEdit, setIsEdit] = useState(false);
- 
+
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [confirmChangeAvatar, setConfirmChangeAvatar] = useState(false);
 
   const user = useSelector(getUser);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isEdit) {
       setPreviewAvatar('');
     }
-  }, [isEdit ]);
+  }, [isEdit]);
 
   const formik = useFormik({
     initialValues: {
       avatar: user.avatarURL,
       name: user.name,
       email: user.email,
-      birthday: formatBirthday(user.birthday),
+      birthday: formatBirthday(user.birthday || '20.20.2020'),
       phone: user.phone,
       city: user.city,
     },
@@ -49,13 +49,9 @@ export const UserForm = () => {
     validateOnBlur: false,
     validationSchema: userSchema,
 
-    onSubmit: (
-      { avatar, name, email, birthday, phone, city },
-
-    ) => {
-
+    onSubmit: ({ avatar, name, email, birthday, phone, city }) => {
       const updateUser = {
-        avatarURL : user.avatarURL,
+        avatarURL: user.avatarURL,
         name,
         email,
         birthday,
@@ -65,15 +61,14 @@ export const UserForm = () => {
 
       console.log('avatar--->', avatar);
 
-
       if (previewAvatar && confirmChangeAvatar) {
         updateUser.avatarURL = avatar;
         console.log('--->', updateUser.avatarURL);
       }
 
-      const formData = createUserFormData(updateUser)
+      const formData = createUserFormData(updateUser);
 
-      dispatch(update(formData))
+      dispatch(update(formData));
 
       setChangeAvatar(false);
       setIsEdit(false);
@@ -83,7 +78,7 @@ export const UserForm = () => {
   const errors = formik.errors;
   const formikValues = formik.values;
 
-  const createUserFormData = data => {
+  const createUserFormData = (data) => {
     const formData = new FormData();
     console.log('data===', data);
     formData.append('avatarURL', data.avatarURL);
@@ -124,7 +119,10 @@ export const UserForm = () => {
   };
 
   function formatBirthday(birthday) {
-    if (birthday.includes('-')) return birthday;    
+    if (!birthday) {
+      return '01.01.2001';
+    }
+    if (birthday.includes('-')) return birthday;
     const parts = birthday.split('.');
     const result = parts[2] + '-' + parts[1] + '-' + parts[0];
     return result;
@@ -177,7 +175,7 @@ export const UserForm = () => {
             ) : (
               <div className="flex justify-center mb-[14px] gap-2">
                 <div
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     setChangeAvatar(false);
                     setConfirmChangeAvatar(true);
@@ -192,7 +190,7 @@ export const UserForm = () => {
                 </div>
                 Confirm
                 <div
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     setChangeAvatar(false);
                     setPreviewAvatar(null);
@@ -216,7 +214,7 @@ export const UserForm = () => {
               id="avatar"
               name="avatar"
               accept="image/*"
-              onChange={e => {
+              onChange={(e) => {
                 const file = e.target.files[0];
                 const localPath = URL.createObjectURL(file);
                 formik.setFieldValue('avatar', file);
@@ -243,10 +241,11 @@ export const UserForm = () => {
               onChange={formik.handleChange}
               readOnly={!isEdit}
             />
-          {errors['name'] && (
-            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
-              {errors['name']}
-            </p>)}
+            {errors['name'] && (
+              <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+                {errors['name']}
+              </p>
+            )}
           </div>
 
           {/* Email */}
@@ -271,13 +270,12 @@ export const UserForm = () => {
               Birthday:
             </label>
             <div className={inputStyle}>
-              
-            <DatePicker
-      selected={new Date(formikValues['birthday'])}  
-      onChange={(date) => formik.setFieldValue('birthday', date)}
-      readOnly={!isEdit}
-      dateFormat="dd-MM-yyyy"  
-    />
+              <DatePicker
+                selected={new Date(formikValues['birthday'])}
+                onChange={(date) => formik.setFieldValue('birthday', date)}
+                readOnly={!isEdit}
+                dateFormat="dd-MM-yyyy"
+              />
             </div>
           </div>
 
@@ -311,11 +309,11 @@ export const UserForm = () => {
               onChange={formik.handleChange}
               readOnly={!isEdit}
             />
-                     {errors['city'] && (
-            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
-              {errors['city']}
-            </p>)}
-
+            {errors['city'] && (
+              <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+                {errors['city']}
+              </p>
+            )}
           </div>
 
           {/* Buttons */}
