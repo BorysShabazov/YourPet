@@ -2,26 +2,39 @@ import { CloseIcon } from '../CloseIcon/CloseIcon';
 import { useEffect, useState } from 'react';
 import { EditIcon } from '../EditIcon/EditIcon';
 import { PhotoIcon } from '../PhotoIcon/PhotoIcon';
-import { Formik, Form, Field, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import Svg from '../Svg/Svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser, selectAuth } from '../../Redux/auth/auth-selectors';
+import { update } from '../../Redux/auth/auth-operations';
+import { userSchema } from './UserSchema';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+const errorMessageStyles =
+  'absolute -bottom-[18px] ml-4 text-red text-xs font-normal';
 
 const labelStyle =
   "text-neutral-900 text-sm font-semibold font-['Manrope'] tracking-wide mdOnly:text-[16px] ";
 const inputStyle =
   "text-neutral-900 text-xs font-normal font-['Manrope'] tracking-wide w-[190px] h-6 px-3 py-1 rounded-[20px] border border-blue-400 justify-start items-center gap-[191px] inline-flex md:w-[255px]  xl:w-[255px]";
 
-export const UserForm = ({ user }) => {
+export const UserForm = () => {
   const [userImagePath, setUserImagePath] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+ 
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [confirmChangeAvatar, setConfirmChangeAvatar] = useState(false);
+
+  const user = useSelector(getUser);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!isEdit) {
       setPreviewAvatar('');
     }
-  }, [isEdit]);
+  }, [isEdit ]);
 
   const formik = useFormik({
     initialValues: {
@@ -34,18 +47,15 @@ export const UserForm = ({ user }) => {
     },
     validateOnChange: false,
     validateOnBlur: false,
-    // validationSchema: AuthFormSchema,
-
-    city: user.city,
+    validationSchema: userSchema,
 
     onSubmit: (
       { avatar, name, email, birthday, phone, city },
-      { resetForm },
+
     ) => {
-      setChangeAvatar(false);
 
       const updateUser = {
-        avatar,
+        avatarURL : user.avatarURL,
         name,
         email,
         birthday,
@@ -53,64 +63,30 @@ export const UserForm = ({ user }) => {
         city,
       };
 
+      console.log('avatar--->', avatar);
+
+
       if (previewAvatar && confirmChangeAvatar) {
-        updateUser.avatar = userImagePath;
+        updateUser.avatarURL = avatar;
+        console.log('--->', updateUser.avatarURL);
       }
 
-      const formData = createUserFormData(updateUser);
+      const formData = createUserFormData(updateUser)
 
-      fetch('https://your-pet-server.onrender.com/api/users/', {
-        method: 'PATCH',
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then(console.log);
+      dispatch(update(formData))
 
+      setChangeAvatar(false);
       setIsEdit(false);
-      resetForm();
     },
   });
 
-  const formikErrors = formik.errors;
+  const errors = formik.errors;
   const formikValues = formik.values;
 
-  const validate = (values) => {
-    const errors = {};
-
-    if (!values.user.name) {
-      errors.user = { ...errors.user, name: 'Name is required' };
-      console.log(errors.user.name);
-    }
-
-    if (!values.user.email) {
-      errors.user = { ...errors.user, email: 'Email is required' };
-      console.log(errors.user.email);
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.user.email)
-    ) {
-      errors.user = { ...errors.user, email: 'Invalid email address' };
-      console.log(errors.user.email);
-    }
-
-    if (!values.user.birthday) {
-      errors.user = { ...errors.user, birthday: 'Birthday is required' };
-    }
-
-    if (!values.user.phone) {
-      errors.user = { ...errors.user, phone: 'Phone number is required' };
-    }
-
-    if (!values.user.city) {
-      errors.user = { ...errors.user, city: 'City is required' };
-    }
-
-    return errors;
-  };
-
-  const createUserFormData = (data) => {
+  const createUserFormData = data => {
     const formData = new FormData();
-
-    formData.append('avatar', data.avatar);
+    console.log('data===', data);
+    formData.append('avatarURL', data.avatarURL);
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('birthday', data.birthday);
@@ -139,6 +115,7 @@ export const UserForm = ({ user }) => {
     setIsEdit(false);
     setChangeAvatar(false);
     setConfirmChangeAvatar(false);
+    formik.setFieldValue('avatar', user.avatarURL);
     formik.setFieldValue('name', user.name);
     formik.setFieldValue('email', user.email);
     formik.setFieldValue('birthday', user.birthday);
@@ -147,6 +124,7 @@ export const UserForm = ({ user }) => {
   };
 
   function formatBirthday(birthday) {
+    if (birthday.includes('-')) return birthday;    
     const parts = birthday.split('.');
     const result = parts[2] + '-' + parts[1] + '-' + parts[0];
     return result;
@@ -199,7 +177,7 @@ export const UserForm = ({ user }) => {
             ) : (
               <div className="flex justify-center mb-[14px] gap-2">
                 <div
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     setChangeAvatar(false);
                     setConfirmChangeAvatar(true);
@@ -214,7 +192,7 @@ export const UserForm = ({ user }) => {
                 </div>
                 Confirm
                 <div
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     setChangeAvatar(false);
                     setPreviewAvatar(null);
@@ -238,11 +216,10 @@ export const UserForm = ({ user }) => {
               id="avatar"
               name="avatar"
               accept="image/*"
-              onChange={(e) => {
+              onChange={e => {
                 const file = e.target.files[0];
                 const localPath = URL.createObjectURL(file);
-                formik.setFieldValue('user.avatar', file);
-                file;
+                formik.setFieldValue('avatar', file);
                 setUserImagePath(localPath);
                 previewFile(file);
               }}
@@ -258,7 +235,7 @@ export const UserForm = ({ user }) => {
               Name:
             </label>
             <input
-              className={inputStyle}
+              className={`${inputStyle} ${errors['name'] && 'border-rose-400'}`}
               type="text"
               id="name"
               name="name"
@@ -266,6 +243,10 @@ export const UserForm = ({ user }) => {
               onChange={formik.handleChange}
               readOnly={!isEdit}
             />
+          {errors['name'] && (
+            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+              {errors['name']}
+            </p>)}
           </div>
 
           {/* Email */}
@@ -290,15 +271,13 @@ export const UserForm = ({ user }) => {
               Birthday:
             </label>
             <div className={inputStyle}>
-              <input
-                className="w-full"
-                type="date"
-                id="birthday"
-                name="birthday"
-                value={formikValues['birthday']}
-                onChange={formik.handleChange}
-                readOnly={!isEdit}
-              />
+              
+            <DatePicker
+      selected={new Date(formikValues['birthday'])}  
+      onChange={(date) => formik.setFieldValue('birthday', date)}
+      readOnly={!isEdit}
+      dateFormat="dd-MM-yyyy"  
+    />
             </div>
           </div>
 
@@ -324,7 +303,7 @@ export const UserForm = ({ user }) => {
               City:
             </label>
             <input
-              className={inputStyle}
+              className={`${inputStyle} ${errors['city'] && 'border-rose-400'}`}
               type="text"
               id="city"
               name="city"
@@ -332,6 +311,11 @@ export const UserForm = ({ user }) => {
               onChange={formik.handleChange}
               readOnly={!isEdit}
             />
+                     {errors['city'] && (
+            <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
+              {errors['city']}
+            </p>)}
+
           </div>
 
           {/* Buttons */}
