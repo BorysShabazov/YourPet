@@ -1,9 +1,12 @@
+import { Field } from 'formik';
+import { ErrorInputMessage } from './ErrorInputMessage';
+
 const baseButtonStyles =
   'px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm font-medium font-manrope tracking-wide';
 const regularButtonStyles = 'bg-lightBlue text-blue';
 const hoveredButtonStyles = 'bg-blue text-background';
 
-const ChooseOptionSection = ({ callback, category, errors }) => {
+const ChooseOptionSection = ({ callback, category }) => {
   return (
     <div className="relative flex flex-col mb-[45px] gap-[12px] md:mb-[87px]">
       <label
@@ -11,7 +14,7 @@ const ChooseOptionSection = ({ callback, category, errors }) => {
           category === 'own' ? hoveredButtonStyles : regularButtonStyles
         }`}
       >
-        <input
+        <Field
           id="category"
           name="category"
           type="radio"
@@ -26,7 +29,7 @@ const ChooseOptionSection = ({ callback, category, errors }) => {
           category === 'sell' ? hoveredButtonStyles : regularButtonStyles
         }`}
       >
-        <input
+        <Field
           id="category"
           name="category"
           type="radio"
@@ -41,7 +44,7 @@ const ChooseOptionSection = ({ callback, category, errors }) => {
           category === 'lost' ? hoveredButtonStyles : regularButtonStyles
         }`}
       >
-        <input
+        <Field
           id="category"
           name="category"
           type="radio"
@@ -56,7 +59,7 @@ const ChooseOptionSection = ({ callback, category, errors }) => {
           category === 'found' ? hoveredButtonStyles : regularButtonStyles
         }`}
       >
-        <input
+        <Field
           id="category"
           name="category"
           type="radio"
@@ -71,7 +74,7 @@ const ChooseOptionSection = ({ callback, category, errors }) => {
           category === 'good-hands' ? hoveredButtonStyles : regularButtonStyles
         }`}
       >
-        <input
+        <Field
           id="category"
           name="category"
           type="radio"
@@ -81,12 +84,7 @@ const ChooseOptionSection = ({ callback, category, errors }) => {
         />
         in good hands
       </label>
-
-      {errors.category && (
-        <p className="absolute -bottom-[20px] text-red text-xs font-normal">
-          {errors.category}
-        </p>
-      )}
+      <ErrorInputMessage inputName={'category'} />
     </div>
   );
 };
