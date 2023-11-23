@@ -3,6 +3,7 @@ import BtnAuth from '../BtnAuth/BtnAuth';
 
 export default function AuthNav({ onClick, isLogin, style = "" }) {
   const [isActive, setIsActive] = useState(true);
+  
   return (
     <ul className={`flex ${style}`}>
       <li onClick={onClick} className='text-centr'>
