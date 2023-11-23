@@ -10,10 +10,11 @@ import AuthButton from '../AuthComponents/AuthButton';
 import AuthFooter from '../AuthComponents/AuthFooter';
 import AuthLabel from '../AuthComponents/AuthLabel';
 import AuthWrapper from '../AuthComponents/AuthWrapper';
+import { authSlice } from '../../Redux/auth/auth-slice';
 
 const AuthForm = () => {
   const dispatch = useDispatch();
-  let httpError = useSelector(getAuthError);
+  const httpError = useSelector(getAuthError);
 
   const formik = useFormik({
     initialValues: {
@@ -22,13 +23,18 @@ const AuthForm = () => {
       password: '',
       confirmPassword: '',
     },
+
+    validate: (values) => {
+      //reset httpError before press button. Fix stack messages
+      dispatch(authSlice.actions.resetHttpError());
+    },
+
     validateOnChange: false,
     validateOnBlur: false,
 
     validationSchema: AuthFormSchema,
 
     onSubmit: ({ name, email, password }, { resetForm }) => {
-      httpError = null;
       dispatch(register({ name, email, password }));
       resetForm();
     },
