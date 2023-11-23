@@ -46,7 +46,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="pt-[20px] md:pt-[24px] xl:pt-[20px] relative">
+      <header className="relative pt-[20px] md:pt-[24px] xl:pt-[20px] bg-wihte">
         <Container>
           <div className="flex items-center justify-between">
             <Nav

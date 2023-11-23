@@ -13,17 +13,15 @@ import ButtonBurger from '../ButtonBurger/buttonBurger';
 
 import AuthNav from '../AuthNav/AuthNav';
 import BtnAuth from '../BtnAuth/BtnAuth';
-import { selectAuth } from '../../../Redux/auth/auth-selectors';
+import { getUser, selectAuth } from '../../../Redux/auth/auth-selectors';
 
 import { BasicModal } from '../../Modals/BasicModal/BasicModal';
 import Leaving from '../../Modals/Leaving/Leaving';
 
+
 export default function MobileMenu({ onToogleMobileMenu }) {
-  const user = {
-    name: '',
-    avatarUrl: '',
-  };
-  const { name } = useSelector((state) => state.auth.user || '');
+  // const { name } = useSelector((state) => state.auth.user || '');
+  const { name = '', avatarURL = '' } = useSelector(getUser) ?? {};
 
   const { token } = useSelector(selectAuth);
 
@@ -35,7 +33,6 @@ export default function MobileMenu({ onToogleMobileMenu }) {
 
   return (
     <>
-      {/* {!isLeavingModalOpen} */}
       <div className="absolute top-0 left-0  h-screen w-screen pt-[20px] md:pt-[24px] bg-white xl:hidden">
         <Container className="flex flex-col gap-[42px] md:gap-[92px] items-centr justify-center">
           <div className="w-full flex items-center justify-between">
@@ -86,12 +83,12 @@ export default function MobileMenu({ onToogleMobileMenu }) {
                 token ? 'pb-[44px]' : ''
               } text-yellow md:hidden`}
             >
-              {!user.avatarUrl ? (
+              {!avatarURL ? (
                 <UserImg />
               ) : (
                 <img
-                  src={user.avatarUrl}
-                  className="block w-[28px]h-[28px] rounded-full object-cover"
+                  src={avatarURL}
+                  className="block w-[28px] h-[28px] rounded-full object-cover"
                 />
               )}
               <span>{name ? name : 'Name'}</span>
