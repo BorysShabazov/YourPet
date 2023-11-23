@@ -19,10 +19,10 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(register.fulfilled, (state, action) => {
-      state.user = action.payload.data.user;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
       state.isLoggedIn = true;
       state.error = null;
-      state.token = action.payload.data.token;
     });
 
     builder.addCase(register.rejected, (state, action) => {
@@ -35,9 +35,9 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
-      // state.user = action.payload.data.user;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
       state.isLoggedIn = true;
-      state.token = action.payload;
     });
 
     builder.addCase(login.rejected, (state, action) => {
@@ -51,7 +51,7 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(currentUser.fulfilled, (state, action) => {
-      state.user = action.payload.data;
+      state.user = action.payload.data.user;
       state.isLoggedIn = true;
       state.isRefresh = false;
     });
