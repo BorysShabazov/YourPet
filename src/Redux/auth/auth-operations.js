@@ -67,3 +67,23 @@ export const logout = createAsyncThunk('auth/logout', async (thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.status);
   }
 });
+
+
+// update
+export const update = createAsyncThunk(
+  'auth/update',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await axios.patch(`${BASE_URL}`, credentials, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });      
+      const { data: dataResponse } = data;
+
+      return { token: dataResponse.token, user: dataResponse.user };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.status);
+    }
+  },
+);
