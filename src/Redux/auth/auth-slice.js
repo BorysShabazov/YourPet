@@ -7,6 +7,7 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefresh: false,
+  isRequestActive: false,
 };
 
 export const authSlice = createSlice({
@@ -37,16 +38,19 @@ export const authSlice = createSlice({
     // login
     builder.addCase(login.pending, (state, action) => {
       state.error = null;
+      state.isRequestActive = true;
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
+      state.isRequestActive = false;
     });
 
     builder.addCase(login.rejected, (state, action) => {
       state.error = action.payload; //401
+      state.isRequestActive = false;
     });
 
     // current
