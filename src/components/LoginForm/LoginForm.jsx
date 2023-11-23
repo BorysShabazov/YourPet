@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../Redux/auth/auth-operations';
 import { useState } from 'react';
+import { login } from '../../Redux/auth/auth-operations';
 import { getAuthError, getIsRequest } from '../../Redux/auth/auth-selectors';
 import LoginFormSchema from '../../schemas/LoginFormSchema';
 import Svg from '../Svg/Svg';
@@ -55,7 +55,6 @@ const LoginForm = () => {
       {({ errors, setFieldError, values, setFieldValue }) => (
         <Form className={`${formStyles}`}>
           <AuthHeader header="Login" />
-
           <div className="flex flex-col gap-9 w-full">
             <AuthInputWrapper>
               <AuthLabel htmlFor="email" />
@@ -63,15 +62,16 @@ const LoginForm = () => {
                 id="email"
                 name="email"
                 placeholder="Email"
+                value={values.email}
                 className={`${inputStyles} ${
-                  errors['email'] ? 'border-[#F43F5E]' : null
+                  errors['email'] ? 'border-red' : null
                 }`}
                 onClick={() => {
                   setFieldError('email', '');
                 }}
               />
 
-              {errors['email'] && values['name'] !== '' && (
+              {errors['email'] && values['email'] !== '' && (
                 <Svg
                   id="icon-cross"
                   className="right-3 absolute cursor-pointer"
@@ -96,9 +96,10 @@ const LoginForm = () => {
                 id="password"
                 name="password"
                 placeholder="Password"
+                value={values.password}
                 type={passwordVisible ? 'text' : 'password'}
                 className={`${inputStyles} ${
-                  errors['password'] || httpError ? 'border-[#F43F5E]' : null
+                  errors['password'] || httpError ? 'border-red' : null
                 } ${isRequest ? 'border-[#00C3AD]' : null} `}
                 onClick={() => {
                   setFieldError('password', '');
