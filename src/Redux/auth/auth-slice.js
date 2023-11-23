@@ -12,6 +12,11 @@ const initialState = {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    resetHttpError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     // register
     builder.addCase(register.pending, (state, action) => {
