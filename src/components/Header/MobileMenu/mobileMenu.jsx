@@ -26,20 +26,16 @@ export default function MobileMenu({ onToogleMobileMenu }) {
   const { name } = useSelector((state) => state.auth.user || '');
 
   const { token } = useSelector(selectAuth);
-  // const token = false;
 
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
-  const handleOpenLeavingModal = () => {
-    // onToogleMobileMenu(false);
-    setLeavingModalOpen(true);
-  };
-  const handleCloseLeavingModal = () => {
-    setLeavingModalOpen(false);
+  const onToogleLeavingModal = () => {
+    setLeavingModalOpen(!isLeavingModalOpen);
   };
 
   return (
     <>
+      {/* {!isLeavingModalOpen} */}
       <div className="absolute top-0 left-0  h-screen w-screen pt-[20px] md:pt-[24px] bg-white xl:hidden">
         <Container className="flex flex-col gap-[42px] md:gap-[92px] items-centr justify-center">
           <div className="w-full flex items-center justify-between">
@@ -54,7 +50,7 @@ export default function MobileMenu({ onToogleMobileMenu }) {
               {token ? (
                 <BtnAuth
                   path="/"
-                  onClick={handleOpenLeavingModal}
+                  onClick={onToogleLeavingModal}
                   style="absolute bottom-[20px] left-[20px] md:static flex bg-blue border-blue text-white"
                 >
                   <span>Logout</span>
@@ -106,9 +102,9 @@ export default function MobileMenu({ onToogleMobileMenu }) {
       </div>
       <BasicModal
         isOpen={isLeavingModalOpen}
-        onCloseModal={handleCloseLeavingModal}
+        onCloseModal={onToogleLeavingModal}
       >
-        <Leaving onCloseModal={handleCloseLeavingModal} />
+        <Leaving onCloseModal={onToogleLeavingModal} />
       </BasicModal>
     </>
   );
