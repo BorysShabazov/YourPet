@@ -17,13 +17,13 @@ export default function Nav({
 }) {
   const location = useLocation();
   const pathPage = location.pathname;
-  
+
   const firstLetterUp = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 
   return (
     <div className={style}>
       <NavLink to="/" state={{ from: location }} className={`${styleLogo}`}>
-        <Logo className="w-[116px] md:w-[162px]" />
+        <Logo className="w-[116px] md:w-[162px]" onClick={onClick} />
       </NavLink>
 
       <ul className={`${styleNavList} ${css.listNav}`}>
@@ -33,7 +33,9 @@ export default function Nav({
               to={path}
               id={text}
               state={{ from: location }}
-              className={`opacity-80 hover:opacity-100 ${path === pathPage ? 'text-yellow' : ''}`}
+              className={`cursor-pointer hover:opacity-80 ${
+                path === pathPage ? 'text-yellow' : ''
+              }`}
             >
               {firstLetterUp(text)}
             </NavLink>
