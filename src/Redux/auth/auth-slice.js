@@ -28,6 +28,7 @@ export const authSlice = createSlice({
     // register
     builder.addCase(register.pending, (state, action) => {
       state.error = null;
+      state.isRequestActive = true;
     });
 
     builder.addCase(register.fulfilled, (state, action) => {
@@ -38,10 +39,12 @@ export const authSlice = createSlice({
       }
       state.isLoggedIn = true;
       state.error = null;
+      state.isRequestActive = false;
     });
 
     builder.addCase(register.rejected, (state, action) => {
       state.error = action.payload; //409
+      state.isRequestActive = false;
     });
 
     // login

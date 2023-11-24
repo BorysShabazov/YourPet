@@ -15,7 +15,7 @@ import {
   inputStyles,
   passwordSuccess,
   wrapperError,
-} from './basicStyles';
+} from './auth-styles';
 import { AuthInputWrapper } from '../AuthComponents/AuthInputWrapper';
 import { AuthSvgWrapper } from '../AuthComponents/AuthSvgWrapper';
 const LoginForm = () => {
@@ -23,8 +23,10 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const httpError = useSelector(getAuthError);
   const isRequest = useSelector(getIsRequest);
-  const axiosError = 'Email or password is invalid';
-  const accessMessage = 'Password is secure';
+  const messages = {
+    axiosError: 'Email or password is invalid',
+    accessMessage: 'Password is secure',
+  };
 
   // toggle password
   const togglePasswordVisibility = (value) => {
@@ -132,11 +134,13 @@ const LoginForm = () => {
                 className={`${wrapperError}`}
               />
               {httpError === 401 ? (
-                <div className={`${wrapperError}`}>{axiosError}</div>
+                <div className={`${wrapperError}`}>{messages.axiosError}</div>
               ) : null}
 
               {isRequest ? (
-                <div className={`${passwordSuccess}`}>{accessMessage}</div>
+                <div className={`${passwordSuccess}`}>
+                  {messages.accessMessage}
+                </div>
               ) : null}
             </AuthInputWrapper>
           </div>
