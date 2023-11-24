@@ -13,6 +13,7 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefresh: false,
+  isRequestActive: false,
 };
 
 export const authSlice = createSlice({
@@ -27,6 +28,7 @@ export const authSlice = createSlice({
     // register
     builder.addCase(register.pending, (state, action) => {
       state.error = null;
+      state.isRequestActive = true;
     });
 
     builder.addCase(register.fulfilled, (state, action) => {
@@ -37,15 +39,18 @@ export const authSlice = createSlice({
       }
       state.isLoggedIn = true;
       state.error = null;
+      state.isRequestActive = false;
     });
 
     builder.addCase(register.rejected, (state, action) => {
       state.error = action.payload; //409
+      state.isRequestActive = false;
     });
 
     // login
     builder.addCase(login.pending, (state, action) => {
       state.error = null;
+      state.isRequestActive = true;
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
@@ -55,10 +60,12 @@ export const authSlice = createSlice({
       //   state.user.birthday = '04.06.1995';
       // }
       state.isLoggedIn = true;
+      state.isRequestActive = false;
     });
 
     builder.addCase(login.rejected, (state, action) => {
       state.error = action.payload; //401
+      state.isRequestActive = false;
     });
 
     // current
