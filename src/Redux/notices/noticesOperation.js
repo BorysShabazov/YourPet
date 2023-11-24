@@ -5,9 +5,9 @@ axios.defaults.baseURL = '';
 
 export const fetchNotices = createAsyncThunk(
   'notices/fetchNotices',
-  async (arg, thunkAPI) => {
+  async (category, thunkAPI) => {
     try {
-      const response = await axios.get(`/notices/${arg}`);
+      const response = await axios.get(`/notices/${category}`);
       return response.data;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);

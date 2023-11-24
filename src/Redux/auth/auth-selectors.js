@@ -7,3 +7,5 @@ export const selectAuth = (state) => state.auth;
 export const getRefresh = (state) => state.auth.isRefresh;
 
 export const getUser = (state) => state.auth.user;
+
+export const getIsRequest = (state) => state.auth.isRequestActive;
