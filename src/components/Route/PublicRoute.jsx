@@ -5,5 +5,11 @@ import { selectAuth } from '../../Redux/auth/auth-selectors';
 export default function PublicRoute({ children, ...routeProps }) {
   const { restricted } = routeProps;
   const { token } = useSelector(selectAuth);
-  return token && restricted ? <Navigate to="/user" /> : <>{children}</>;
+  if (token && restricted) {
+    return (
+      <Navigate to="/user" state={{ fromPage: window.location.pathname }} />
+    );
+  }
+
+  return <>{children}</>;
 }

@@ -1,9 +1,9 @@
 import Svg from '../Svg/Svg';
 const PetCard = ({ pet }) => {
   return (
-    <div className="w-72 h-[456px] relative">
+    <div className="w-72 h-[456px] mx-auto relative">
       <div className=" hover:shadow-xl w-72 h-[456px] bg-white rounded-bl-[40px] rounded-br-[40px] shadow absolute">
-        <img className="w-72 h-72" src="https://marylandpet.com/wp-content/uploads/2022/05/Golden-Retriever-Puppy-288x288.jpg" alt={pet.name} />
+        <img className="w-72 h-72" src="https://marylandpet.com/wp-content/uploads/2022/05/Golden-Retriever-Puppy-288x288.jpg" alt="" />
 
         <div className=" flex items-center  w-[126px] h-[32px] px-[17px] py-[11px] left-0 top-[16px] absolute bg-[#CCE4FB] rounded-tr-2xl rounded-br-2xl  ">
           <p className=" flex items-center w-[92px] h-[10px]  text-neutral-900 text-sm font-medium font-['Manrope']">
