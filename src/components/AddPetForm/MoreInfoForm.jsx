@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Svg from '../Svg/Svg';
+import { ErrorMessage, Field } from 'formik';
+import { ErrorInputMessage } from './ErrorInputMessage';
 
 const baseButtonStyles =
   'flex flex-row align-center  px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm text-base font-normal font-manrope tracking-wide leading-normal';
@@ -15,7 +17,6 @@ const errorMessageStyles =
   'absolute -bottom-[18px] ml-4 text-red text-xs font-normal';
 
 const MoreInfoForm = ({
-  callback,
   errors,
   category,
   sex,
@@ -26,7 +27,15 @@ const MoreInfoForm = ({
 }) => {
   const [petImagePath, setPetImagePath] = useState('');
 
+  const chooseButtonColor = (inputValue) => {
+    if (sex === '' && inputValue === 'female') return '#F43F5E';
+    if (sex === '' && inputValue === 'male') return '#54ADFF';
+
+    return sex === inputValue ? '#FFF' : '#888888';
+  };
+
   const hasPetImage = petImagePath !== '';
+
   return (
     <div className="flex flex-col mb-[24px] gap-[20px] md:flex-row md:mx-[40px] md:gap-[45px] xl:gap-[80px]">
       <div>
@@ -38,25 +47,17 @@ const MoreInfoForm = ({
                 sex === 'female' ? hoveredButtonStyles : regularButtonStyles
               }`}
             >
-              <input
-                id="sex"
+              <Field
                 name="sex"
                 type="radio"
                 value="female"
-                onChange={callback}
                 className="w-0 h-0 invisible"
               />
               <Svg
                 id="icon-female"
                 className="flex items-center w-fit"
                 fill="transparent"
-                stroke={
-                  sex !== ''
-                    ? sex === 'female'
-                      ? '#FFF'
-                      : '#888888'
-                    : '#F43F5E'
-                }
+                stroke={chooseButtonColor('female')}
               />
               Female
             </label>
@@ -65,30 +66,29 @@ const MoreInfoForm = ({
                 sex === 'male' ? hoveredButtonStyles : regularButtonStyles
               }`}
             >
-              <input
-                id="sex"
+              <Field
                 name="sex"
                 type="radio"
                 value="male"
-                onChange={callback}
                 className="w-0 h-0 invisible"
               />
               <Svg
                 id="icon-male"
                 className="flex items-center w-fit"
                 fill="transparent"
-                stroke={
-                  sex !== '' ? (sex === 'male' ? '#FFF' : '#888888') : '#54ADFF'
-                }
+                stroke={chooseButtonColor('male')}
               />
               Male
             </label>
           </div>
-          {errors.sex && (
-            <div className="absolute -bottom-[18px] flex justify-center w-[100%] text-red text-xs font-normal">
-              <p className="w-fit ">{errors.sex}</p>
-            </div>
-          )}
+
+          <ErrorMessage name="sex">
+            {(message) => (
+              <div className="absolute -bottom-[10px] flex justify-center w-[100%] text-red text-xs font-normal">
+                <p className="w-fit">{message}</p>
+              </div>
+            )}
+          </ErrorMessage>
         </div>
         <div className="relative flex flex-col items-center gap-[13px]">
           <label
@@ -98,7 +98,7 @@ const MoreInfoForm = ({
           >
             {!hasPetImage && (
               <p className="text-black text-sm font-medium font-manrope">
-                Add pet's photo
+                Add pet's photo:
               </p>
             )}
 
@@ -120,8 +120,8 @@ const MoreInfoForm = ({
               )}
 
               <input
-                id="petAvatarURL"
-                name="petAvatarURL"
+                id="petImage"
+                name="petImage"
                 type="file"
                 onChange={(e) => {
                   const file = e.target.files[0];
@@ -134,10 +134,7 @@ const MoreInfoForm = ({
             </div>
           </label>
           {hasPetImage && (
-            <label
-              htmlFor="petAvatarURL"
-              className="flex flex-row items-center"
-            >
+            <label htmlFor="petImage" className="flex flex-row items-center">
               <Svg
                 id="icon-camera"
                 className="flex items-center w-fit mr-[8px]"
@@ -149,9 +146,9 @@ const MoreInfoForm = ({
               </p>
             </label>
           )}
-          {errors.petAvatarURL && (
+          {errors.petImage && (
             <p className="absolute -bottom-[18px] break-keep text-red text-xs font-normal">
-              {errors.petAvatarURL}
+              {errors.petImage}
             </p>
           )}
         </div>
@@ -161,58 +158,50 @@ const MoreInfoForm = ({
           <label className={labelStyles}>
             <p className={inputTitleStyles}>Location</p>
 
-            <input
-              id="location"
+            <Field
               name="location"
               type="text"
               value={location}
               placeholder="Add some location"
-              onChange={callback}
               className={`${inputStyles} ${
                 errors.location && errors.location !== '' ? errorInputStyle : ''
               }`}
             />
-            {errors.location && (
-              <p className={errorMessageStyles}>{errors.location}</p>
-            )}
+            <ErrorInputMessage
+              inputName="location"
+              styles={errorMessageStyles}
+            />
           </label>
         )}
         {category === 'sell' && (
           <label className={labelStyles}>
             <p className={inputTitleStyles}>Price</p>
 
-            <input
-              id="price"
+            <Field
               name="price"
               type="number"
               value={price}
               placeholder="Add some price"
-              onChange={callback}
               className={`${inputStyles} ${
                 errors.price && errors.price !== '' ? errorInputStyle : ''
               }`}
             />
-            {errors.price && (
-              <p className={errorMessageStyles}>{errors.price}</p>
-            )}
+            <ErrorInputMessage inputName="price" styles={errorMessageStyles} />
           </label>
         )}
         <label className={`${labelStyles} h-[100%]`}>
           <p className={inputTitleStyles}>Comments</p>
 
-          <textarea
-            id="comments"
+          <Field
+            as="textarea"
             name="comments"
             value={comments}
             placeholder="Type about your friend"
-            onChange={callback}
             className={`flex w-[100%] h-[100%] px-[16px] py-[8px] border border-blue rounded-[20px] resize-none ${
               errors.comments && errors.comments !== '' ? errorInputStyle : ''
             }`}
           />
-          {errors.comments && (
-            <p className={errorMessageStyles}>{errors.comments}</p>
-          )}
+          <ErrorInputMessage inputName="comments" styles={errorMessageStyles} />
         </label>
       </div>
     </div>

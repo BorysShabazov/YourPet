@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-axios.defaults.baseURL = '';
+axios.defaults.baseURL = 'https://your-pet-server.onrender.com/api';
 
 export const fetchPets = createAsyncThunk(
   'pets/fetchPets',
@@ -19,9 +19,8 @@ export const createPets = createAsyncThunk(
   'pets/postPets',
   async (arg, thunkAPI) => {
     try {
-      await axios.post('/pets', arg);
-      const response = await axios.get('/pets');
-      return response.data;
+      const { data } = await axios.post('/pets', arg);
+      return data;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
     }

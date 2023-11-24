@@ -1,92 +1,25 @@
-const baseButtonStyles =
-  'px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm font-medium font-manrope tracking-wide';
-const regularButtonStyles = 'bg-lightBlue text-blue';
-const hoveredButtonStyles = 'bg-blue text-background';
+import { ErrorInputMessage } from './ErrorInputMessage';
+import { RadioButton } from './RadioButton';
 
-const ChooseOptionSection = ({ callback, category, errors }) => {
+const ChooseOptionSection = ({ category }) => {
   return (
     <div className="relative flex flex-col mb-[45px] gap-[12px] md:mb-[87px]">
-      <label
-        className={`${baseButtonStyles} ${
-          category === 'own' ? hoveredButtonStyles : regularButtonStyles
-        }`}
-      >
-        <input
-          id="category"
-          name="category"
-          type="radio"
-          value="own"
-          onChange={callback}
-          className="w-0 h-0 invisible"
-        />
+      <RadioButton category={category} name="category" value="own">
         your pet
-      </label>
-      <label
-        className={`${baseButtonStyles} ${
-          category === 'sell' ? hoveredButtonStyles : regularButtonStyles
-        }`}
-      >
-        <input
-          id="category"
-          name="category"
-          type="radio"
-          value="sell"
-          onChange={callback}
-          className="w-0 h-0 invisible"
-        />
+      </RadioButton>
+      <RadioButton category={category} name="category" value="sell">
         sell
-      </label>
-      <label
-        className={`${baseButtonStyles} ${
-          category === 'lost' ? hoveredButtonStyles : regularButtonStyles
-        }`}
-      >
-        <input
-          id="category"
-          name="category"
-          type="radio"
-          value="lost"
-          onChange={callback}
-          className="w-0 h-0 invisible"
-        />
+      </RadioButton>
+      <RadioButton category={category} name="category" value="lost">
         lost
-      </label>
-      <label
-        className={`${baseButtonStyles} ${
-          category === 'found' ? hoveredButtonStyles : regularButtonStyles
-        }`}
-      >
-        <input
-          id="category"
-          name="category"
-          type="radio"
-          value="found"
-          onChange={callback}
-          className="w-0 h-0 invisible"
-        />
+      </RadioButton>
+      <RadioButton category={category} name="category" value="found">
         found
-      </label>
-      <label
-        className={`${baseButtonStyles} ${
-          category === 'good-hands' ? hoveredButtonStyles : regularButtonStyles
-        }`}
-      >
-        <input
-          id="category"
-          name="category"
-          type="radio"
-          value="good-hands"
-          onChange={callback}
-          className="w-0 h-0 invisible"
-        />
+      </RadioButton>
+      <RadioButton category={category} name="category" value="good-hands">
         in good hands
-      </label>
-
-      {errors.category && (
-        <p className="absolute -bottom-[20px] text-red text-xs font-normal">
-          {errors.category}
-        </p>
-      )}
+      </RadioButton>
+      <ErrorInputMessage inputName={'category'} />
     </div>
   );
 };
