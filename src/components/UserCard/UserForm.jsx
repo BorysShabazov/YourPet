@@ -10,7 +10,7 @@ import { update } from '../../Redux/auth/auth-operations';
 import { userSchema } from './UserSchema';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 const errorMessageStyles =
   'absolute -bottom-[18px] ml-4 text-red text-xs font-normal';
@@ -24,7 +24,7 @@ export const UserForm = () => {
   const user = useSelector(getUser);
   const dispatch = useDispatch();
 
-  const [userImagePath, setUserImagePath] = useState('');
+  const [avatarFile, setAvatarFile] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
 
   const [userAvatar, setUserAvatar] = useState(user.avatarURL);
@@ -39,6 +39,8 @@ export const UserForm = () => {
   }, [isEdit]);
 
   console.log(user.birthday);
+
+
 
   const formik = useFormik({
     initialValues: {
@@ -61,10 +63,10 @@ export const UserForm = () => {
         city,
       };
 
-      console.log('avatar--->', previewAvatar);
+      console.log('avatar--->', avatarFile);
 
       if (previewAvatar && confirmChangeAvatar) {
-        updateUser.avatar = previewAvatar;
+        updateUser.avatar = avatarFile;
         console.log('--->', updateUser.avatar);
       }
 
@@ -83,7 +85,7 @@ export const UserForm = () => {
   const createUserFormData = (data) => {
     const formData = new FormData();
     console.log('data===', data);
-    formData.append('avatarURL', data.avatar);
+    formData.append('avatar', data.avatar);
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('birthday', data.birthday);
@@ -208,9 +210,8 @@ export const UserForm = () => {
               onChange={(e) => {
                 const file = e.target.files[0];
                 const localPath = URL.createObjectURL(file);
-                setUserImagePath(localPath);
                 previewFile(file);
-                console.log(previewAvatar);
+                setAvatarFile(file)
               }}
             />
           </div>
@@ -260,10 +261,23 @@ export const UserForm = () => {
             <label className={labelStyle} htmlFor="birthday">
               Birthday:
             </label>
+
+            {/* <input
+              className={inputStyle}
+              type="text"
+              id="birthday"
+              name="birthday"
+              value={formikValues['birthday']}
+              onChange={formik.handleChange}
+              readOnly={!isEdit}
+            /> */}
             <div>
               <DatePicker
-                selected={new Date(formikValues['birthday'])}
+                selected={
+                  new Date(formikValues['birthday']) 
+                }
                 onChange={(date) => {
+
                   formik.setFieldValue('birthday', date);
                 }}
                 readOnly={!isEdit}
