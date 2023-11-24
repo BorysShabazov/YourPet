@@ -96,7 +96,7 @@ const MoreInfoForm = ({
           >
             {!hasPetImage && (
               <p className="text-black text-sm font-medium font-manrope">
-                Add pet's photo
+                Add pet's photo:
               </p>
             )}
 

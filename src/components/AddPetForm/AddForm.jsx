@@ -10,6 +10,7 @@ import {
 } from '../../schemas/AddPetFormSchemas';
 import Svg from '../Svg/Svg';
 import { useLocation, useNavigate } from 'react-router';
+import axios from 'axios';
 
 const AddForm = () => {
   const [step, setStep] = useState(1);
@@ -27,16 +28,16 @@ const AddForm = () => {
     const formData = new FormData();
 
     formData.append('category', data.category);
-    formData.append('title', data.title);
     formData.append('name', data.name);
     formData.append('birthDate', data.birth);
     formData.append('type', data.type);
     formData.append('sex', data.sex);
     formData.append('image', data.petImage);
-    formData.append('price', data.price);
-    formData.append('location', data.location);
     formData.append('comments', data.comments);
-
+    // formData.append('title', data.title);
+    // formData.append('price', data.price);
+    // formData.append('location', data.location);
+    console.log(formData);
     return formData;
   };
 
@@ -44,15 +45,15 @@ const AddForm = () => {
     <Formik
       initialValues={{
         category: 'own',
-        title: '',
-        name: '',
-        birth: '',
-        type: '',
-        sex: '',
+        title: 'i need you',
+        name: 'batman',
+        birth: '12-12-1212',
+        type: 'bat',
+        sex: 'male',
         petImage: null,
-        price: '',
-        location: '',
-        comments: '',
+        price: '123456789',
+        location: 'gotem',
+        comments: 'sykablya ia hochy spaty',
       }}
       validateOnChange={false}
       validateOnBlur={false}
@@ -61,18 +62,21 @@ const AddForm = () => {
         (step === 2 && secondValidationSchema) ||
         (step === 3 && lastValidationSchema)
       }
-      onSubmit={(values) => {
-        if (step === 3) {
-          const formData = createFormData(values);
+      onSubmit={(data) => {
+        console.log('i work?');
 
-          fetch('https://httpbin.org/post', {
-            method: 'POST',
-            body: formData,
-          })
+        if (step === 3) {
+          const formData = createFormData(data);
+          //your-pet-server.onrender.com/api/pets
+          axios
+            .post('/pets', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
             .then((res) => res.json())
             .then(console.log);
-
-          navigate(backLinkLocationRef.current);
+          // navigate(backLinkLocationRef.current);
           return;
         }
 

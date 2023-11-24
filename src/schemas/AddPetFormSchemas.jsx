@@ -53,7 +53,7 @@ export const lastValidationSchema = yup.object({
     .oneOf(['male', 'female'], 'Invalid sex')
     .required('You have to choose the sex'),
 
-  petAvatarURL: yup
+  petImage: yup
     .mixed()
     .required("You need to add the pet's photo")
     .test(
