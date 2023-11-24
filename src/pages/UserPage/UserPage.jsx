@@ -57,16 +57,11 @@ const UserPage = () => {
     <section className="py-[20px] md:py-[60px] ">
       <div className="relative container mx-auto xl:flex gap-[32px]">
         <div className="mb-[42px]">
-          <h2
-            onClick={() => {
-              console.log(user);
-            }}
-            className="text-black text-xl font-medium font-['Manrope'] tracking-wide mb-[18px] md:text-[28px]"
-          >
+          <h2 className="text-black text-xl font-medium font-['Manrope'] tracking-wide mb-[18px] md:text-[28px]">
             My information:
           </h2>
 
-          {/* <UserCard /> */}
+          <UserCard />
         </div>
 
         <div className="relative">
