@@ -4,14 +4,13 @@
 
 @import './assets/fonts/custom-fonts.css';
 
-@layer components{
+@layer components {
   .blue-gradient:hover {
     background: linear-gradient(290deg, #419ef1 0%, #9bd0ff 107.89%);
   }
-    .blue-gradient-full {
-      background: linear-gradient(290deg, #419ef1 0%, #9bd0ff 107.89%);
-    }
-
+  .blue-gradient-full {
+    background: linear-gradient(290deg, #419ef1 0%, #9bd0ff 107.89%);
+  }
 }
 
 .visually-hidden {
@@ -26,6 +25,11 @@
   clip-path: inset(50%);
   margin: -1px;
 }
-.overflow-hidden{
+.overflow-hidden {
   overflow: hidden;
+}
+
+/* auth shadow */
+.auth-box-shadow {
+  box-shadow: 3px 8px 14px 0px rgba(136, 198, 253, 0.19);
 }
