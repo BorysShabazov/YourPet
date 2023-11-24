@@ -10,6 +10,7 @@ import { update } from '../../Redux/auth/auth-operations';
 import { userSchema } from './UserSchema';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { format } from 'date-fns';
 
 const errorMessageStyles =
   'absolute -bottom-[18px] ml-4 text-red text-xs font-normal';
@@ -20,15 +21,16 @@ const inputStyle =
   "text-neutral-900 text-xs font-normal font-['Manrope'] tracking-wide w-[190px] h-6 px-3 py-1 rounded-[20px] border border-blue-400 justify-start items-center gap-[191px] inline-flex md:w-[255px]  xl:w-[255px]";
 
 export const UserForm = () => {
+  const user = useSelector(getUser);
+  const dispatch = useDispatch();
+
   const [userImagePath, setUserImagePath] = useState('');
   const [isEdit, setIsEdit] = useState(false);
 
+  const [userAvatar, setUserAvatar] = useState(user.avatarURL);
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [confirmChangeAvatar, setConfirmChangeAvatar] = useState(false);
-
-  const user = useSelector(getUser);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isEdit) {
@@ -36,22 +38,22 @@ export const UserForm = () => {
     }
   }, [isEdit]);
 
+  console.log(user.birthday);
+
   const formik = useFormik({
     initialValues: {
-      avatar: user.avatarURL,
-      name: user.name,
-      email: user.email,
-      birthday: formatBirthday(user.birthday || '20.20.2020'),
-      phone: user.phone,
-      city: user.city,
+      name: user.name || '',
+      email: user.email || '',
+      birthday: user.birthday || '',
+      phone: user.phone || '',
+      city: user.city || '',
     },
     validateOnChange: false,
     validateOnBlur: false,
-    validationSchema: userSchema,
+    // validationSchema: userSchema,
 
-    onSubmit: ({ avatar, name, email, birthday, phone, city }) => {
+    onSubmit: ({ name, email, birthday, phone, city }) => {
       const updateUser = {
-        avatarURL: user.avatarURL,
         name,
         email,
         birthday,
@@ -59,17 +61,17 @@ export const UserForm = () => {
         city,
       };
 
-      console.log('avatar--->', avatar);
+      console.log('avatar--->', previewAvatar);
 
       if (previewAvatar && confirmChangeAvatar) {
-        updateUser.avatarURL = avatar;
-        console.log('--->', updateUser.avatarURL);
+        updateUser.avatar = previewAvatar;
+        console.log('--->', updateUser.avatar);
       }
 
       const formData = createUserFormData(updateUser);
 
       dispatch(update(formData));
-
+      setUserAvatar(previewAvatar);
       setChangeAvatar(false);
       setIsEdit(false);
     },
@@ -81,7 +83,7 @@ export const UserForm = () => {
   const createUserFormData = (data) => {
     const formData = new FormData();
     console.log('data===', data);
-    formData.append('avatarURL', data.avatarURL);
+    formData.append('avatarURL', data.avatar);
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('birthday', data.birthday);
@@ -92,7 +94,7 @@ export const UserForm = () => {
   };
 
   function previewFile(file) {
-    var reader = new FileReader();
+    const reader = new FileReader();
 
     reader.onloadend = function () {
       setPreviewAvatar(reader.result);
@@ -110,23 +112,12 @@ export const UserForm = () => {
     setIsEdit(false);
     setChangeAvatar(false);
     setConfirmChangeAvatar(false);
-    formik.setFieldValue('avatar', user.avatarURL);
     formik.setFieldValue('name', user.name);
     formik.setFieldValue('email', user.email);
     formik.setFieldValue('birthday', user.birthday);
     formik.setFieldValue('phone', user.phone);
     formik.setFieldValue('city', user.city);
   };
-
-  function formatBirthday(birthday) {
-    if (!birthday) {
-      return '01.01.2001';
-    }
-    if (birthday.includes('-')) return birthday;
-    const parts = birthday.split('.');
-    const result = parts[2] + '-' + parts[1] + '-' + parts[0];
-    return result;
-  }
 
   return (
     <form
@@ -157,7 +148,7 @@ export const UserForm = () => {
             <div className="flex justify-center mb-[14px]">
               <img
                 className="w-[182px] h-[182px] rounded-[40px] object-cover"
-                src={previewAvatar ? previewAvatar : user.avatarURL}
+                src={previewAvatar ? previewAvatar : userAvatar}
                 alt="User Avatar"
               />
             </div>
@@ -213,13 +204,13 @@ export const UserForm = () => {
               type={isEdit && !changeAvatar ? 'file' : ''}
               id="avatar"
               name="avatar"
-              accept="image/*"
+              accept="image/jpeg, image/png"
               onChange={(e) => {
                 const file = e.target.files[0];
                 const localPath = URL.createObjectURL(file);
-                formik.setFieldValue('avatar', file);
                 setUserImagePath(localPath);
                 previewFile(file);
+                console.log(previewAvatar);
               }}
             />
           </div>
@@ -269,12 +260,15 @@ export const UserForm = () => {
             <label className={labelStyle} htmlFor="birthday">
               Birthday:
             </label>
-            <div className={inputStyle}>
+            <div>
               <DatePicker
                 selected={new Date(formikValues['birthday'])}
-                onChange={(date) => formik.setFieldValue('birthday', date)}
+                onChange={(date) => {
+                  formik.setFieldValue('birthday', date);
+                }}
                 readOnly={!isEdit}
                 dateFormat="dd-MM-yyyy"
+                className={inputStyle}
               />
             </div>
           </div>
