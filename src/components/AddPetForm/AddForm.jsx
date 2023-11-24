@@ -11,10 +11,13 @@ import {
 import Svg from '../Svg/Svg';
 import { useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { createPets } from '../../Redux/pets/petsOperation';
 
 const AddForm = () => {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const previousLocation = useLocation();
   const backLinkLocationRef = useRef(previousLocation.state ?? '/');
 
@@ -34,10 +37,13 @@ const AddForm = () => {
     formData.append('sex', data.sex);
     formData.append('image', data.petImage);
     formData.append('comments', data.comments);
-    // formData.append('title', data.title);
-    // formData.append('price', data.price);
-    // formData.append('location', data.location);
-    console.log(formData);
+
+    if (data.category !== 'own') {
+      formData.append('title', data.title);
+      formData.append('location', data.location);
+    }
+    if (data.category === 'sell') formData.append('price', data.price);
+
     return formData;
   };
 
@@ -63,21 +69,20 @@ const AddForm = () => {
         (step === 3 && lastValidationSchema)
       }
       onSubmit={(data) => {
-        console.log('i work?');
-
         if (step === 3) {
           const formData = createFormData(data);
-          //your-pet-server.onrender.com/api/pets
-          axios
-            .post('/pets', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            })
-            .then((res) => res.json())
-            .then(console.log);
-          // navigate(backLinkLocationRef.current);
-          return;
+
+          dispatch(createPets(formData));
+          //   axios
+          //     .post('/notices', formData, {
+          //       headers: {
+          //         'Content-Type': 'multipart/form-data',
+          //       },
+          //     })
+          //     .then((res) => res.json())
+          //     .then(console.log);
+          //   // navigate(backLinkLocationRef.current);
+          //   return;
         }
 
         step < 3 && setStep((prevStep) => prevStep + 1);

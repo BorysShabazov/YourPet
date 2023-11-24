@@ -44,7 +44,7 @@ const petsStateSlice = createSlice({
     builder.addCase(createPets.pending, pendingFunc);
     builder.addCase(createPets.fulfilled, (state, action) => {
       return {
-        items: action.payload,
+        items: [action.payload.data, ...state.items],
         isLoading: false,
         error: null,
       };

@@ -35,6 +35,7 @@ const MoreInfoForm = ({
   };
 
   const hasPetImage = petImagePath !== '';
+
   return (
     <div className="flex flex-col mb-[24px] gap-[20px] md:flex-row md:mx-[40px] md:gap-[45px] xl:gap-[80px]">
       <div>
@@ -80,10 +81,11 @@ const MoreInfoForm = ({
               Male
             </label>
           </div>
+
           <ErrorMessage name="sex">
             {(message) => (
               <div className="absolute -bottom-[10px] flex justify-center w-[100%] text-red text-xs font-normal">
-                <p className="w-fit ">{message}</p>
+                <p className="w-fit">{message}</p>
               </div>
             )}
           </ErrorMessage>
