@@ -21,7 +21,6 @@ import { createPortal } from 'react-dom';
 const mobileMenuRoot = document.querySelector('#mobile-menu');
 
 export default function Header() {
-  
   const { token } = useSelector(selectAuth);
   const { name = '', avatarURL = '' } = useSelector(getUser) ?? {};
 
@@ -46,7 +45,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative pt-[20px] md:pt-[24px] xl:pt-[20px] bg-wihte">
+      <header className="relative pt-[20px] md:pt-[24px] xl:pt-[20px] bg-[#FEF9F9]">
         <Container>
           <div className="flex items-center justify-between">
             <Nav
