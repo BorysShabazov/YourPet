@@ -8,6 +8,10 @@
   .blue-gradient:hover {
     background: linear-gradient(290deg, #419ef1 0%, #9bd0ff 107.89%);
   }
+    .blue-gradient-full {
+      background: linear-gradient(290deg, #419ef1 0%, #9bd0ff 107.89%);
+    }
+
 }
 
 .visually-hidden {
