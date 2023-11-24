@@ -1,25 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createPets, deletePets, fetchPets } from './petsOperation';
+import { pendingFunc, rejectFunc } from '../operations/handlePendingAndReject';
 
 const initialPets = {
   items: [],
   isLoading: false,
   error: null,
-};
-
-const rejectFunc = (state, action) => {
-  return {
-    items: state.items,
-    isLoading: false,
-    error: action.payload,
-  };
-};
-const pendingFunc = (state) => {
-  return {
-    items: state.items,
-    isLoading: true,
-    error: null,
-  };
 };
 
 const petsStateSlice = createSlice({
