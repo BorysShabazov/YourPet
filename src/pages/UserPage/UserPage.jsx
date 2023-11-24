@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react';
 import { fetchPets } from '../../Redux/pets/petsOperation';
 import Congrats from '../../components/Modals/Congrats/Congrats';
 import { BasicModal } from '../../components/Modals/BasicModal/BasicModal';
+import { getIsLoggedIn } from '../../Redux/auth/auth-selectors';
+import Leaving from '../../components/Modals/Leaving/Leaving';
+
 const UserPage = () => {
   // const dispatch = useDispatch();
   // const petsList = useSelector(getPets)
@@ -15,6 +18,11 @@ const UserPage = () => {
   const location = useLocation();
 
   const [isCongratsModalOpen, setShowCongratsModal] = useState(false);
+  const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
+
+  const onTogleLeavingModal = () => {
+    setLeavingModalOpen(!isLeavingModalOpen);
+  };
 
   useEffect(() => {
     if (location.state && location.state.fromPage === '/YourPet/register') {
@@ -49,9 +57,7 @@ const UserPage = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   dispatch(fetchPets());
-  // }, [dispatch]);
+  const isLoggedIn = useSelector(getIsLoggedIn)
 
   return (
     <section className="py-[20px] md:py-[60px] ">
@@ -61,7 +67,7 @@ const UserPage = () => {
             My information:
           </h2>
 
-          <UserCard />
+          {isLoggedIn && <UserCard onTogleLeavingModal={onTogleLeavingModal} />}
         </div>
 
         <div className="relative">
@@ -101,8 +107,17 @@ const UserPage = () => {
         isOpen={isCongratsModalOpen}
         onCloseModal={handleCloseCongratsModal}
       >
+        <Leaving onCloseModal={onTogleLeavingModal} />
         <Congrats onCloseModal={handleCloseCongratsModal} />
       </BasicModal>
+
+      <BasicModal
+        isOpen={isLeavingModalOpen}
+        onCloseModal={onTogleLeavingModal}
+      >
+        <Leaving onCloseModal={onTogleLeavingModal} />
+      </BasicModal>
+      
     </section>
   );
 };
