@@ -31,9 +31,8 @@ export const createNotice = createAsyncThunk(
   'notices/postNotice',
   async (arg, thunkAPI) => {
     try {
-      await axios.post('/notices', arg);
-      const response = await axios.get('/notices');
-      return response.data;
+      const { data } = await axios.post('/notices', arg);
+      return data;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
     }
