@@ -25,7 +25,7 @@ const AddForm = () => {
   const { step, setStep, category, setCategory } =
     useContext(AddPetFormContext);
   const isLoading = useSelector(getIsLoadingPets);
-  const addPetError = useSelector(getAddPetError);
+  const addingPetError = useSelector(getAddPetError);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const previousLocation = useLocation();
@@ -91,9 +91,9 @@ const AddForm = () => {
           dispatch(
             category === 'own' ? createPets(formData) : createNotice(formData),
           ).then(() => {
-            if (!addPetError) {
+            if (!addingPetError) {
               actions.resetForm();
-              navigate(backLinkLocationRef.current);
+              navigate(category === 'own' ? '/user' : '/notices');
             }
           });
         }
