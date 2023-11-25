@@ -20,7 +20,8 @@ const mobileMenuRoot = document.querySelector('#mobile-menu');
 
 export default function Header() {
   const { token } = useSelector(selectAuth);
-
+// const token=true
+// const token=false
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
@@ -34,7 +35,6 @@ export default function Header() {
 
   const onToogleMobileMenu = () => {
     setIsMobilMenuActive(!isMobilMenuActive);
-    console.log('toggle');
   };
 
   const onToogleLeavingModal = () => {
