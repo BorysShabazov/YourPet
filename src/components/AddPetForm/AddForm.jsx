@@ -1,8 +1,8 @@
 import { useContext, useRef } from 'react';
 import { Form, Formik } from 'formik';
-import ChooseOptionSection from './ChooseOptionForm';
-import PersonalDetailsForm from './PersonalDetailsForm';
-import MoreInfoForm from './MoreInfoForm';
+import ChooseOptionSection from './FormSections/ChooseOptionSection';
+import PersonalDetailsSection from './FormSections/PersonalDetailsSection';
+import MoreInfoSection from './FormSections/MoreInfoSection';
 import {
   firstValidationSchema,
   secondValidationSchema,
@@ -17,6 +17,7 @@ import {
   getAddPetError,
   getIsLoadingPets,
 } from '../../Redux/pets/petsSelectors';
+import { formatRawDate } from '../../Helpers/formatRawDate';
 
 const buttonStyles =
   'px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide';
@@ -46,7 +47,7 @@ const AddForm = () => {
 
     formData.append('category', data.category);
     formData.append('name', data.name);
-    formData.append('birthDate', data.birth);
+    formData.append('birthDate', formatRawDate(data.birth));
     formData.append('type', data.type);
     formData.append('sex', data.sex);
     formData.append('image', data.petImage);
@@ -67,7 +68,7 @@ const AddForm = () => {
         category: category,
         title: '',
         name: '',
-        birth: '',
+        birth: new Date(),
         type: '',
         sex: '',
         petImage: null,
@@ -120,11 +121,10 @@ const AddForm = () => {
         },
       }) => (
         <Form onSubmit={handleSubmit} encType="multipart/form-data">
-          {step === 1 && (
-            <ChooseOptionSection callback={handleChange} category={category} />
-          )}
+          {step === 1 && <ChooseOptionSection category={category} />}
           {step === 2 && (
-            <PersonalDetailsForm
+            <PersonalDetailsSection
+              setFieldValue={setFieldValue}
               errors={errors}
               category={category}
               title={title}
@@ -134,7 +134,7 @@ const AddForm = () => {
             />
           )}
           {step === 3 && (
-            <MoreInfoForm
+            <MoreInfoSection
               setPhoto={(file) => {
                 setFieldValue('petImage', file);
               }}

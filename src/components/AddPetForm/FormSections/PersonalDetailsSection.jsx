@@ -1,7 +1,8 @@
-import { CustomInput } from './CustomInput';
+import { CustomInput } from '../CustomFormComponents/CustomInput';
 
-const PersonalDetailsForm = ({
+const PersonalDetailsSection = ({
   errors,
+  setFieldValue,
   category,
   title,
   name,
@@ -33,7 +34,8 @@ const PersonalDetailsForm = ({
           <CustomInput
             name="birth"
             value={birth}
-            placeholder="Type date of birth"
+            type="date"
+            callback={setFieldValue}
             error={errors.birth}
           >
             Date of birth
@@ -52,4 +54,4 @@ const PersonalDetailsForm = ({
   );
 };
 
-export default PersonalDetailsForm;
+export default PersonalDetailsSection;
