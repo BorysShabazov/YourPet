@@ -34,7 +34,7 @@ export default function Header() {
 
   const onToogleMobileMenu = () => {
     setIsMobilMenuActive(!isMobilMenuActive);
-    console.log("toggle")
+    console.log('toggle');
   };
 
   const onToogleLeavingModal = () => {
@@ -52,12 +52,17 @@ export default function Header() {
               styleNavList="hidden xl:flex"
             />
 
-            <div className="flex gap-[8px] md:gap-[24px]">
+            <div className="smOnly:h-[28px] flex gap-[8px] md:gap-[24px]">
               {token ? (
                 <div className="hidden md:flex gap-6 items-center">
-                  <BtnLogout style="hidden xl:flex">Logout</BtnLogout>
+                  <BtnLogout
+                    style="hidden xl:flex"
+                    onClick={onToogleLeavingModal}
+                  >
+                    logout
+                  </BtnLogout>
                   <UserInfo
-                    style="md:flex gap-[12px] text-yellow"
+                    style="md:flex  gap-[12px] items-center md:h-[44px] text-yellow"
                     styleName="hidden md:inline-block"
                   />
                 </div>
