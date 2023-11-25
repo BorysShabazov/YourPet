@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Svg from '../Svg/Svg';
+import Svg from '../../Svg/Svg';
 import { ErrorMessage, Field } from 'formik';
-import { ErrorInputMessage } from './ErrorInputMessage';
+import { ErrorInputMessage } from '../CustomFormComponents/ErrorInputMessage';
 
 const baseButtonStyles =
   'flex flex-row align-center  px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm text-base font-normal font-manrope tracking-wide leading-normal';
@@ -16,7 +16,7 @@ const errorInputStyle = 'border-red';
 const errorMessageStyles =
   'absolute -bottom-[18px] ml-4 text-red text-xs font-normal';
 
-const MoreInfoForm = ({
+const MoreInfoSection = ({
   errors,
   category,
   sex,
@@ -208,4 +208,4 @@ const MoreInfoForm = ({
   );
 };
 
-export default MoreInfoForm;
+export default MoreInfoSection;

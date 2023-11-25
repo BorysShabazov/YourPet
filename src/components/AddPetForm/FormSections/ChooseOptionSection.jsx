@@ -1,5 +1,5 @@
-import { ErrorInputMessage } from './ErrorInputMessage';
-import { RadioButton } from './RadioButton';
+import { ErrorInputMessage } from '../CustomFormComponents/ErrorInputMessage';
+import { RadioButton } from '../CustomFormComponents/RadioButton';
 
 const ChooseOptionSection = ({ category }) => {
   return (

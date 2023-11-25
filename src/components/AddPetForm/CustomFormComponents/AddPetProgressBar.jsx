@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AddPetFormContext } from './AddPetForm';
+import { AddPetFormContext } from '../AddPetForm';
 
 const progressBarStyles =
   'flex flex-col justify-center text-[10px] font-medium font-manrope md:text-base  md:leading-relaxed';
