@@ -11,15 +11,18 @@ import { userSchema } from './UserSchema';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const errorTextStyle ="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal top-6 left-[60px] xl:left-[85px]"
-const hoverStyle = "transition duration-200 ease-in-out cursor-pointer hover:opacity-80"
+const errorTextStyle =
+  'pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal top-6 left-[60px] xl:left-[85px]';
+const hoverStyle =
+  'transition duration-200 ease-in-out cursor-pointer hover:opacity-80';
 const labelStyle =
   "text-neutral-900 text-sm font-semibold font-['Manrope'] tracking-wide mdOnly:text-[16px] ";
 const inputStyle =
   "text-neutral-900 text-xs font-normal font-['Manrope'] tracking-wide w-[190px] h-6 px-3 py-1 rounded-[20px] border border-blue-400 justify-start items-center gap-[191px] inline-flex md:w-[255px]  xl:w-[255px]";
 
-export const UserForm = ({onTogleLeavingModal}) => {
+export const UserForm = ({ onTogleLeavingModal }) => {
   const user = useSelector(getUser);
+  const isUpdatePending = useSelector((state) => state.auth.isRequestActive); // Предполагается, что isRequestActive используется для update
   const dispatch = useDispatch();
 
   const [avatarFile, setAvatarFile] = useState(null);
@@ -37,15 +40,13 @@ export const UserForm = ({onTogleLeavingModal}) => {
 
   const birthdayType = (date) => {
     const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
-    const dateString = "2023-11-07T22:00:00.000Z";
-  
+
     if (typeof date === 'string' && dateRegex.test(date)) {
       return date;
     }
 
-    return Date.now()
+    return Date.now();
   };
-
 
   const formik = useFormik({
     initialValues: {
@@ -68,18 +69,14 @@ export const UserForm = ({onTogleLeavingModal}) => {
         city,
       };
 
-      console.log('avatar--->', avatarFile);
-
       if (previewAvatar && confirmChangeAvatar) {
         updateUser.avatar = avatarFile;
-        console.log('--->', updateUser.avatar);
       }
 
       const formData = createUserFormData(updateUser);
       dispatch(update(formData));
       setChangeAvatar(false);
       setIsEdit(false);
-  
     },
   });
 
@@ -88,7 +85,7 @@ export const UserForm = ({onTogleLeavingModal}) => {
 
   const createUserFormData = (data) => {
     const formData = new FormData();
-    console.log('data===', data);
+
     formData.append('avatar', data.avatar);
     formData.append('name', data.name);
     formData.append('email', data.email);
@@ -134,7 +131,7 @@ export const UserForm = ({onTogleLeavingModal}) => {
     >
       <div className={`absolute top-[14px] right-[14px] ${hoverStyle}`}>
         {!isEdit ? (
-          <div  onClick={() => setIsEdit(true)}>
+          <div onClick={() => setIsEdit(true)}>
             <EditIcon />
           </div>
         ) : (
@@ -151,12 +148,16 @@ export const UserForm = ({onTogleLeavingModal}) => {
             htmlFor="avatar"
             className="flex justify-center flex-col gap-[5px]"
           >
-            <div className="flex justify-center mb-[14px]">
-              <img
-                className="w-[182px] h-[182px] rounded-[40px] object-cover"
-                src={previewAvatar ? previewAvatar : user.avatarURL}
-                alt="User Avatar"
-              />
+            <div className="flex justify-center mb-[14px] w-[182px] h-[182px] rounded-[40px] bg-slate-300 items-center">
+              {!isUpdatePending ? (
+                <img
+                  className=" object-cover  rounded-[40px]"
+                  src={previewAvatar ? previewAvatar : user.avatarURL}
+                  alt="User Avatar"
+                />
+              ) : (
+                <div>Loading</div>
+              )}
             </div>
             {!changeAvatar ? (
               <div
@@ -215,9 +216,8 @@ export const UserForm = ({onTogleLeavingModal}) => {
               accept="image/jpeg, image/png"
               onChange={(e) => {
                 const file = e.target.files[0];
-                const localPath = URL.createObjectURL(file);
                 previewFile(file);
-                setAvatarFile(file)
+                setAvatarFile(file);
               }}
             />
           </div>
@@ -240,9 +240,7 @@ export const UserForm = ({onTogleLeavingModal}) => {
               readOnly={!isEdit}
             />
             {errors['name'] && (
-              <p className={errorTextStyle}>
-                {errors['name']}
-              </p>
+              <p className={errorTextStyle}>{errors['name']}</p>
             )}
           </div>
 
@@ -252,7 +250,9 @@ export const UserForm = ({onTogleLeavingModal}) => {
               Email:
             </label>
             <input
-              className={`${inputStyle} ${errors['email'] && 'border-rose-400'}`}
+              className={`${inputStyle} ${
+                errors['email'] && 'border-rose-400'
+              }`}
               type="text"
               id="email"
               name="email"
@@ -260,10 +260,8 @@ export const UserForm = ({onTogleLeavingModal}) => {
               onChange={formik.handleChange}
               readOnly={!isEdit}
             />
-                        {errors['email'] && (
-              <p className={errorTextStyle}>
-                {errors['email']}
-              </p>
+            {errors['email'] && (
+              <p className={errorTextStyle}>{errors['email']}</p>
             )}
           </div>
 
@@ -272,23 +270,10 @@ export const UserForm = ({onTogleLeavingModal}) => {
             <label className={labelStyle} htmlFor="birthday">
               Birthday:
             </label>
-
-            {/* <input
-              className={inputStyle}
-              type="text"
-              id="birthday"
-              name="birthday"
-              value={formikValues['birthday']}
-              onChange={formik.handleChange}
-              readOnly={!isEdit}
-            /> */}
             <div>
               <DatePicker
-                selected={
-                  new Date(formikValues['birthday']) 
-                }
+                selected={new Date(formikValues['birthday'])}
                 onChange={(date) => {
-
                   formik.setFieldValue('birthday', date);
                 }}
                 readOnly={!isEdit}
@@ -304,19 +289,19 @@ export const UserForm = ({onTogleLeavingModal}) => {
               Phone:
             </label>
             <input
-              className={`${inputStyle} ${errors['phone'] && 'border-rose-400'}`}
+              className={`${inputStyle} ${
+                errors['phone'] && 'border-rose-400'
+              }`}
               type="tel"
               id="phone"
               name="phone"
-              placeholder='+380000000000'
+              placeholder="+38123456789"
               value={formikValues['phone']}
               onChange={formik.handleChange}
               readOnly={!isEdit}
             />
-             {errors['phone'] && (
-              <p className={errorTextStyle}>
-              {errors['phone']}
-              </p>
+            {errors['phone'] && (
+              <p className={errorTextStyle}>{errors['phone']}</p>
             )}
           </div>
 
@@ -335,9 +320,7 @@ export const UserForm = ({onTogleLeavingModal}) => {
               readOnly={!isEdit}
             />
             {errors['city'] && (
-              <p className={errorTextStyle}>
-                {errors['city']}
-              </p>
+              <p className={errorTextStyle}>{errors['city']}</p>
             )}
           </div>
 
@@ -352,18 +335,21 @@ export const UserForm = ({onTogleLeavingModal}) => {
               </button>
             </div>
           ) : (
-            <div 
-          onClick={onTogleLeavingModal}
-            className="w-full flex text-zinc-500 text-base font-medium font-['Manrope'] tracking-wide ">
-            <div className={`cursor-pointer hover:opacity-80 flex  gap-[12px] ${hoverStyle}`}>
-            <Svg
-                id={'icon-logout'}
-                size={24}
-                stroke={'#54ADFF'}
-                fill={'transparent'}
-              />
-              Log Out
-            </div>
+            <div
+              onClick={onTogleLeavingModal}
+              className="w-full flex text-zinc-500 text-base font-medium font-['Manrope'] tracking-wide "
+            >
+              <div
+                className={`cursor-pointer hover:opacity-80 flex  gap-[12px] ${hoverStyle}`}
+              >
+                <Svg
+                  id={'icon-logout'}
+                  size={24}
+                  stroke={'#54ADFF'}
+                  fill={'transparent'}
+                />
+                Log Out
+              </div>
             </div>
           )}
         </div>

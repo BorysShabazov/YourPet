@@ -112,16 +112,19 @@ export const authSlice = createSlice({
     // update
     builder.addCase(update.pending, (state, action) => {
       state.error = null;
+      state.isRequestActive = true;
     });
 
     builder.addCase(update.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.isLoggedIn = true;
       state.error = null;
+      state.isRequestActive = false;
     });
 
     builder.addCase(update.rejected, (state, action) => {
       state.error = action.payload; //409
+      state.isRequestActive = false;
     });
   },
 });
