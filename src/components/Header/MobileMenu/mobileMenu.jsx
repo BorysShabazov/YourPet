@@ -26,16 +26,16 @@ export default function MobileMenu({ onToogleMobileMenu }) {
   return (
     <>
       <div className="absolute top-0 left-0  h-screen w-screen pt-[20px] md:pt-[24px] bg-white xl:hidden">
-        <Container className="flex flex-col gap-[42px] md:gap-[92px] items-centr justify-center">
-          <div className="w-full flex items-center justify-between">
+        <Container className="flex flex-col gap-[42px]  md:gap-[92px] items-centr justify-center">
+          <div className="flex  items-center justify-between w-full h-[28px] md:h-[44px]">
             <Nav styleNavList="hidden" onClick={onToogleMobileMenu} />
-            <div className="flex gap-[24px] ">
+            <div className="flex gap-[24px] "> 
               {token ? (
                 <BtnLogout
                   onClick={onToogleLeavingModal}
                   style="absolute bottom-[20px] left-[20px] md:static flex"
                 >
-                  Logout
+                  lgout
                 </BtnLogout>
               ) : (
                 <AuthNav
