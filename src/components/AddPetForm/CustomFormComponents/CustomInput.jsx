@@ -1,6 +1,9 @@
 import { Field } from 'formik';
 import { ErrorInputMessage } from './ErrorInputMessage';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useState } from 'react';
+import { formatRawDate } from '../../../Helpers/formatRawDate';
 
 const labelStyles =
   'relative flex flex-col text-black text-sm font-medium font-manrope md:text-xl md:leading-relaxed';
@@ -19,6 +22,8 @@ export const CustomInput = ({
   error,
   children,
 }) => {
+  const [date, setDate] = useState(new Date());
+
   return (
     <label className={labelStyles}>
       {children}
@@ -33,9 +38,10 @@ export const CustomInput = ({
       ) : (
         <DatePicker
           name={name}
-          selected={value}
+          selected={date}
           onChange={(date) => {
-            callback('birth', date);
+            setDate(date);
+            callback('birth', formatRawDate(date));
           }}
           dateFormat="dd-MM-yyyy"
           className={`${inputStyles} ${error ? errorInputStyle : ''}`}

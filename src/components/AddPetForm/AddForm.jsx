@@ -47,7 +47,7 @@ const AddForm = () => {
 
     formData.append('category', data.category);
     formData.append('name', data.name);
-    formData.append('birthDate', formatRawDate(data.birth));
+    formData.append('birthDate', data.birth);
     formData.append('type', data.type);
     formData.append('sex', data.sex);
     formData.append('image', data.petImage);
@@ -68,7 +68,7 @@ const AddForm = () => {
         category: category,
         title: '',
         name: '',
-        birth: new Date(),
+        birth: formatRawDate(new Date()),
         type: '',
         sex: '',
         petImage: null,
@@ -91,7 +91,9 @@ const AddForm = () => {
 
           dispatch(
             category === 'own' ? createPets(formData) : createNotice(formData),
-          ).then(() => {
+          ).then((res) => {
+            console.log(res.error);
+
             if (!addingPetError) {
               actions.resetForm();
               navigate(category === 'own' ? '/user' : '/notices');
