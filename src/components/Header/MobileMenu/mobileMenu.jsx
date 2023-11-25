@@ -53,7 +53,7 @@ export default function MobileMenu({ onToogleMobileMenu }) {
               style="flex-col  gap-[12px] items-center md:hidden "
             />
           ) : (
-            <UserInfo
+            <UserInfo onClick={onToogleMobileMenu}
               style={`flex items-center justify-center gap-[12px] ${
                 token ? 'pb-[44px]' : ''
               } text-yellow md:hidden`}

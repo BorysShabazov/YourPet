@@ -4,11 +4,11 @@ import { getUser } from '../../../Redux/auth/auth-selectors';
 import Svg from '../../Svg/Svg';
 import { firstLetterUp } from '../helpers';
 
-export default function UserInfo({ style, styleName }) {
+export default function UserInfo({ style, styleName, onClick }) {
   const { name = '', avatarURL = '' } = useSelector(getUser) ?? {};
 
   return (
-    <NavLink to="/user" className={style}>
+    <NavLink to="/user" className={style} onClick={onClick}>
       {!avatarURL ? (
         <Svg id="icon-user" size="28px" stroke="#FFC107" fill="transparent" />
       ) : (
