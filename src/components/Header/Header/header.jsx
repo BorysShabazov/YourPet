@@ -20,18 +20,18 @@ const mobileMenuRoot = document.querySelector('#mobile-menu');
 
 export default function Header() {
   const { token } = useSelector(selectAuth);
-// const token=true
-// const token=false
+  // const token=true
+  // const token=false
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
   useEffect(() => {
-    if (isMobilMenuActive || isLeavingModalOpen) {
+    if (isMobilMenuActive) {
       document.body.classList.add('overflow-hidden');
     } else {
       document.body.classList.remove('overflow-hidden');
     }
-  }, [isMobilMenuActive, isLeavingModalOpen]);
+  }, [isMobilMenuActive]);
 
   const onToogleMobileMenu = () => {
     setIsMobilMenuActive(!isMobilMenuActive);
