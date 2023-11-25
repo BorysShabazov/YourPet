@@ -5,18 +5,20 @@ const baseButtonStyles =
 const regularButtonStyles = 'bg-lightBlue text-blue';
 const hoveredButtonStyles = 'bg-blue text-background';
 
-export const RadioButton = ({ category, name, value, children }) => (
-  <label
-    className={`${baseButtonStyles} ${
-      category === value ? hoveredButtonStyles : regularButtonStyles
-    }`}
-  >
-    <Field
-      name={name}
-      type="radio"
-      value={value}
-      className="w-0 h-0 invisible"
-    />
-    {children}
-  </label>
-);
+export const RadioButton = ({ category, name, value, children }) => {
+  return (
+    <label
+      className={`${baseButtonStyles} ${
+        category === value ? hoveredButtonStyles : regularButtonStyles
+      }`}
+    >
+      <Field
+        name={name}
+        type="radio"
+        value={value}
+        className="w-0 h-0 invisible"
+      />
+      {children}
+    </label>
+  );
+};

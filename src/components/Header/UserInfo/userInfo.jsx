@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { getUser } from '../../../Redux/auth/auth-selectors';
 import Svg from '../../Svg/Svg';
+import { firstLetterUp } from '../helpers';
 
 export default function UserInfo({ style, styleName }) {
   const { name = '', avatarURL = '' } = useSelector(getUser) ?? {};
@@ -16,7 +17,7 @@ export default function UserInfo({ style, styleName }) {
           className="block w-[28px] h-[28px] border-[1px] rounded-full border-yellow object-cover"
         />
       )}
-      <span className={styleName}>{name ? name : 'Name'}</span>
+      <span className={styleName}>{name ? firstLetterUp(name) : 'Name'}</span>
     </NavLink>
   );
 }

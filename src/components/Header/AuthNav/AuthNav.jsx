@@ -1,13 +1,12 @@
 import BtnAuth from '../BtnAuth/BtnAuth';
 import { useLocation } from 'react-router';
 import Svg from '../../Svg/Svg';
+import { firstLetterUp } from '../helpers';
 
 const navLinkArr = [
   { path: '/login', text: 'log IN' },
-  { path: '/register', text: 'Registration' },
+  { path: '/register', text: 'registration' },
 ];
-const firstLetterUp = (text) => text.charAt(0).toUpperCase() + text.slice(1);
-
 export default function AuthNav({ onClick, style = '' }) {
   const location = useLocation();
   const pathPage = location.pathname;
@@ -24,7 +23,8 @@ export default function AuthNav({ onClick, style = '' }) {
               path === pathPage ? 'text-white bg-yellow' : ''
             }`}
           >
-            {firstLetterUp(text)}{' '}
+            {/* {firstLetterUp(text)} */}
+            {text}
             {idx === 0 ? (
               <Svg
                 id="icon-pawprint"
