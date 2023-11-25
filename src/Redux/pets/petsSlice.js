@@ -41,27 +41,15 @@ const petsStateSlice = createSlice({
     // delete
 
     builder.addCase(deletePets.pending, pendingFunc);
-    //     builder.addCase(deletePets.fulfilled, (state, action) => {
-    //       console.log('New state after delete:', state);
 
-    //       return {
-    //         ...state,
-    //         items: state.items.filter((el) => el._id !== action.payload._id),
-    //         isLoading: false,
-    //         error: null,
-    //       };
-    //     });
-    //     builder.addCase(deletePets.rejected, rejectFunc);
-    //   },
-    // });
     builder.addCase(deletePets.fulfilled, (state, action) => {
-      const index = state.items.findIndex(
-        (pet) => pet.id === action.payload.id,
-      );
-      state.items.splice(index, 1);
-      state.isLoading = false;
-      state.error = null;
+      return {
+        items: [...state.items.filter((el) => el._id !== action.payload)],
+        isLoading: false,
+        error: null,
+      };
     });
+
     builder.addCase(deletePets.rejected, rejectFunc);
   },
 });
