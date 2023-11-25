@@ -2,15 +2,14 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setToken, delToken } from '../operations/handleToken';
 
-// const BASE_URL = 'https://your-pet-server.onrender.com/api/users';
-axios.defaults.baseURL = 'https://your-pet-server.onrender.com/api/';
+axios.defaults.baseURL = 'https://your-pet-server.onrender.com';
 
 // register
 export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await axios.post(`users/register`, credentials);
+      const { data } = await axios.post(`/api/users/register`, credentials);
       const { data: dataResponse } = data;
 
       setToken(dataResponse.token);
@@ -26,7 +25,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await axios.post(`users/login`, credentials);
+      const { data } = await axios.post(`/api/users/login`, credentials);
       const { data: dataResponse } = data;
 
       setToken(dataResponse.token);
@@ -51,7 +50,7 @@ export const currentUser = createAsyncThunk(
     setToken(persistToken);
 
     try {
-      const { data } = await axios.get(`users/current`);
+      const { data } = await axios.get(`/api/users/current`);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.status);
@@ -60,9 +59,9 @@ export const currentUser = createAsyncThunk(
 );
 
 // logout
-export const logout = createAsyncThunk('auth/logout', async (thunkAPI) => {
+export const logout = createAsyncThunk('/api/auth/logout', async (thunkAPI) => {
   try {
-    const result = await axios.post(`users/logout`);
+    const result = await axios.post(`/api/users/logout`);
     delToken();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.status);
@@ -74,7 +73,7 @@ export const update = createAsyncThunk(
   'auth/update',
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await axios.patch(`users`, credentials, {
+      const { data } = await axios.patch(`/api/users`, credentials, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

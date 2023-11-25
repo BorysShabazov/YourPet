@@ -1,8 +1,6 @@
-import axios from "axios";
-
-const BASE_URL = axios.defaults.baseURL = 'https://your-pet-server.onrender.com'
+import axios from 'axios';
 
 export const getNews = async () => {
-    const resp = await axios(`${BASE_URL}/api/news/`);
-    return resp.data;
-}
+  const resp = await axios('/api/news/');
+  return resp.data;
+};
