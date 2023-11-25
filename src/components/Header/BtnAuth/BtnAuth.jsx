@@ -8,7 +8,8 @@ export default function BtnAuth({ children, style, path, onClick }) {
       className={`flex w-[165px] px-[20px] py-[8px] justify-center items-center gap-[8px] border-[2px]  rounded-[40px] cursor-pointer} ${style} `}
       onClick={onClick}
     >
-      {firstLetterUp(children)}
+      {firstLetterUp(children[0])}
+      {/* {children} */}
     </NavLink>
   );
 }

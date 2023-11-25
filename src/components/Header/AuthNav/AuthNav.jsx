@@ -23,7 +23,8 @@ export default function AuthNav({ onClick, style = '' }) {
               path === pathPage ? 'text-white bg-yellow' : ''
             }`}
           >
-            {firstLetterUp(text)}
+            {/* {firstLetterUp(text)} */}
+            {text}
             {idx === 0 ? (
               <Svg
                 id="icon-pawprint"
