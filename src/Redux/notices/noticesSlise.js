@@ -5,27 +5,13 @@ import {
   fetchNotices,
   getNoticeById,
 } from './noticesOperation';
+import { pendingFunc, rejectFunc } from '../operations/handlePendingAndReject';
 
 const initialNotices = {
   items: [],
   isLoading: false,
   error: null,
   selectedNotice: null,
-};
-
-const rejectFunc = (state, action) => {
-  return {
-    items: state.items,
-    isLoading: false,
-    error: action.payload,
-  };
-};
-const pendingFunc = (state) => {
-  return {
-    items: state.items,
-    isLoading: true,
-    error: null,
-  };
 };
 
 const noticesStateSlice = createSlice({
