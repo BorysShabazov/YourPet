@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import AddForm from './AddForm';
-import AddPetFormTitle from './AddPetFormTitle';
-import AddPetProgressBar from './AddPetProgressBar';
+import AddPetFormTitle from './CustomFormComponents/AddPetFormTitle';
+import AddPetProgressBar from './CustomFormComponents/AddPetProgressBar';
 import BackgroundContainer from './BackgroundContainer';
 
 export const AddPetFormContext = createContext(null);

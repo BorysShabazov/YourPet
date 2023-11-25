@@ -1,8 +1,8 @@
 import { useContext, useRef } from 'react';
 import { Form, Formik } from 'formik';
-import ChooseOptionSection from './ChooseOptionForm';
-import PersonalDetailsForm from './PersonalDetailsForm';
-import MoreInfoForm from './MoreInfoForm';
+import ChooseOptionSection from './FormSections/ChooseOptionSection';
+import PersonalDetailsSection from './FormSections/PersonalDetailsSection';
+import MoreInfoSection from './FormSections/MoreInfoSection';
 import {
   firstValidationSchema,
   secondValidationSchema,
@@ -17,6 +17,7 @@ import {
   getAddPetError,
   getIsLoadingPets,
 } from '../../Redux/pets/petsSelectors';
+import { formatRawDate } from '../../Helpers/formatRawDate';
 
 const buttonStyles =
   'px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide';
@@ -25,7 +26,7 @@ const AddForm = () => {
   const { step, setStep, category, setCategory } =
     useContext(AddPetFormContext);
   const isLoading = useSelector(getIsLoadingPets);
-  const addPetError = useSelector(getAddPetError);
+  const addingPetError = useSelector(getAddPetError);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const previousLocation = useLocation();
@@ -67,7 +68,7 @@ const AddForm = () => {
         category: category,
         title: '',
         name: '',
-        birth: '',
+        birth: formatRawDate(new Date()),
         type: '',
         sex: '',
         petImage: null,
@@ -90,10 +91,12 @@ const AddForm = () => {
 
           dispatch(
             category === 'own' ? createPets(formData) : createNotice(formData),
-          ).then(() => {
-            if (!addPetError) {
+          ).then((res) => {
+            console.log(res.error);
+
+            if (!addingPetError) {
               actions.resetForm();
-              navigate(backLinkLocationRef.current);
+              navigate(category === 'own' ? '/user' : '/notices');
             }
           });
         }
@@ -120,11 +123,10 @@ const AddForm = () => {
         },
       }) => (
         <Form onSubmit={handleSubmit} encType="multipart/form-data">
-          {step === 1 && (
-            <ChooseOptionSection callback={handleChange} category={category} />
-          )}
+          {step === 1 && <ChooseOptionSection category={category} />}
           {step === 2 && (
-            <PersonalDetailsForm
+            <PersonalDetailsSection
+              setFieldValue={setFieldValue}
               errors={errors}
               category={category}
               title={title}
@@ -134,7 +136,7 @@ const AddForm = () => {
             />
           )}
           {step === 3 && (
-            <MoreInfoForm
+            <MoreInfoSection
               setPhoto={(file) => {
                 setFieldValue('petImage', file);
               }}
