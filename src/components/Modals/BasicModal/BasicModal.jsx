@@ -20,11 +20,13 @@ export function BasicModal({ isOpen, onCloseModal, children }) {
     };
 
     if (isOpen) {
+      document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', handleEsc);
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
+      document.body.style.overflow = '';
       document.removeEventListener('keydown', handleEsc);
       document.removeEventListener('mousedown', handleClickOutside);
     };

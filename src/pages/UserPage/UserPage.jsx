@@ -14,9 +14,9 @@ import Leaving from '../../components/Modals/Leaving/Leaving';
 const UserPage = () => {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getPets);
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchPets());
+  }, [dispatch]);
 
   const petsList = useSelector(getPets);
 
@@ -93,7 +93,7 @@ const UserPage = () => {
           >
             <AddPetButton />
           </Link>
-          <div className>
+          <div>
             {!isLoadingPets ? (
               <ul className="flex flex-col gap-[20px]">
                 {petsList.length > 0 ? (
