@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// axios.defaults.baseURL = '';
-
 export const fetchNotices = createAsyncThunk(
   'notices/fetchNotices',
   async (category, thunkAPI) => {
