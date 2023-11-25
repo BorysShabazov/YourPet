@@ -5,7 +5,7 @@ import AddPetButton from '../../components/AddPetButton/AddPetButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPets } from '../../Redux/pets/petsSelectors';
 import { useEffect, useState } from 'react';
-import { deletePets, fetchPets } from '../../Redux/pets/petsOperation';
+import { fetchPets } from '../../Redux/pets/petsOperation';
 import Congrats from '../../components/Modals/Congrats/Congrats';
 import { BasicModal } from '../../components/Modals/BasicModal/BasicModal';
 import { getIsLoggedIn } from '../../Redux/auth/auth-selectors';
@@ -13,12 +13,11 @@ import Leaving from '../../components/Modals/Leaving/Leaving';
 
 const UserPage = () => {
   const dispatch = useDispatch();
+  const petsList = useSelector(getPets);
 
   useEffect(() => {
     dispatch(fetchPets());
   }, [dispatch]);
-
-  const petsList = useSelector(getPets);
 
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
 
@@ -39,10 +38,6 @@ const UserPage = () => {
 
   const handleCloseCongratsModal = () => {
     setShowCongratsModal(false);
-  };
-
-  const handleDeletePet = (id) => {
-    dispatch(deletePets(id));
   };
 
   // const pets = [
@@ -106,7 +101,6 @@ const UserPage = () => {
                         type={el.type}
                         comments={el.comments}
                         id={el._id}
-                        handleDeletePet={handleDeletePet}
                       />
                     </li>
                   ))
