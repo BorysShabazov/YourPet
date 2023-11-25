@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef } from 'react';
 import { Form, Formik } from 'formik';
 import ChooseOptionSection from './ChooseOptionForm';
 import PersonalDetailsForm from './PersonalDetailsForm';
@@ -10,11 +10,22 @@ import {
 } from '../../schemas/AddPetFormSchemas';
 import Svg from '../Svg/Svg';
 import { useLocation, useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPets } from '../../Redux/pets/petsOperation';
+import { AddPetFormContext } from './AddPetForm';
+import {
+  getAddPetError,
+  getIsLoadingPets,
+} from '../../Redux/pets/petsSelectors';
+
+const buttonStyles =
+  'px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide';
 
 const AddForm = () => {
-  const [step, setStep] = useState(1);
+  const { step, setStep, category, setCategory } =
+    useContext(AddPetFormContext);
+  const isLoading = useSelector(getIsLoadingPets);
+  const addPetError = useSelector(getAddPetError);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const previousLocation = useLocation();
@@ -24,6 +35,10 @@ const AddForm = () => {
     step > 1
       ? setStep((prevStep) => prevStep - 1)
       : navigate(backLinkLocationRef.current);
+
+    if (step === 2) {
+      setCategory('own');
+    }
   };
 
   const createFormData = (data) => {
@@ -49,16 +64,16 @@ const AddForm = () => {
   return (
     <Formik
       initialValues={{
-        category: 'own',
-        title: 'i need you',
-        name: 'batman',
-        birth: '12-12-1212',
-        type: 'bat',
-        sex: 'male',
+        category: category,
+        title: '',
+        name: '',
+        birth: '',
+        type: '',
+        sex: '',
         petImage: null,
-        price: '123456789',
-        location: 'gotem',
-        comments: 'sykablya ia hochy spaty',
+        price: '',
+        location: '',
+        comments: '',
       }}
       validateOnChange={false}
       validateOnBlur={false}
@@ -67,21 +82,20 @@ const AddForm = () => {
         (step === 2 && secondValidationSchema) ||
         (step === 3 && lastValidationSchema)
       }
-      onSubmit={(data) => {
-        if (step === 3) {
-          const formData = createFormData(data);
+      onSubmit={(values, actions) => {
+        if (step === 1) setCategory(values.category);
 
-          dispatch(createPets(formData));
-          //   axios
-          //     .post('/notices', formData, {
-          //       headers: {
-          //         'Content-Type': 'multipart/form-data',
-          //       },
-          //     })
-          //     .then((res) => res.json())
-          //     .then(console.log);
-          //   // navigate(backLinkLocationRef.current);
-          //   return;
+        if (step === 3) {
+          const formData = createFormData(values);
+
+          dispatch(
+            category === 'own' ? createPets(formData) : createNotice(formData),
+          ).then(() => {
+            if (!addPetError) {
+              actions.resetForm();
+              navigate(backLinkLocationRef.current);
+            }
+          });
         }
 
         step < 3 && setStep((prevStep) => prevStep + 1);
@@ -137,7 +151,12 @@ const AddForm = () => {
           <div className="flex flex-col justify-center px-[4px] w-[100%] gap-[4px] md:flex-row-reverse md">
             <button
               type="button"
-              className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide bg-blue text-background md:px-[28px] md:w-[248px] border border-blue"
+              className={`${buttonStyles} border ${
+                isLoading
+                  ? 'bg-lightBlue border-lightBlue'
+                  : 'bg-blue border-blue hover:blue-gradient'
+              }  text-background md:px-[28px] md:w-[248px] `}
+              disabled={isLoading}
               onClick={handleSubmit}
             >
               {step === 3 ? 'Done' : 'Next'}
@@ -145,7 +164,8 @@ const AddForm = () => {
             </button>
             <button
               type="button"
-              className="px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%]  text-sm font-medium font-manrope tracking-wide text-blue hover:border hover:border-blue md:w-[116px]"
+              className={`${buttonStyles} text-blue hover:border hover:border-blue md:w-[116px]`}
+              disabled={isLoading}
               onClick={goBack}
             >
               <Svg id="icon-arrow-left" className="w-fit" stroke="#54ADFF" />

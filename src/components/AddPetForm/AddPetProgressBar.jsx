@@ -6,60 +6,59 @@ const progressBarStyles =
 const defaultBarTitleStyles = 'text-grey mb-[12px]';
 const activeBarTitleStyles = 'text-blue mb-[12px]';
 const doneBarTitleStyles = 'text-green mb-[12px]';
-const defaultBarLineStyles =
-  'w-[80px] h-[8px] bg-lightBlue rounded-lg md:w-[120px]';
+const barLineStyles = 'w-[80px] h-[8px] rounded-lg md:w-[120px]';
+const defaultBarLineStyles = `${barLineStyles} bg-lightBlue`;
 const activeBarLineStyles = 'w-[80px] h-[8px] bg-blue rounded-lg md:w-[120px]';
 const doneBarLineStyles = 'w-[80px] h-[8px] bg-green rounded-lg md:w-[120px]';
 
 const AddPetProgressBar = () => {
   const { step } = useContext(AddPetFormContext);
 
-  const chooseTitleStyle = (stepCount) => {
-    if (stepCount === 1) {
-      return;
-    }
-  };
   return (
     <div className="w-[100%] flex flex-row justify-center mb-[16px] gap-[12px] md:gap-[16px] md:mb-[24px]">
+      {/* step 1 */}
       <div className={`${progressBarStyles}`}>
         <p
-          className={`${activeBarTitleStyles} ${
-            step >= 2 ? doneBarTitleStyles : ''
-          }`}
+          className={`
+          ${step === 1 ? activeBarTitleStyles : doneBarTitleStyles}`}
         >
           Choose option
         </p>
         <div
-          className={`${activeBarLineStyles} ${
-            step >= 2 ? doneBarLineStyles : ''
-          }`}
+          className={`${step === 1 ? activeBarLineStyles : doneBarLineStyles}`}
         />
       </div>
+
+      {/* step 2 */}
       <div className={`${progressBarStyles}`}>
         <p
-          className={`${
-            step === 2 ? activeBarTitleStyles : defaultBarTitleStyles
-          } ${step === 3 ? doneBarTitleStyles : ''}`}
+          className={`
+          ${step === 1 ? defaultBarTitleStyles : ''} 
+          ${step === 2 ? activeBarTitleStyles : ''} 
+          ${step === 3 ? doneBarTitleStyles : ''}`}
         >
           Personal details
         </p>
         <div
-          className={`${defaultBarLineStyles} ${
-            step === 2 ? activeBarLineStyles : ''
-          } ${step === 3 ? doneBarLineStyles : ''}`}
+          className={`
+          ${step === 1 ? defaultBarLineStyles : ''} 
+          ${step === 2 ? activeBarLineStyles : ''} 
+          ${step === 3 ? doneBarLineStyles : ''}`}
         />
       </div>
+
+      {/* step 3 */}
       <div className={`${progressBarStyles}`}>
         <p
-          className={`${defaultBarTitleStyles} ${
-            step === 3 ? activeBarTitleStyles : ''
+          className={`${
+            step === 3 ? activeBarTitleStyles : defaultBarTitleStyles
           }`}
         >
           More info
         </p>
         <div
-          className={`${defaultBarLineStyles} ${
-            step === 3 ? activeBarLineStyles : ''
+          className={`${
+            step === 3 ? activeBarLineStyles : defaultBarLineStyles
           }`}
         />
       </div>

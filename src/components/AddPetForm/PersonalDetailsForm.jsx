@@ -28,7 +28,7 @@ const PersonalDetailsForm = ({
             placeholder="Type name pet"
             error={errors.name}
           >
-            Title of add
+            Pet's name
           </CustomInput>
           <CustomInput
             name="birth"
