@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { EditIcon } from '../EditIcon/EditIcon';
 import { useFormik } from 'formik';
 import Svg from '../Svg/Svg';
 import { useDispatch, useSelector } from 'react-redux';
