@@ -6,7 +6,7 @@ const ToMainPageButton = () => {
   const navigate = useNavigate();
   return (
     <div
-      className="cursor-pointer mx-auto w-[248px] mt-[263px] flex justify-center items-center h-10 px-7 py-2  bg-gradient-to-r from-blue to-blue  rounded-[40px] gap-3 shadow z-10 flex-row-reverse  md:mt-[458px] md:px-5 md:py-2 md:gap-[6px] xl:mt-[380px] xl:center hover:blue-gradient focus:blue-gradient"
+      className="cursor-pointer mx-auto w-[248px] mt-[44px] flex justify-center items-center h-10 px-7 py-2  bg-gradient-to-r from-blue to-blue  rounded-[40px] gap-3 shadow z-10 flex-row-reverse  md:px-5 md:py-2 md:gap-[6px] xl:mt-[40px] xl:center hover:blue-gradient focus:blue-gradient"
       onClick={() => navigate('/')}
     >
       <div className="w-6 h-[21px] md:h-6 justify-center items-center inline-flex">
