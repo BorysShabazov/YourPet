@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { register } from '../../Redux/auth/auth-operations';
 import { getAuthError, getIsRequest } from '../../Redux/auth/auth-selectors';
 import AuthFormSchema from '../../schemas/AuthFormSchema';
@@ -46,6 +46,11 @@ const AuthForm = () => {
         break;
     }
   };
+
+  // reset http errors
+  useEffect(() => {
+    dispatch(authSlice.actions.resetHttpError());
+  }, [dispatch]);
 
   return (
     <Formik

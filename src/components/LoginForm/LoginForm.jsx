@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from '../../Redux/auth/auth-operations';
 import { getAuthError, getIsRequest } from '../../Redux/auth/auth-selectors';
 import LoginFormSchema from '../../schemas/LoginFormSchema';
@@ -27,6 +27,11 @@ const LoginForm = () => {
     axiosError: 'Email or password is invalid',
     accessMessage: 'Password is secure',
   };
+
+  // reset http errors
+  useEffect(() => {
+    dispatch(authSlice.actions.resetHttpError());
+  }, [dispatch]);
 
   // toggle password
   const togglePasswordVisibility = (value) => {
