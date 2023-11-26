@@ -35,7 +35,7 @@
   opacity: 1;
 }
 
-@keyframes pawAnimation {
+@keyframes minipawAnimation {
   0% {
     opacity: 1;
     transform: rotateY(0deg);
