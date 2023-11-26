@@ -1,6 +1,6 @@
 <svg id="svg-sprite" aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<defs>
-        <symbol id="paw" viewBox="0 0 249 209.32">
+        <symbol id="minipaw" viewBox="0 0 249 209.32">
           <ellipse
             cx="27.917"
             cy="106.333"

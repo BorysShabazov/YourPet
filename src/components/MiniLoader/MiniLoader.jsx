@@ -6,13 +6,13 @@ const MiniLoader = () => {
     <>
       <div className="ajax-miniloader">
         {[...Array(1)].map((_, i) => (
-          <div key={i} className={`paw paw${i + 1} no-cssanimations`}>
+          <div key={i} className={`minipaw minipaw${i + 1} no-cssanimations`}>
             <svg
               className="icon"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
-              <use href={`${svg}#paw`} />
+              <use href={`${svg}#minipaw`} />
             </svg>
           </div>
         ))}
