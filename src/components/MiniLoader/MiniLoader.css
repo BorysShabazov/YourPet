@@ -1,0 +1,51 @@
+.ajax-miniloader {
+  font-size: 50px;
+  color: #ffc107;
+}
+
+.ajax-miniloader .minipaw {
+  width: 1em;
+  height: 1em;
+  animation: minipawAnimation 550ms ease-in-out infinite;
+  opacity: 1;
+}
+
+.ajax-miniloader .minipaw svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ajax-miniloader .minipaw .icon {
+  fill: currentColor;
+}
+
+.ajax-miniloader .minipaw:nth-child(odd) {
+  transform: rotateY(0deg);
+}
+
+.ajax-miniloader .minipaw:nth-child(even) {
+  transform: rotate(10deg) translate(125%, 0);
+}
+
+.ajax-miniloader .minipaw:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.ajax-miniloader .minipaw.no-cssanimations {
+  opacity: 1;
+}
+
+@keyframes minipawAnimation {
+  0% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  50% {
+    opacity: 0.3;
+    transform: rotateY(90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}

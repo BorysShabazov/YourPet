@@ -12,11 +12,9 @@ import Svg from '../Svg/Svg';
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPets } from '../../Redux/pets/petsOperation';
+import { createNotice } from '../../Redux/notices/noticesOperation';
 import { AddPetFormContext } from './AddPetForm';
-import {
-  getAddPetError,
-  getIsLoadingPets,
-} from '../../Redux/pets/petsSelectors';
+import { getIsLoadingPets } from '../../Redux/pets/petsSelectors';
 import { formatRawDate } from '../../Helpers/formatRawDate';
 
 const buttonStyles =
@@ -26,7 +24,6 @@ const AddForm = () => {
   const { step, setStep, category, setCategory } =
     useContext(AddPetFormContext);
   const isLoading = useSelector(getIsLoadingPets);
-  const addingPetError = useSelector(getAddPetError);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const previousLocation = useLocation();
@@ -46,13 +43,15 @@ const AddForm = () => {
     const formData = new FormData();
 
     formData.append('category', data.category);
-    formData.append('name', data.name);
-    formData.append('birthDate', data.birth);
     formData.append('type', data.type);
     formData.append('sex', data.sex);
     formData.append('image', data.petImage);
     formData.append('comments', data.comments);
 
+    if (data.category !== 'found') {
+      formData.append('name', data.name);
+      formData.append('birthDate', data.birth);
+    }
     if (data.category !== 'own') {
       formData.append('title', data.title);
       formData.append('location', data.location);
@@ -92,11 +91,9 @@ const AddForm = () => {
           dispatch(
             category === 'own' ? createPets(formData) : createNotice(formData),
           ).then((res) => {
-            console.log(res.error);
-
-            if (!addingPetError) {
+            if (!res.error) {
               actions.resetForm();
-              navigate(category === 'own' ? '/user' : '/notices');
+              navigate(category === 'own' ? '/user' : '/notices/sell');
             }
           });
         }
@@ -106,7 +103,6 @@ const AddForm = () => {
     >
       {({
         handleSubmit,
-        handleChange,
         setFieldValue,
         errors,
         values: {

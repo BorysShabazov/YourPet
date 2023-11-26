@@ -9,20 +9,20 @@ const NotFoundPage = () => {
 		md:flex md:place-content-center md:w-[768px] md:text-neutral-900 md:text-[32px] md:font-smibold md:leading-[41.60px] xl:w-[1280px] xl:text-[32px] xl:mt-[44px] "
       >
         <span> Ooops!</span>
-        <h2>This page not found :(</h2>
+        <h2>This page not found :&#40;</h2>
       </div>
 
       <picture>
         <source
-          srcset="/src/images/not_found_page/not_found_page_mobi.png"
+          srcSet="/src/images/not_found_page/not_found_page_mobi.png"
           media="(max-width: 767px)"
         />
         <source
-          srcset="/src/images/not_found_page/not_found_page_tablet.png"
+          srcSet="/src/images/not_found_page/not_found_page_tablet.png"
           media="(max-width: 1279px)"
         />
         <source
-          srcset="/src/images/not_found_page/not_found_page_desctop.png"
+          srcSet="/src/images/not_found_page/not_found_page_desctop.png"
           media="(min-width: 1280px)"
         />
         <img

@@ -1,5 +1,6 @@
 import * as yup from 'yup';
-const datePattern = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+const datePattern = /^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-\d{4}$/;
+
 const MAX_MB_FILESIZE = 3;
 
 export const firstValidationSchema = yup.object({
