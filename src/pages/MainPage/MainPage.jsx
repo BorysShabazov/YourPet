@@ -12,7 +12,7 @@ const MainPage = () => {
         </h1>
         <picture className="hidden xl:block xl:mt-0 xl:absolute xl:-top-[22%] xl:left-[14%] z-[-1] ">
           <source
-            srcset="/src/images/main_img/main@3x.png"
+            srcSet="/src/images/main_img/main@3x.png"
             media="(min-width: 1280px)"
           />
           <img src="/src/images/main_img/main@3x.png" alt="Сute dogs and cat" />
@@ -20,11 +20,11 @@ const MainPage = () => {
       </Container>
       <picture className="mx-auto overflow-hidden xl:hidden z-[-1]">
         <source
-          srcset="/src/images/main_img/main.png"
+          srcSet="/src/images/main_img/main.png"
           media="(max-width: 767px)"
         />
         <source
-          srcset="/src/images/main_img/main@2x.png"
+          srcSet="/src/images/main_img/main@2x.png"
           media="(max-width: 1279px)"
         />
         <img
