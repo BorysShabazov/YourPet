@@ -15,7 +15,7 @@ import { createPets } from '../../Redux/pets/petsOperation';
 import { createNotice } from '../../Redux/notices/noticesOperation';
 import { AddPetFormContext } from './AddPetForm';
 import { getIsLoadingPets } from '../../Redux/pets/petsSelectors';
-import { formatRawDate } from '../../Helpers/formatRawDate';
+import { formatRawDate } from '../../helpers/formatRawDate';
 
 const buttonStyles =
   'px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide';
