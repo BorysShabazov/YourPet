@@ -3,5 +3,5 @@ export const formatRawDate = (date) => {
   const mounth = (date.getMonth() + 1).toString().padStart(2, '0');
   const year = date.getFullYear().toString();
 
-  return [mounth, day, year].join('-');
+  return [day, mounth, year].join('-');
 };
