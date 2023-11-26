@@ -1,34 +1,38 @@
-import { CloseIcon } from '../CloseIcon/CloseIcon';
 import { useEffect, useState } from 'react';
-import { EditIcon } from '../EditIcon/EditIcon';
-import { PhotoIcon } from '../PhotoIcon/PhotoIcon';
 import { useFormik } from 'formik';
 import Svg from '../Svg/Svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, selectAuth } from '../../Redux/auth/auth-selectors';
+import { getUser } from '../../Redux/auth/auth-selectors';
 import { update } from '../../Redux/auth/auth-operations';
 import { userSchema } from './UserSchema';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import MiniLoader from '../../components/MiniLoader/MiniLoader';
 
-const errorMessageStyles =
-  'absolute -bottom-[18px] ml-4 text-red text-xs font-normal';
-
+const errorTextStyle =
+  'pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal top-6 left-[60px] xl:left-[85px]';
+const hoverStyle =
+  'transition duration-200 ease-in-out cursor-pointer hover:opacity-80';
 const labelStyle =
   "text-neutral-900 text-sm font-semibold font-['Manrope'] tracking-wide mdOnly:text-[16px] ";
 const inputStyle =
   "text-neutral-900 text-xs font-normal font-['Manrope'] tracking-wide w-[190px] h-6 px-3 py-1 rounded-[20px] border border-blue-400 justify-start items-center gap-[191px] inline-flex md:w-[255px]  xl:w-[255px]";
 
-export const UserForm = () => {
-  const [userImagePath, setUserImagePath] = useState('');
+export const UserForm = ({
+  onTogleLeavingModal,
+  handleEditForm,
+  editReset,
+}) => {
+  const user = useSelector(getUser);
+  const isUpdatePending = useSelector((state) => state.auth.isRequestActive); // Предполагается, что isRequestActive используется для update
+  const dispatch = useDispatch();
+
+  const [avatarFile, setAvatarFile] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
 
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [confirmChangeAvatar, setConfirmChangeAvatar] = useState(false);
-
-  const user = useSelector(getUser);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isEdit) {
@@ -36,22 +40,37 @@ export const UserForm = () => {
     }
   }, [isEdit]);
 
+  useEffect(() => {
+    if (editReset) {
+      setIsEdit(false);
+      resetFields();
+    }
+  }, [editReset]);
+
+  const birthdayType = (date) => {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+
+    if (typeof date === 'string' && dateRegex.test(date)) {
+      return date;
+    }
+
+    return Date.now();
+  };
+
   const formik = useFormik({
     initialValues: {
-      avatar: user.avatarURL,
-      name: user.name,
-      email: user.email,
-      birthday: formatBirthday(user.birthday || '20.20.2020'),
-      phone: user.phone,
-      city: user.city,
+      name: user.name || '',
+      email: user.email || '',
+      birthday: birthdayType(user.birthday),
+      phone: user.phone || '',
+      city: user.city || '',
     },
     validateOnChange: false,
-    validateOnBlur: false,
+    validateOnBlur: true,
     validationSchema: userSchema,
 
-    onSubmit: ({ avatar, name, email, birthday, phone, city }) => {
+    onSubmit: ({ name, email, birthday, phone, city }) => {
       const updateUser = {
-        avatarURL: user.avatarURL,
         name,
         email,
         birthday,
@@ -59,17 +78,12 @@ export const UserForm = () => {
         city,
       };
 
-      console.log('avatar--->', avatar);
-
       if (previewAvatar && confirmChangeAvatar) {
-        updateUser.avatarURL = avatar;
-        console.log('--->', updateUser.avatarURL);
+        updateUser.avatar = avatarFile;
       }
 
       const formData = createUserFormData(updateUser);
-
       dispatch(update(formData));
-
       setChangeAvatar(false);
       setIsEdit(false);
     },
@@ -80,8 +94,8 @@ export const UserForm = () => {
 
   const createUserFormData = (data) => {
     const formData = new FormData();
-    console.log('data===', data);
-    formData.append('avatarURL', data.avatarURL);
+
+    formData.append('avatar', data.avatar);
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('birthday', data.birthday);
@@ -92,7 +106,7 @@ export const UserForm = () => {
   };
 
   function previewFile(file) {
-    var reader = new FileReader();
+    const reader = new FileReader();
 
     reader.onloadend = function () {
       setPreviewAvatar(reader.result);
@@ -110,23 +124,12 @@ export const UserForm = () => {
     setIsEdit(false);
     setChangeAvatar(false);
     setConfirmChangeAvatar(false);
-    formik.setFieldValue('avatar', user.avatarURL);
     formik.setFieldValue('name', user.name);
     formik.setFieldValue('email', user.email);
     formik.setFieldValue('birthday', user.birthday);
     formik.setFieldValue('phone', user.phone);
     formik.setFieldValue('city', user.city);
   };
-
-  function formatBirthday(birthday) {
-    if (!birthday) {
-      return '01.01.2001';
-    }
-    if (birthday.includes('-')) return birthday;
-    const parts = birthday.split('.');
-    const result = parts[2] + '-' + parts[1] + '-' + parts[0];
-    return result;
-  }
 
   return (
     <form
@@ -135,14 +138,30 @@ export const UserForm = () => {
       className="flex flex-col flex-wrap-reverse"
       onSubmit={formik.handleSubmit}
     >
-      <div className="absolute top-[14px] right-[14px]">
+      <div className={`absolute top-[14px] right-[14px] ${hoverStyle}`}>
         {!isEdit ? (
-          <div onClick={() => setIsEdit(true)}>
-            <EditIcon />
+          <div
+            onClick={() => {
+              setIsEdit(true);
+              handleEditForm();
+            }}
+          >
+            <Svg
+              id={'icon-edit'}
+              size={24}
+              fill={'#54ADFF'}
+              className={hoverStyle}
+            />
           </div>
         ) : (
           <div onClick={resetFields}>
-            <CloseIcon />
+            <Svg
+              id={'icon-cross'}
+              size={24}
+              stroke={'#54ADFF'}
+              fill={'transparent'}
+              className={hoverStyle}
+            />
           </div>
         )}
       </div>
@@ -154,26 +173,38 @@ export const UserForm = () => {
             htmlFor="avatar"
             className="flex justify-center flex-col gap-[5px]"
           >
-            <div className="flex justify-center mb-[14px]">
-              <img
-                className="w-[182px] h-[182px] rounded-[40px] object-cover"
-                src={previewAvatar ? previewAvatar : user.avatarURL}
-                alt="User Avatar"
-              />
+            <div className="flex justify-center mb-[14px]  w-[182px] h-[182px] rounded-[40px] bg-slate-100 items-center overflow-hidden">
+              {!isUpdatePending ? (
+                <img
+                  className=" object-cover  rounded-[40px] w-[182px] h-[182px]"
+                  src={previewAvatar ? previewAvatar : user.avatarURL}
+                  alt="User Avatar"
+                />
+              ) : (
+                <div className="text-center">
+                  <MiniLoader />
+                </div>
+              )}
             </div>
             {!changeAvatar ? (
               <div
                 className={
                   isEdit
-                    ? 'flex flex-row justify-center gap-[5px] mb-[21px]'
-                    : 'flex flex-row justify-center gap-[5px] mb-[21px] opacity-0'
+                    ? `flex flex-row justify-center gap-[5px] mb-[14px] ${hoverStyle} h-6`
+                    : 'flex flex-row justify-center gap-[5px] mb-[14px] opacity-0 h-6'
                 }
               >
-                <PhotoIcon />
+                <Svg
+                  id={'icon-camera'}
+                  size={24}
+                  stroke={'#54ADFF'}
+                  fill={'transparent'}
+                  className={hoverStyle}
+                />
                 Edit photo
               </div>
             ) : (
-              <div className="flex justify-center mb-[14px] gap-2">
+              <div className="flex justify-center mb-[14px] gap-2 h-6">
                 <div
                   onClick={(e) => {
                     e.preventDefault();
@@ -186,6 +217,7 @@ export const UserForm = () => {
                     size={24}
                     stroke={'#54ADFF'}
                     fill={'transparent'}
+                    className={hoverStyle}
                   />
                 </div>
                 Confirm
@@ -197,10 +229,11 @@ export const UserForm = () => {
                   }}
                 >
                   <Svg
-                    id={'icon-trash'}
+                    id={'icon-cross'}
                     size={24}
                     stroke={'#54ADFF'}
                     fill={'transparent'}
+                    className={hoverStyle}
                   />
                 </div>
               </div>
@@ -213,13 +246,11 @@ export const UserForm = () => {
               type={isEdit && !changeAvatar ? 'file' : ''}
               id="avatar"
               name="avatar"
-              accept="image/*"
+              accept="image/jpeg, image/png"
               onChange={(e) => {
                 const file = e.target.files[0];
-                const localPath = URL.createObjectURL(file);
-                formik.setFieldValue('avatar', file);
-                setUserImagePath(localPath);
                 previewFile(file);
+                setAvatarFile(file);
               }}
             />
           </div>
@@ -228,7 +259,7 @@ export const UserForm = () => {
         {/* All text-fields */}
         <div className="flex flex-col gap-[20px]">
           {/* Name */}
-          <div className="flex justify-between">
+          <div className="flex justify-between relative">
             <label className={labelStyle} htmlFor="name">
               Name:
             </label>
@@ -242,19 +273,19 @@ export const UserForm = () => {
               readOnly={!isEdit}
             />
             {errors['name'] && (
-              <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
-                {errors['name']}
-              </p>
+              <p className={errorTextStyle}>{errors['name']}</p>
             )}
           </div>
 
           {/* Email */}
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full relative">
             <label className={labelStyle} htmlFor="email">
               Email:
             </label>
             <input
-              className={inputStyle}
+              className={`${inputStyle} ${
+                errors['email'] && 'border-rose-400'
+              }`}
               type="text"
               id="email"
               name="email"
@@ -262,6 +293,9 @@ export const UserForm = () => {
               onChange={formik.handleChange}
               readOnly={!isEdit}
             />
+            {errors['email'] && (
+              <p className={errorTextStyle}>{errors['email']}</p>
+            )}
           </div>
 
           {/* Birthday */}
@@ -269,34 +303,43 @@ export const UserForm = () => {
             <label className={labelStyle} htmlFor="birthday">
               Birthday:
             </label>
-            <div className={inputStyle}>
+            <div>
               <DatePicker
                 selected={new Date(formikValues['birthday'])}
-                onChange={(date) => formik.setFieldValue('birthday', date)}
+                onChange={(date) => {
+                  formik.setFieldValue('birthday', date);
+                }}
                 readOnly={!isEdit}
                 dateFormat="dd-MM-yyyy"
+                className={inputStyle}
               />
             </div>
           </div>
 
           {/* Phone */}
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full relative">
             <label className={labelStyle} htmlFor="phone">
               Phone:
             </label>
             <input
-              className={inputStyle}
+              className={`${inputStyle} ${
+                errors['phone'] && 'border-rose-400'
+              }`}
               type="tel"
               id="phone"
               name="phone"
+              placeholder="+38123456789"
               value={formikValues['phone']}
               onChange={formik.handleChange}
               readOnly={!isEdit}
             />
+            {errors['phone'] && (
+              <p className={errorTextStyle}>{errors['phone']}</p>
+            )}
           </div>
 
           {/* City */}
-          <div className="flex justify-between">
+          <div className="flex justify-between relative">
             <label className={labelStyle} htmlFor="city">
               City:
             </label>
@@ -310,9 +353,7 @@ export const UserForm = () => {
               readOnly={!isEdit}
             />
             {errors['city'] && (
-              <p className="pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal">
-                {errors['city']}
-              </p>
+              <p className={errorTextStyle}>{errors['city']}</p>
             )}
           </div>
 
@@ -327,14 +368,21 @@ export const UserForm = () => {
               </button>
             </div>
           ) : (
-            <div className="w-full flex text-zinc-500 text-base font-medium font-['Manrope'] tracking-wide gap-[12px]">
-              <Svg
-                id={'icon-logout'}
-                size={24}
-                stroke={'#54ADFF'}
-                fill={'transparent'}
-              />
-              Log Out
+            <div
+              onClick={onTogleLeavingModal}
+              className="w-full flex text-zinc-500 text-base font-medium font-['Manrope'] tracking-wide "
+            >
+              <div
+                className={`cursor-pointer hover:opacity-80 flex  gap-[12px] ${hoverStyle}`}
+              >
+                <Svg
+                  id={'icon-logout'}
+                  size={24}
+                  stroke={'#54ADFF'}
+                  fill={'transparent'}
+                />
+                Log Out
+              </div>
             </div>
           )}
         </div>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Svg from '../../Svg/Svg';
+
 const modalRoot = document.querySelector('#modal-root');
 
 export function BasicModal({ isOpen, onCloseModal, children }) {
@@ -20,11 +21,13 @@ export function BasicModal({ isOpen, onCloseModal, children }) {
     };
 
     if (isOpen) {
+      document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', handleEsc);
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
+      document.body.style.overflow = '';
       document.removeEventListener('keydown', handleEsc);
       document.removeEventListener('mousedown', handleClickOutside);
     };

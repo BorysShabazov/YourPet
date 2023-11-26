@@ -3,7 +3,7 @@ import { deleteNotice } from '../../../Redux/notices/noticesOperation';
 import Svg from '../../Svg/Svg';
 import { deletePets } from '../../../Redux/pets/petsOperation';
 
-const DeleteModal = ({ id, onCloseModal, title, nameToDelete }) => {
+const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
   const dispatch = useDispatch();
   const onDelete = () => {
     if (title === 'adverstiment') {
@@ -22,7 +22,7 @@ const DeleteModal = ({ id, onCloseModal, title, nameToDelete }) => {
       </h3>
       <div className="  smOnly:w-60 md:w-96 mt-10 text-center">
         <span className="text-black text-base font-medium font-['Manrope']">
-          Are you sure you want to delete{' '}
+          Are you sure you want to delete
         </span>
         <span className="text-black text-base font-bold font-['Manrope']">
           `{nameToDelete}`
@@ -38,14 +38,14 @@ const DeleteModal = ({ id, onCloseModal, title, nameToDelete }) => {
           onClick={onCloseModal}
           className="Frame36 hover:blue-gradient hover:text-white smOnly:w-64 smOnly:h-10 w-32 h-10 px-5 py-2 rounded-3xl border-2 border-blue justify-center items-center gap-2 inline-flex  text-blue text-base font-bold font-['Manrope'] tracking-wide"
         >
-          Cancel{' '}
+          Cancel
         </button>
 
         <button
           onClick={onDelete}
           className="Frame35 smOnly:w-64 smOnly:h-10  md:ml-4 w-32 px-5 py-2 bg-blue hover:blue-gradient rounded-3xl justify-center items-center gap-2 inline-flex text-stone-50 text-base font-bold font-['Manrope'] tracking-wide"
         >
-          Yes
+          Delete
           <span>
             <Svg
               id={'icon-trash'}

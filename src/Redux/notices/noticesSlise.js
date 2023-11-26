@@ -1,26 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createNotice, deleteNotice, fetchNotices, getNoticeById } from './noticesOperation';
+import {
+  createNotice,
+  deleteNotice,
+  fetchNotices,
+  getNoticeById,
+} from './noticesOperation';
+import { pendingFunc, rejectFunc } from '../operations/handlePendingAndReject';
 
 const initialNotices = {
   items: [],
   isLoading: false,
   error: null,
   selectedNotice: null,
-};
-
-const rejectFunc = (state, action) => {
-  return {
-    items: state.items,
-    isLoading: false,
-    error: action.payload,
-  };
-};
-const pendingFunc = (state) => {
-  return {
-    items: state.items,
-    isLoading: true,
-    error: null,
-  };
 };
 
 const noticesStateSlice = createSlice({
@@ -40,26 +31,25 @@ const noticesStateSlice = createSlice({
     });
     builder.addCase(fetchNotices.rejected, rejectFunc);
 
-//getNoticeById
+    //getNoticeById
 
-builder.addCase(getNoticeById.pending, pendingFunc);
-builder.addCase(getNoticeById.fulfilled, (state, action) => {
-  return {
-    ...state,
-    selectedNotice: action.payload,
-    isLoading: false,
-    error: null,
-  };
-});
-builder.addCase(getNoticeById.rejected, rejectFunc);
-
+    builder.addCase(getNoticeById.pending, pendingFunc);
+    builder.addCase(getNoticeById.fulfilled, (state, action) => {
+      return {
+        ...state,
+        selectedNotice: action.payload,
+        isLoading: false,
+        error: null,
+      };
+    });
+    builder.addCase(getNoticeById.rejected, rejectFunc);
 
     // create
 
     builder.addCase(createNotice.pending, pendingFunc);
-    builder.addCase(createNotice.fulfilled, (state, _) => {
+    builder.addCase(createNotice.fulfilled, (state, action) => {
       return {
-        items: state.items,
+        items: [action.payload.data, ...state.items],
         isLoading: false,
         error: null,
       };
@@ -81,7 +71,6 @@ builder.addCase(getNoticeById.rejected, rejectFunc);
 });
 
 export const noticesStateReducer = noticesStateSlice.reducer;
-
 
 // builder.addCase(getNoticeById.pending, pendingFunc);
 // builder.addCase(getNoticeById.fulfilled, (_, action) => {

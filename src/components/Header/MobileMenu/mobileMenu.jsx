@@ -1,27 +1,20 @@
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
-import { ReactComponent as Close } from '../../../images/svg/cross-small.svg';
-import { ReactComponent as Logo } from '../../../images/svg/logo.svg';
-import { ReactComponent as UserImg } from '../../../images/svg/user-1.svg';
-import Svg from '../../Svg/Svg';
-
 import { Container } from '../../../ui/index';
 import Nav from '../Nav/nav';
-import ButtonBurger from '../ButtonBurger/buttonBurger';
 
 import AuthNav from '../AuthNav/AuthNav';
-import BtnAuth from '../BtnAuth/BtnAuth';
-import { getUser, selectAuth } from '../../../Redux/auth/auth-selectors';
+
+import { selectAuth } from '../../../Redux/auth/auth-selectors';
 
 import { BasicModal } from '../../Modals/BasicModal/BasicModal';
 import Leaving from '../../Modals/Leaving/Leaving';
-
+import BtnLogout from '../BtnLogout/BtnLogout';
+import UserInfo from '../UserInfo/userInfo';
+import BtnBurgerClose from '../BtnBurgerClose/btnBurgerClose';
 
 export default function MobileMenu({ onToogleMobileMenu }) {
-  const { name = '', avatarURL = '' } = useSelector(getUser) ?? {};
-
   const { token } = useSelector(selectAuth);
 
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
@@ -33,40 +26,24 @@ export default function MobileMenu({ onToogleMobileMenu }) {
   return (
     <>
       <div className="absolute top-0 left-0  h-screen w-screen pt-[20px] md:pt-[24px] bg-white xl:hidden">
-        <Container className="flex flex-col gap-[42px] md:gap-[92px] items-centr justify-center">
-          <div className="w-full flex items-center justify-between">
-            <NavLink to="/" state={{ from: location }}>
-              <Logo
-                className="w-[116px] md:w-[162px]"
-                onClick={onToogleMobileMenu}
-              />
-            </NavLink>
-
+        <Container className=" relative h-screen flex flex-col gap-[42px]  md:gap-[92px] items-centr ">
+          <div className="flex  items-center justify-between w-full h-[28px] md:h-[44px]">
+            <Nav styleNavList="hidden" onClick={onToogleMobileMenu} />
             <div className="flex gap-[24px] ">
               {token ? (
-                <BtnAuth
-                  path="/"
+                <BtnLogout
                   onClick={onToogleLeavingModal}
-                  style="absolute bottom-[20px] left-[20px] md:static flex bg-blue border-blue text-white hover:blue-gradient"
+                  style="absolute bottom-[40px] left-[20px] md:static flex"
                 >
-                  <span>Logout</span>
-                  <Svg
-                    size="24px"
-                    id="icon-logout"
-                    stroke="white"
-                    fill="#54ADFF"
-                  />
-                </BtnAuth>
+                  lgout
+                </BtnLogout>
               ) : (
                 <AuthNav
                   onClick={onToogleMobileMenu}
                   style="hidden md:flex gap-[20px]"
                 />
               )}
-
-              <ButtonBurger onClick={onToogleMobileMenu}>
-                <Close className="stroke-current text-yellow" />
-              </ButtonBurger>
+              <BtnBurgerClose id="icon-cross" onClick={onToogleMobileMenu} />
             </div>
           </div>
 
@@ -76,22 +53,11 @@ export default function MobileMenu({ onToogleMobileMenu }) {
               style="flex-col  gap-[12px] items-center md:hidden "
             />
           ) : (
-            <NavLink
-              to="/user"
-              className={`flex items-center justify-center gap-[12px] ${
-                token ? 'pb-[44px]' : ''
-              } text-yellow md:hidden`}
-            >
-              {!avatarURL ? (
-                <UserImg />
-              ) : (
-                <img
-                  src={avatarURL}
-                  className="block w-[28px] h-[28px] rounded-full object-cover"
-                />
-              )}
-              <span>{name ? name : 'Name'}</span>
-            </NavLink>
+            // <div className="flex  justify-center gap-[12px] ">
+              <UserInfo
+                onClick={onToogleMobileMenu}
+                style={`${token ? 'flex justify-center gap-[12px] pb-[44px]' : ''} text-yellow md:hidden`}             />
+            /* </div> */
           )}
           <Nav onClick={onToogleMobileMenu} styleLogo="hidden" />
         </Container>

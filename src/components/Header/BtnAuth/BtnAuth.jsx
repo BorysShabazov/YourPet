@@ -1,13 +1,15 @@
 import { NavLink } from 'react-router-dom';
+import { firstLetterUp } from '../helpers';
 
-export default function BtnAuth({ children, style, path, onClick,isActive }) {
+export default function BtnAuth({ children, style, path, onClick }) {
   return (
     <NavLink
-      to={`${path}`}
-      className={`flex w-[165px] px-[20px] py-[8px] justify-center items-center gap-[8px] border-[2px]  rounded-[40px] ${isActive?"bg-yellow text-white":""} ${style} `}
+      to={path}
+      className={`flex w-[165px] px-[20px] py-[8px] justify-center items-center gap-[8px] border-[2px]  rounded-[40px] cursor-pointer} ${style} `}
       onClick={onClick}
     >
-      {children}
+      {firstLetterUp(children[0])}
+      {/* {children} */}
     </NavLink>
   );
 }

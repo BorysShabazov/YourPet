@@ -1,25 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createPets, deletePets, fetchPets } from './petsOperation';
+import { pendingFunc, rejectFunc } from '../operations/handlePendingAndReject';
 
 const initialPets = {
   items: [],
   isLoading: false,
   error: null,
-};
-
-const rejectFunc = (state, action) => {
-  return {
-    items: state.items,
-    isLoading: false,
-    error: action.payload,
-  };
-};
-const pendingFunc = (state) => {
-  return {
-    items: state.items,
-    isLoading: true,
-    error: null,
-  };
 };
 
 const petsStateSlice = createSlice({
@@ -32,7 +18,7 @@ const petsStateSlice = createSlice({
     builder.addCase(fetchPets.pending, pendingFunc);
     builder.addCase(fetchPets.fulfilled, (_, action) => {
       return {
-        items: [...action.payload],
+        items: action.payload.data.pets,
         isLoading: false,
         error: null,
       };
@@ -44,7 +30,8 @@ const petsStateSlice = createSlice({
     builder.addCase(createPets.pending, pendingFunc);
     builder.addCase(createPets.fulfilled, (state, action) => {
       return {
-        items: action.payload,
+        ...state,
+        items: [...state.items, action.payload.data.pet],
         isLoading: false,
         error: null,
       };
@@ -54,15 +41,16 @@ const petsStateSlice = createSlice({
     // delete
 
     builder.addCase(deletePets.pending, pendingFunc);
+
     builder.addCase(deletePets.fulfilled, (state, action) => {
       return {
-        items: [...state.items.filter((el) => el.id !== action.payload)],
+        items: [...state.items.filter((el) => el._id !== action.payload)],
         isLoading: false,
         error: null,
       };
     });
+
     builder.addCase(deletePets.rejected, rejectFunc);
   },
 });
-
 export const petsStateReducer = petsStateSlice.reducer;

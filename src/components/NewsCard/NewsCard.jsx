@@ -1,32 +1,56 @@
 import { Link } from "react-router-dom/dist";
-import news from "../../images/news1.png";
+import { format } from "date-fns";
+import { useState } from "react";
 
-const NewsCard = () => {
+const CuttedText = ({text, length}) => {
+  const [isHover, setIsHover] = useState(false);
+  
+  const handleMouseEnter = () => setIsHover(true)
+  const handleMouseLeave = () => setIsHover(false);
+
   return (
-    <div className=" w-[280px] h-[578px] mx-auto md:mx-0 md:w-[336px] md:h-[544px] xl:w-[395px]">
+    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
+
+      {text.length > length ? (<span style={{cursor:'zoom-in'}}>
+        {!isHover ? text.slice(0, length) + '...' : text}  
+      </span>):(text)
+        }
+    </div>
+  )
+
+}
+
+const NewsCard = ({ date, imgUrl, text, title, url }) => {
+  return (
+    <div className="   mx-auto md:mx-0 md:w-[336px]  xl:w-[395px]">
       <div className="w-full h-2 blue-gradient-full rounded-[40px]"></div>
-      <div className="mx-auto mt-[12px] flex flex-col gap-[16px] bg-white rounded-[20px]">
-        <img
-          src={news}
+      <div className="mx-auto mt-[12px] flex flex-col justify-between bg-white rounded-[20px] md:h-[556px] p-[16px] md:p-[12px]">
+        <div className=" flex flex-col gap-[16px]">
+          <div className="mx-[-16px] mt-[-16px] md:mx-[-12px] md:mt-[-12px]">
+             <img 
+          src={imgUrl}
           alt="newImage"
           className="w-full  bg-black bg-opacity-20 rounded-[20px] h-[252px] "
         />
-        <div className="px-[16px] pb-[16px] md:px-[12px] md:pb-[12px] flex flex-col gap-[16px]">
-          <h2 className="text-2xl font-bold ">Happy new about pet</h2>
-          <p className="text-base font-normal">
-            In January, I fell in love with someone. It was the last thing I’d
-            expect and caught me completely off guard.He has sandy blond hair
-            with flecks of gray and gorgeous, sad eyes. He loves to go on walks
-            and cuddle. His name is Herbie. 
-          </p>
-
-          <div className="flex justify-between mt-[24px]">
-            <p className=" text-grey text-base font-normal">Date</p>
-            <Link className="text-blue text-base font-medium">Read more</Link>
           </div>
+         <h2 className="text-2xl font-bold font-manrope "><CuttedText text={ title} length="40"/></h2>
+          <p className="text-base font-normal font-manrope"><CuttedText text={ text} length="400" /></p>
+        </div>
+        <div className="flex justify-between mt-[24px] md:mt-[40px]">
+          <p className=" text-grey text-base font-normal font-manrope">
+            {format(Date.parse(date), "dd/MM/yyyy")}
+          </p>
+          <Link
+            target="_blank"
+            to={url}
+            className="text-blue text-base font-medium font-manrope hover:text-black"
+          >
+            Read more
+          </Link>
         </div>
       </div>
-    </div>
+      </div>
+    
   );
 };
 

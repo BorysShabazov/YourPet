@@ -35,9 +35,9 @@ isOpen={isAttentionModalOpen}
       </BasicModal>
     <div
       className="w-20 h-20 md:h-10 bg-blue rounded-[40px] shadow blue-gradient fixed right-5 
-    bottom-5 md:relative md:inset-0 md:mt-[40px] md:w-[129px] cursor-pointer" onClick={handleClick}
+    bottom-5 md:relative md:inset-0 md:mt-[40px] md:w-[129px] cursor-pointer z-10" onClick={handleClick}
     >
-      <div className="absolute left-0 top-0 w-full h-full md:flex-row-reverse md:flex md:static md:pr-[13px] gap-[8px] items-center">
+      <div className="absolute left-0 top-0 w-full rounded-[40px] h-full md:flex-row-reverse md:flex md:static md:pr-[13px] gap-[8px] items-center">
         <Svg
           id="icon-plus"
           size="24px"
