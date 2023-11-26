@@ -6,7 +6,7 @@
 .ajax-miniloader .minipaw {
   width: 1em;
   height: 1em;
-  animation: pawAnimation 550ms ease-in-out infinite;
+  animation: minipawAnimation 550ms ease-in-out infinite;
   opacity: 1;
 }
 
