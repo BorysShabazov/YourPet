@@ -49,7 +49,7 @@ const PetCard = ({ pet }) => {
   
   return (
     <>
-      <div className=" w-[288px] h-[456px] mdOnly:w-[336px] smOnly:w-[280px] relative hover:shadow-xl  bg-white rounded-bl-[40px] rounded-br-[40px] shadow">
+      <div className=" w-[288px] h-[100%] mx-h-[456px] pb-[24px]  mdOnly:w-[336px] smOnly:w-[280px] relative hover:shadow-xl  bg-white rounded-bl-[40px] rounded-br-[40px] shadow">
         {/* <div className=" hover:shadow-xl w-[280px] h-[456px] md:w-[280px]  h-[456px] bg-white rounded-bl-[40px] rounded-br-[40px] shadow absolute"> */}
           <img
             className="h-[288px] w-[100%]"
@@ -86,7 +86,7 @@ const PetCard = ({ pet }) => {
 
           <button
             onClick={() => handleOpenLearnMoreModal(id)}
-            className="hover:bg-gradient-to-l from-[#419EF1] to-[#9BD0FF] hover:text-white hover:border-none w-[248px] h-[38px] mx-[20px] mt-[20px] smOnly:mx-[16px] mdOnly:mx-[44px] mdOnly:h-[40px] rounded-[40px] border-2 border-[#54ADFF]  text-[#54ADFF] items-center pl-[78px]  flex font-['Manrope'] tracking-wide group"
+            className="hover:bg-gradient-to-l from-[#419EF1] to-[#9BD0FF] hover:text-white hover:border-none w-[248px] h-[38px] mx-[20px] mt-[20px] smOnly:mx-[16px] mdOnly:mx-[44px] mdOnly:h-[40px] rounded-[40px] border-2 border-[#54ADFF]  text-[#54ADFF] items-center pl-[78px]   flex font-['Manrope'] tracking-wide group"
             type="button"
           >
            <p className='transition-transform transform group-hover:-translate-x-[18px] flex '> Learn more
@@ -97,7 +97,7 @@ const PetCard = ({ pet }) => {
             /></p>
           </button>
 
-          <div className=" w-20 px-1 py-0.5 left-[12px] mdOnly:left-[24px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
+          <div className=" w-20 px-1 py-0.5 left-[12px] smOnly:left-[8px] mdOnly:left-[24px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
             <Svg
               id={'icon-location'}
               size={24}
@@ -108,7 +108,7 @@ const PetCard = ({ pet }) => {
             </p>
           </div>
 
-          <div className=" w-20 px-1 py-0.5 left-[100px] mdOnly:left-[128px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
+          <div className=" w-20 px-1 py-0.5 left-[104px] smOnly:left-[100px] mdOnly:left-[128px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
             <Svg
               id={'icon-clock'}
               size={24}
@@ -119,7 +119,7 @@ const PetCard = ({ pet }) => {
             </p>
           </div>
 
-          <div className=" w-[80px] h-[28px] px-1 py-0.5 left-[192px] mdOnly:left-[232px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl flex justify-center items-center gap-[4px] group">
+          <div className=" w-[80px] h-[28px] px-1 py-0.5 left-[196px] smOnly:left-[192px] mdOnly:left-[232px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl flex justify-center items-center gap-[4px] group">
             <Svg
               id={'icon-female'}
               size={24}
