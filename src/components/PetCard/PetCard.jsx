@@ -25,10 +25,9 @@ const PetCard = ({ pet }) => {
 
         </p>
 
-        <button
+        <button 
           className="hover:bg-gradient-to-l from-[#419EF1] to-[#9BD0FF] hover:text-white hover:border-none w-[248px] h-[38px] mx-[20px] mt-[20px] rounded-[40px] border-2 border-[#54ADFF] justify-center items-center gap-2.5 inline-flex text-blue-400 font-semibold font-['Manrope'] tracking-wide group"
-          type="button"
-        >
+          type="button" >
           Learn more
           <Svg
             id={'icon-pawprint'}
