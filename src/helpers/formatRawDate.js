@@ -1,3 +1,7 @@
 export const formatRawDate = (date) => {
-  return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join('-');
+  const day = date.getDate().toString().padStart(2, '0');
+  const mounth = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+
+  return [mounth, day, year].join('-');
 };
