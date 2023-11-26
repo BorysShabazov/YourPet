@@ -49,10 +49,10 @@ const PetCard = ({ pet }) => {
   
   return (
     <>
-      <div className="w-72 h-[456px] mx-auto relative">
-        <div className=" hover:shadow-xl w-72 h-[456px] bg-white rounded-bl-[40px] rounded-br-[40px] shadow absolute">
+      <div className=" w-[288px] h-[456px] mdOnly:w-[336px] smOnly:w-[280px] relative hover:shadow-xl  bg-white rounded-bl-[40px] rounded-br-[40px] shadow">
+        {/* <div className=" hover:shadow-xl w-[280px] h-[456px] md:w-[280px]  h-[456px] bg-white rounded-bl-[40px] rounded-br-[40px] shadow absolute"> */}
           <img
-            className="w-72 h-72"
+            className="h-[288px] w-[100%]"
             src="https://marylandpet.com/wp-content/uploads/2022/05/Golden-Retriever-Puppy-288x288.jpg"
             alt=""
           />
@@ -63,16 +63,17 @@ const PetCard = ({ pet }) => {
             </p>
           </div>
 
-          <div className="w-10 h-10 left-[236px] top-[12px] absolute group">
-            <div className="w-10 h-10 left-0 top-0 absolute bg-[#CCE4FB] rounded-full " />
+          <div className="w-10 h-10 right-[12px] top-[12px] bg-[#CCE4FB] rounded-full absolute group">
+            {/* <div className="w-10 h-10 left-0 top-0 absolute bg-[#CCE4FB] rounded-full " /> */}
             <Svg
               id={'icon-heart'}
               size={24}
               className="left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF]"
             />
           </div>
-           <div className="w-10 h-10 left-[236px] top-[68px] absolute group " onClick={()=>handleOpenDeleteModal(id)}>
-            <div className="w-10 h-10 left-0 top-0 absolute bg-[#CCE4FB] rounded-full" />
+          
+           <div className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full " onClick={()=>handleOpenDeleteModal(id)}>
+            {/* <div className="w-10 h-10 left-0 top-0 absolute bg-[#CCE4FB] rounded-full" /> */}
             <Svg
               id={'icon-trash'}
               size={24}
@@ -85,18 +86,18 @@ const PetCard = ({ pet }) => {
 
           <button
             onClick={() => handleOpenLearnMoreModal(id)}
-            className="hover:bg-gradient-to-l from-[#419EF1] to-[#9BD0FF] hover:text-white hover:border-none w-[248px] h-[38px] mx-[20px] mt-[20px] rounded-[40px] border-2 border-[#54ADFF] justify-center items-center gap-2.5 inline-flex text-blue-400 font-semibold font-['Manrope'] tracking-wide group"
+            className="hover:bg-gradient-to-l from-[#419EF1] to-[#9BD0FF] hover:text-white hover:border-none w-[248px] h-[38px] mx-[20px] mt-[20px] smOnly:mx-[16px] mdOnly:mx-[44px] mdOnly:h-[40px] rounded-[40px] border-2 border-[#54ADFF]  text-[#54ADFF] items-center pl-[78px]  flex font-['Manrope'] tracking-wide group"
             type="button"
           >
-            Learn more
+           <p className='transition-transform transform group-hover:-translate-x-[18px] flex '> Learn more
             <Svg
               id={'icon-pawprint'}
               size={24}
-              className=" fill-transparent group-hover:fill-[white]"
-            />
+              className=" fill-transparent group-hover:fill-[white] ml-[12px]"
+            /></p>
           </button>
 
-          <div className=" w-20 px-1 py-0.5 left-[12px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
+          <div className=" w-20 px-1 py-0.5 left-[12px] mdOnly:left-[24px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
             <Svg
               id={'icon-location'}
               size={24}
@@ -107,7 +108,7 @@ const PetCard = ({ pet }) => {
             </p>
           </div>
 
-          <div className=" w-20 px-1 py-0.5 left-[104px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
+          <div className=" w-20 px-1 py-0.5 left-[100px] mdOnly:left-[128px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
             <Svg
               id={'icon-clock'}
               size={24}
@@ -118,7 +119,7 @@ const PetCard = ({ pet }) => {
             </p>
           </div>
 
-          <div className=" w-[80px] h-[28px] px-1 py-0.5 left-[196px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl flex justify-center items-center gap-[4px] group">
+          <div className=" w-[80px] h-[28px] px-1 py-0.5 left-[192px] mdOnly:left-[232px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl flex justify-center items-center gap-[4px] group">
             <Svg
               id={'icon-female'}
               size={24}
@@ -129,7 +130,7 @@ const PetCard = ({ pet }) => {
             </p>
           </div>
         </div>
-      </div>
+      {/* </div> */}
       <BasicModal
         isOpen={isLearnMoreModalOpen}
         onCloseModal={handleCloseLearnMoreModal}
