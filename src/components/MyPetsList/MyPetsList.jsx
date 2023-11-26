@@ -52,7 +52,7 @@ export const MyPetsList = () => {
   return (
     <>
       <div>
-        {isLoadingPets ? (
+        {!isLoadingPets ? (
           <ul className="flex flex-col gap-[20px]">
             {petsList.length > 0 ? (
               petsList.map((el) => (
