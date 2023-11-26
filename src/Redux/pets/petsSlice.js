@@ -7,7 +7,7 @@ const initialPets = {
   isLoading: false,
   error: null,
 };
-
+console.log('initialPets: ', initialPets.items);
 const petsStateSlice = createSlice({
   name: 'pets',
   initialState: initialPets,
@@ -31,7 +31,7 @@ const petsStateSlice = createSlice({
     builder.addCase(createPets.fulfilled, (state, action) => {
       return {
         ...state,
-        items: [action.payload.data, ...state.items],
+        items: [...state.items, action.payload.data.pet],
         isLoading: false,
         error: null,
       };
@@ -41,15 +41,16 @@ const petsStateSlice = createSlice({
     // delete
 
     builder.addCase(deletePets.pending, pendingFunc);
+
     builder.addCase(deletePets.fulfilled, (state, action) => {
       return {
-        items: [...state.items.filter((el) => el.id !== action.payload)],
+        items: [...state.items.filter((el) => el._id !== action.payload)],
         isLoading: false,
         error: null,
       };
     });
+
     builder.addCase(deletePets.rejected, rejectFunc);
   },
 });
-
 export const petsStateReducer = petsStateSlice.reducer;

@@ -3,7 +3,7 @@ import { deleteNotice } from '../../../Redux/notices/noticesOperation';
 import Svg from '../../Svg/Svg';
 import { deletePets } from '../../../Redux/pets/petsOperation';
 
-const DeleteModal = ({ id, onCloseModal, title, nameToDelete }) => {
+const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
   const dispatch = useDispatch();
   const onDelete = () => {
     if (title === 'adverstiment') {

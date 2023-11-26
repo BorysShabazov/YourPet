@@ -1,20 +1,23 @@
-import { DeleteIcon } from '../DeleteIcon/DeleteIcon';
+import Svg from '../Svg/Svg';
 import { format } from 'date-fns';
 
+const hoverStyle =
+  'transition duration-200 ease-in-out cursor-pointer hover:opacity-80';
+
 const MyPetsCard = ({
+  id,
   photo,
   name,
   birth,
   type,
   comments,
-  id,
-  handleDeletePet,
+  handleTogleDeleteModal,
 }) => {
   const birthday = new Date(birth);
   const formatDate = format(birthday, 'dd.MM.yyyy');
 
   return (
-    <div className="relative w-[280px] bg-white rounded-[20px] shadow pt-[16px] pb-[24px] px-[20px] md:w-[703px] md:flex xl:w-[821px] md:gap-5 mx-auto">
+    <div className="relative w-[280px] bg-white rounded-[20px] shadow pt-[16px] pb-[24px] px-[20px] md:w-[703px] md:flex xl:w-[821px] md:gap-5">
       <div className="w-60 rounded-[20px] justify-center flex smOnly:mb-[20px] ">
         <img
           className="w-full h-[240px] rounded-[40px] object-cover md:w-[128px] md:h-[128px] xl:w-[161px] xl:h-[161px]"
@@ -23,10 +26,18 @@ const MyPetsCard = ({
       </div>
       <div className="relative w-full">
         <div
-          className="absolute top-[-4px] right-[0] transition duration-200 ease-in-out cursor-pointer hover:opacity-80"
-          onClick={() => handleDeletePet(id)}
+          onClick={() => {
+            handleTogleDeleteModal(id, name);
+          }}
+          className="absolute top-[-4px] right-[0]"
         >
-          <DeleteIcon />
+          <Svg
+            id={'icon-trash'}
+            size={24}
+            stroke={'#54ADFF'}
+            fill={'transparent'}
+            className={hoverStyle}
+          />
         </div>
         <ul className="flex flex-col gap-[12px]">
           <li>
