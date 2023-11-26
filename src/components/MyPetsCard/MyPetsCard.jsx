@@ -1,4 +1,5 @@
 import Svg from '../Svg/Svg';
+import { format } from 'date-fns';
 
 const hoverStyle =
   'transition duration-200 ease-in-out cursor-pointer hover:opacity-80';
@@ -12,6 +13,9 @@ const MyPetsCard = ({
   comments,
   handleTogleDeleteModal,
 }) => {
+  const birthday = new Date(birth);
+  const formatDate = format(birthday, 'dd.MM.yyyy');
+
   return (
     <div className="relative w-[280px] bg-white rounded-[20px] shadow pt-[16px] pb-[24px] px-[20px] md:w-[703px] md:flex xl:w-[821px] md:gap-5">
       <div className="w-60 rounded-[20px] justify-center flex smOnly:mb-[20px] ">
@@ -49,7 +53,7 @@ const MyPetsCard = ({
               <span className="text-black text-sm font-bold font-['Manrope'] tracking-wide">
                 Date of birth:
               </span>{' '}
-              {birth}
+              {formatDate}
             </p>
           </li>
           <li>
