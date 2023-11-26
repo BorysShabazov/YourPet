@@ -1,7 +1,4 @@
-import { CloseIcon } from '../CloseIcon/CloseIcon';
 import { useEffect, useState } from 'react';
-import { EditIcon } from '../EditIcon/EditIcon';
-import { PhotoIcon } from '../PhotoIcon/PhotoIcon';
 import { useFormik } from 'formik';
 import Svg from '../Svg/Svg';
 import { useDispatch, useSelector } from 'react-redux';
@@ -132,11 +129,23 @@ export const UserForm = ({ onTogleLeavingModal }) => {
       <div className={`absolute top-[14px] right-[14px] ${hoverStyle}`}>
         {!isEdit ? (
           <div onClick={() => setIsEdit(true)}>
-            <EditIcon />
+            <Svg
+              id={'icon-edit'}
+              size={24}
+              fill={'#54ADFF'}
+              className={hoverStyle}
+            />
+            {/* <EditIcon /> */}
           </div>
         ) : (
           <div onClick={resetFields}>
-            <CloseIcon />
+            <Svg
+              id={'icon-cross'}
+              size={24}
+              stroke={'#54ADFF'}
+              fill={'transparent'}
+              className={hoverStyle}
+            />
           </div>
         )}
       </div>
@@ -148,30 +157,36 @@ export const UserForm = ({ onTogleLeavingModal }) => {
             htmlFor="avatar"
             className="flex justify-center flex-col gap-[5px]"
           >
-            <div className="flex justify-center mb-[14px] w-[182px] h-[182px] rounded-[40px] bg-slate-300 items-center">
+            <div className="flex justify-center mb-[14px]  w-[182px] h-[182px] rounded-[40px] bg-slate-300 items-center overflow-hidden">
               {!isUpdatePending ? (
                 <img
-                  className=" object-cover  rounded-[40px]"
+                  className=" object-cover  rounded-[40px] w-[182px] h-[182px]"
                   src={previewAvatar ? previewAvatar : user.avatarURL}
                   alt="User Avatar"
                 />
               ) : (
-                <div>Loading</div>
+                <div className="text-center">Loading</div>
               )}
             </div>
             {!changeAvatar ? (
               <div
                 className={
                   isEdit
-                    ? `flex flex-row justify-center gap-[5px] mb-[21px] ${hoverStyle}`
-                    : 'flex flex-row justify-center gap-[5px] mb-[21px] opacity-0'
+                    ? `flex flex-row justify-center gap-[5px] mb-[14px] ${hoverStyle} h-6`
+                    : 'flex flex-row justify-center gap-[5px] mb-[14px] opacity-0 h-6'
                 }
               >
-                <PhotoIcon />
+                <Svg
+                  id={'icon-camera'}
+                  size={24}
+                  stroke={'#54ADFF'}
+                  fill={'transparent'}
+                  className={hoverStyle}
+                />
                 Edit photo
               </div>
             ) : (
-              <div className="flex justify-center mb-[14px] gap-2">
+              <div className="flex justify-center mb-[14px] gap-2 h-6">
                 <div
                   onClick={(e) => {
                     e.preventDefault();
@@ -196,7 +211,7 @@ export const UserForm = ({ onTogleLeavingModal }) => {
                   }}
                 >
                   <Svg
-                    id={'icon-trash'}
+                    id={'icon-cross'}
                     size={24}
                     stroke={'#54ADFF'}
                     fill={'transparent'}
