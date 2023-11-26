@@ -45,7 +45,7 @@ const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
           onClick={onDelete}
           className="Frame35 smOnly:w-64 smOnly:h-10  md:ml-4 w-32 px-5 py-2 bg-blue hover:blue-gradient rounded-3xl justify-center items-center gap-2 inline-flex text-stone-50 text-base font-bold font-['Manrope'] tracking-wide"
         >
-          Yes
+          Delete
           <span>
             <Svg
               id={'icon-trash'}

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Svg from '../../Svg/Svg';
+
 const modalRoot = document.querySelector('#modal-root');
 
 export function BasicModal({ isOpen, onCloseModal, children }) {
