@@ -85,7 +85,7 @@ export const MyPetsList = () => {
         onCloseModal={handleTogleDeleteModal}
       >
         <DeleteModal
-          title={'yuor pet'}
+          title={'your pet'}
           nameToDelete={currentName}
           id={currentId}
           onCloseModal={handleTogleDeleteModal}
