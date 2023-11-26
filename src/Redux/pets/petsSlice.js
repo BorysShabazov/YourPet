@@ -7,7 +7,7 @@ const initialPets = {
   isLoading: false,
   error: null,
 };
-console.log('initialPets: ', initialPets.items);
+
 const petsStateSlice = createSlice({
   name: 'pets',
   initialState: initialPets,
