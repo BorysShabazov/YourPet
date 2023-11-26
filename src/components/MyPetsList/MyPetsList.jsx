@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { fetchPets } from '../../Redux/pets/petsOperation';
 import DeleteModal from '../Modals/DeleteModal/DeleteModal';
 import { BasicModal } from '../Modals/BasicModal/BasicModal';
+import MiniLoader from '../MiniLoader/MiniLoader';
 
 // const pets = [
 //   {
@@ -51,7 +52,7 @@ export const MyPetsList = () => {
   return (
     <>
       <div>
-        {!isLoadingPets ? (
+        {isLoadingPets ? (
           <ul className="flex flex-col gap-[20px]">
             {petsList.length > 0 ? (
               petsList.map((el) => (
@@ -74,7 +75,9 @@ export const MyPetsList = () => {
             )}
           </ul>
         ) : (
-          <div className="text-center py-7">Loading</div>
+          <div className="w-full flex justify-center py-7">
+            <MiniLoader />
+          </div>
         )}
       </div>
       <BasicModal
