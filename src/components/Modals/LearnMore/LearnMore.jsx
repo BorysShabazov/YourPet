@@ -6,7 +6,6 @@ import ListOfNotice from "./ListInfoOfNotice";
 import ButtonContact from "./ButtonContact";
 import { getNoticeById } from "../../../Redux/notices/noticesOperation";
 import { getSelectedNotice } from "../../../Redux/notices/noticesSelectors";
-
 const data = {
   group: 'In good hands',
   title: 'Сute dog looking for a home',

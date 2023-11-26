@@ -22,7 +22,7 @@ const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
       </h3>
       <div className="  smOnly:w-60 md:w-96 mt-10 text-center">
         <span className="text-black text-base font-medium font-['Manrope']">
-          Are you sure you want to delete{' '}
+          Are you sure you want to delete
         </span>
         <span className="text-black text-base font-bold font-['Manrope']">
           `{nameToDelete}`
@@ -38,7 +38,7 @@ const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
           onClick={onCloseModal}
           className="Frame36 hover:blue-gradient hover:text-white smOnly:w-64 smOnly:h-10 w-32 h-10 px-5 py-2 rounded-3xl border-2 border-blue justify-center items-center gap-2 inline-flex  text-blue text-base font-bold font-['Manrope'] tracking-wide"
         >
-          Cancel{' '}
+          Cancel
         </button>
 
         <button
