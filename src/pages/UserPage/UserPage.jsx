@@ -50,7 +50,7 @@ const UserPage = () => {
           <Link
             to={'/add-pet'}
             state={location}
-            className="z-10 fixed right-[20px] bottom-[20px] md:absolute md:top-0 md:right-0 md:bottom-full"
+            className="fixed right-[20px] bottom-[20px] z-1 md:absolute md:top-0 md:right-0 md:bottom-full z-1"
           >
             <AddPetButton />
           </Link>
