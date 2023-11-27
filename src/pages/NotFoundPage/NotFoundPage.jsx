@@ -14,15 +14,15 @@ const NotFoundPage = () => {
 
       <picture>
         <source
-          srcset="/src/images/not_found_page/not_found_page_mobi.png"
+          srcSet="/src/images/not_found_page/not_found_page_mobi.png"
           media="(max-width: 767px)"
         />
         <source
-          srcset="/src/images/not_found_page/not_found_page_tablet.png"
+          srcSet="/src/images/not_found_page/not_found_page_tablet.png"
           media="(max-width: 1279px)"
         />
         <source
-          srcset="/src/images/not_found_page/not_found_page_desctop.png"
+          srcSet="/src/images/not_found_page/not_found_page_desctop.png"
           media="(min-width: 1280px)"
         />
         <img

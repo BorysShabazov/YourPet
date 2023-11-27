@@ -1,16 +1,9 @@
 import { useState } from 'react';
 import Svg from '../Svg/Svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { getNotices } from '../../Redux/notices/noticesSelectors';
-import { useParams } from 'react-router-dom';
 
-export const Search = ({ className = '' }) => {
+export const Search = ({getQuery, className = '' }) => {
   const [value, setValue] = useState('');
-  const notices = useSelector(getNotices);
-  const { categoryName } = useParams();
-  const dispatch=useDispatch()
-
-
+  
   const handleChange = ({ target }) => {
     setValue(target.value);
   };
@@ -18,7 +11,7 @@ export const Search = ({ className = '' }) => {
     setValue('');
   };
   const handleSearch = () => {
-    
+    getQuery(value);
   }
 
   return (
