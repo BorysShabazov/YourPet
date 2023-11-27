@@ -14,7 +14,7 @@ export const MyPetsList = () => {
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [petsPerPage, setPetsPerPage] = useState(3);
+  const [petsPerPage, setPetsPerPage] = useState(4);
 
   const indexOfLastPet = currentPage * petsPerPage;
   const indexOfFirstPet = indexOfLastPet - petsPerPage;
@@ -42,7 +42,7 @@ export const MyPetsList = () => {
         {!isLoadingPets ? (
           <ul
             className={`flex flex-col gap-[20px] ${
-              petsList.length > 3 && 'xl:h-[650px]'
+              petsList.length > 3 && ''
             }`}
           >
             {petsList.length > 0 ? (
