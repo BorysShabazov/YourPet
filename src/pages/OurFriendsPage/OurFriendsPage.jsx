@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Container, Title } from '../../ui';
 import { getFriends } from '../../assets/getFriends';
-import FriendCard from '../../components/FriendCard/FriendCard';
+import FriendCards from '../../components/FriendCard/FriendCard';
 
 const OurFriendsPage = () => {
   const [friends, setFriends] = useState([]);
@@ -20,9 +20,9 @@ const OurFriendsPage = () => {
   }, []);
 
   return (
-    <Container>
-      <Title className="mt-[40px] md:mt-[80px]">Our Friends</Title>
-      <FriendCard friends={friends} />
+    <Container className='pt-[40px] md:pt-[80px] pb-[75px] md:pb-[172px] xl:pb-[70px]'>
+      <Title className='mb-[24px] md:mb-[40px] xl:mb-[60px]'>Our Friend</Title>
+      <FriendCards friends={friends} />
     </Container>
   );
 };
