@@ -30,7 +30,6 @@ const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
   const isLoggedIn = useSelector(getIsLoggedIn);
   const isError = useSelector(getErrorNotice);
   const data2 = useSelector(getSelectedNotice);
-  console.log('data2: ', data2);
   const [isAddToFavorite, setAddToFavorite] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -76,7 +75,7 @@ const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
         <div className="flex flex-col justify-center items-center smOnly:w-[280px] smOnly:h-[821px] md:w-[633px] md:h-[495px]">
           <img src="/src/images/catError.png" alt="error" />
           <p className="text-rose-600 text-lg font-bold font-['Manrope']">
-            Sorry, something went wrong
+            Sorry, something went wrong !
           </p>
           <button
             onClick={() => window.location.reload()}

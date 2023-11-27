@@ -12,7 +12,7 @@ const ContentLearnModal = ({ data, isAddToFavorite, addToFavorites }) => {
             alt="dog"
             className="Rectangle303 smOnly:w-auto smOnly:h-[286px] md:w-[262px] md:h-[325px] rounded-bl-[40px] rounded-br-[40px]"
           />
-          <p className=" InGoodHands py-2 px-3 rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4 smOnly: left-[1px] md:left-0 absolute">
+          <p className=" InGoodHands py-2 px-3 rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4 md:top-6 smOnly: left-[1px] md:left-0 absolute">
             {data.group}
           </p>
         </div>
