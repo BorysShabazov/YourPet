@@ -10,26 +10,27 @@ import {
 import MiniLoader from '../../MiniLoader/MiniLoader';
 import ContentLearnModal from './ContentLearnModal';
 
-const data = {
-  group: 'In good hands',
-  title: 'Сute dog looking for a home',
-  name: 'Pesto',
-  birthday: '21.09.2020',
-  type: 'Dog',
-  place: 'Kharkiv',
-  the_sex: 'male',
-  email: 'user@mail.com',
-  phone: '+380123456789',
-  price: '$250',
-  comments:
-    ' Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too!',
-};
+// const data = {
+//   group: 'In good hands',
+//   title: 'Сute dog looking for a home',
+//   name: 'Pesto',
+//   birthday: '21.09.2020',
+//   type: 'Dog',
+//   place: 'Kharkiv',
+//   the_sex: 'male',
+//   email: 'user@mail.com',
+//   phone: '+380123456789',
+//   price: '$250',
+//   comments:
+//     ' Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too!',
+// };
 
 const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
   const isLoadingNotice = useSelector(getIsLoadingNotice);
   const isLoggedIn = useSelector(getIsLoggedIn);
   const isError = useSelector(getErrorNotice);
-  const data2 = useSelector(getSelectedNotice);
+  const data = useSelector(getSelectedNotice);
+  console.log('data: ', data);
   const [isAddToFavorite, setAddToFavorite] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -48,7 +49,6 @@ const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
   const addToFavorites = () => {
     if (isLoggedIn) {
       if (isAddToFavorite) {
@@ -105,37 +105,3 @@ const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
 };
 
 export default LearnMore;
-//повісити на кнопку LearnMore та передати id
-// onClick={()=>handleOpenLearnMoreModal(el.id)}
-
-// const dispatch = useDispatch();
-// const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
-// const [isAttentionModalOpen, setAttentionModalOpen] = useState(false);
-
-// const handleOpenAttentionModal = () => {
-//     setAttentionModalOpen(true);
-//   };
-//   const handleCloseAttentionModal = () => {
-//     setAttentionModalOpen(false);
-//   };
-
-// const handleOpenLearnMoreModal = (id) => {
-//     setLearnMoreModalOpen(true);
-//     dispatch(getNoticeById(id));
-//   };
-//   const handleCloseLearnMoreModal = () => {
-//     setLearnMoreModalOpen(false);
-//   };
-
-{
-  /* <BasicModal 
-isOpen={isLearnMoreModalOpen}
-        onCloseModal={handleCloseLearnMoreModal}>
-             <LearnMore onOpenAtentionModal={handleOpenAttentionModal} onCloseModal={handleCloseLearnMoreModal} />
-        </BasicModal> */
-}
-// <BasicModal
-// isOpen={isAttentionModalOpen}
-//         onCloseModal={handleCloseAttentionModal}>
-//        <AttentionModal  />
-//       </BasicModal>

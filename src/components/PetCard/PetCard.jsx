@@ -25,7 +25,6 @@ const PetCard = ({ pet }) => {
   };
 
   const handleOpenLearnMoreModal = (_id) => {
-    console.log('id: ', _id);
     setLearnMoreModalOpen(true);
     dispatch(getNoticeById(_id));
   };
