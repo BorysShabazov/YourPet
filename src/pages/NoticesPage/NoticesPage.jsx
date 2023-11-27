@@ -20,7 +20,7 @@ const NoticesPage = () => {
     const {categoryName} = useParams();
     useEffect(() => {
         dispatch(fetchNotices(categoryName))
-    }, [categoryName])
+    }, [categoryName, dispatch])
     const noticies = useSelector(getNotices);
 
     return (

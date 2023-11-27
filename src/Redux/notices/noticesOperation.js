@@ -6,7 +6,8 @@ export const fetchNotices = createAsyncThunk(
   async (category, thunkAPI) => {
     try {
       const response = await axios.get(`/api/notices/${category}`);
-      return response.data;
+      console.log(response);
+      return response.data.data.notices;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
     }
