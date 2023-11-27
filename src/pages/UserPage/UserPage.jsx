@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+
 import UserCard from '../../components/UserCard/UserCard';
 import AddPetButton from '../../components/AddPetButton/AddPetButton';
 import { useSelector } from 'react-redux';
@@ -11,7 +12,6 @@ import { MyPetsList } from '../../components/MyPetsList/MyPetsList';
 
 const UserPage = () => {
   const location = useLocation();
-
   const [isCongratsModalOpen, setShowCongratsModal] = useState(false);
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
