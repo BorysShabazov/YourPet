@@ -9,13 +9,13 @@ const CuttedText = ({text, length}) => {
   const handleMouseLeave = () => setIsHover(false);
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
+    <span onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
 
       {text.length > length ? (<span style={{cursor:'zoom-in'}}>
         {!isHover ? text.slice(0, length) + '...' : text}  
       </span>):(text)
         }
-    </div>
+    </span>
   )
 
 }
