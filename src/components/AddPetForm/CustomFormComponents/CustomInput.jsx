@@ -3,7 +3,7 @@ import { ErrorInputMessage } from './ErrorInputMessage';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
-import { formatRawDate } from '../../../Helpers/formatRawDate';
+import { formatRawDate } from '../../../helpers/formatRawDate';
 
 const labelStyles =
   'relative flex flex-col text-black text-sm font-medium font-manrope md:text-xl md:leading-relaxed';
