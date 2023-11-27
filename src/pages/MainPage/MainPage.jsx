@@ -27,6 +27,7 @@ const MainPage = () => {
             media="(min-width: 1280px)"
           />
           <img src="/src/images/mainImg/main@3x.png" alt="Сute dogs and cat" />
+
         </picture>
       </Container>
     </>
