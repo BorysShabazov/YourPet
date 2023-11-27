@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createPets, deletePets, fetchPets } from './petsOperation';
+import { createPet, deletePet, fetchPets } from './petsOperation';
 import { pendingFunc, rejectFunc } from '../operations/handlePendingAndReject';
 
 const initialPets = {
@@ -27,8 +27,8 @@ const petsStateSlice = createSlice({
 
     // create
 
-    builder.addCase(createPets.pending, pendingFunc);
-    builder.addCase(createPets.fulfilled, (state, action) => {
+    builder.addCase(createPet.pending, pendingFunc);
+    builder.addCase(createPet.fulfilled, (state, action) => {
       return {
         ...state,
         items: [...state.items, action.payload.data.pet],
@@ -36,13 +36,13 @@ const petsStateSlice = createSlice({
         error: null,
       };
     });
-    builder.addCase(createPets.rejected, rejectFunc);
+    builder.addCase(createPet.rejected, rejectFunc);
 
     // delete
 
-    builder.addCase(deletePets.pending, pendingFunc);
+    builder.addCase(deletePet.pending, pendingFunc);
 
-    builder.addCase(deletePets.fulfilled, (state, action) => {
+    builder.addCase(deletePet.fulfilled, (state, action) => {
       return {
         items: [...state.items.filter((el) => el._id !== action.payload)],
         isLoading: false,
@@ -50,7 +50,7 @@ const petsStateSlice = createSlice({
       };
     });
 
-    builder.addCase(deletePets.rejected, rejectFunc);
+    builder.addCase(deletePet.rejected, rejectFunc);
   },
 });
 export const petsStateReducer = petsStateSlice.reducer;

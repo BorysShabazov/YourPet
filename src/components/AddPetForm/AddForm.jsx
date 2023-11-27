@@ -11,7 +11,7 @@ import {
 import Svg from '../Svg/Svg';
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPets } from '../../Redux/pets/petsOperation';
+import { createPet } from '../../Redux/pets/petsOperation';
 import { createNotice } from '../../Redux/notices/noticesOperation';
 import { AddPetFormContext } from './AddPetForm';
 import { getIsLoadingPets } from '../../Redux/pets/petsSelectors';
@@ -91,7 +91,7 @@ const AddForm = () => {
           const formData = createFormData(values);
 
           dispatch(
-            category === 'own' ? createPets(formData) : createNotice(formData),
+            category === 'own' ? createPet(formData) : createNotice(formData),
           ).then((res) => {
             if (!res.error) {
               actions.resetForm();
