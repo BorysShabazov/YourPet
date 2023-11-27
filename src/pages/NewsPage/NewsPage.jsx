@@ -3,6 +3,7 @@ import NewsCard from "../../components/NewsCard/NewsCard";
 import { Search } from "../../components/Notices/Search";
 import { Container, Title } from "../../ui";
 import { getNews, getNewsByQuery } from "../../assets/getNews";
+import { PaginatedItems } from "../../components/Pagination/Pagination";
 
 
 
@@ -45,6 +46,7 @@ const NewsPage = () => {
           <li key={_id}><NewsCard date={date} imgUrl={imgUrl} text={text} title={title} url={url}/></li>
         ))}
       </ul>
+      <PaginatedItems itemsPerPage={4}/>
     </Container>
   );
 };

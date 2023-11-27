@@ -53,13 +53,13 @@ const PetCard = ({ pet }) => {
         {/* <div className=" hover:shadow-xl w-[280px] h-[456px] md:w-[280px]  h-[456px] bg-white rounded-bl-[40px] rounded-br-[40px] shadow absolute"> */}
           <img
             className="h-[288px] w-[100%]"
-            src="https://marylandpet.com/wp-content/uploads/2022/05/Golden-Retriever-Puppy-288x288.jpg"
-            alt=""
+            src={pet.imageURL}
+            alt={pet.title}
           />
 
           <div className=" flex items-center  w-[126px] h-[32px] px-[17px] py-[11px] left-0 top-[16px] absolute bg-[#CCE4FB] rounded-tr-2xl rounded-br-2xl  ">
             <p className=" flex items-center w-[92px] h-[10px]  text-neutral-900 text-sm font-medium font-['Manrope']">
-              In good hands
+              {pet.category}
             </p>
           </div>
 
