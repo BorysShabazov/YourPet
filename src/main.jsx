@@ -9,15 +9,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 import AxiosInterceptor from './components/Auth/AxiosInterceptor.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <AxiosInterceptor>
-          <BrowserRouter basename="/YourPet/">
-            <App />
-          </BrowserRouter>
-        </AxiosInterceptor>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <AxiosInterceptor>
+        <BrowserRouter basename="/YourPet/">
+          <App />
+        </BrowserRouter>
+      </AxiosInterceptor>
+    </PersistGate>
+  </Provider>,
 );
