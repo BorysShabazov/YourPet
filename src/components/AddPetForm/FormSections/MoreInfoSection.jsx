@@ -4,7 +4,7 @@ import { ErrorMessage, Field } from 'formik';
 import { ErrorInputMessage } from '../CustomFormComponents/ErrorInputMessage';
 
 const baseButtonStyles =
-  'flex flex-row align-center  px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm text-base font-normal font-manrope tracking-wide leading-normal';
+  'flex flex-row align-center  px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm text-base font-normal font-manrope tracking-wide leading-normal cursor-pointer';
 const regularButtonStyles = 'text-grey';
 const hoveredButtonStyles = 'bg-blue text-background';
 const inputTitleStyles = 'mb-[4px]';
@@ -22,10 +22,13 @@ const MoreInfoSection = ({
   sex,
   price,
   location,
+  petImage,
   setPhoto,
   comments,
 }) => {
-  const [petImagePath, setPetImagePath] = useState('');
+  const [petImagePath, setPetImagePath] = useState(
+    petImage ? URL.createObjectURL(petImage) : '',
+  );
 
   const chooseButtonColor = (inputValue) => {
     if (sex === '' && inputValue === 'female') return '#F43F5E';
@@ -93,7 +96,7 @@ const MoreInfoSection = ({
         <div className="relative flex flex-col items-center gap-[13px]">
           <label
             className={`flex flex-col gap-[8px] items-center mx-auto ${
-              hasPetImage ? 'pointer-events-none' : ''
+              hasPetImage ? 'pointer-events-none' : 'cursor-pointer'
             }`}
           >
             {!hasPetImage && (
@@ -134,7 +137,10 @@ const MoreInfoSection = ({
             </div>
           </label>
           {hasPetImage && (
-            <label htmlFor="petImage" className="flex flex-row items-center">
+            <label
+              htmlFor="petImage"
+              className="flex flex-row items-center cursor-pointer"
+            >
               <Svg
                 id="icon-camera"
                 className="flex items-center w-fit mr-[8px]"

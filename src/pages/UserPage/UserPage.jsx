@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+
 import UserCard from '../../components/UserCard/UserCard';
 import AddPetButton from '../../components/AddPetButton/AddPetButton';
 import { useSelector } from 'react-redux';
@@ -11,7 +12,6 @@ import { MyPetsList } from '../../components/MyPetsList/MyPetsList';
 
 const UserPage = () => {
   const location = useLocation();
-
   const [isCongratsModalOpen, setShowCongratsModal] = useState(false);
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
@@ -50,7 +50,7 @@ const UserPage = () => {
           <Link
             to={'/add-pet'}
             state={location}
-            className="z-10 fixed right-[20px] bottom-[20px] md:absolute md:top-0 md:right-0 md:bottom-full"
+            className="fixed right-[20px] bottom-[20px] z-1 md:absolute md:top-0 md:right-0 md:bottom-full z-1"
           >
             <AddPetButton />
           </Link>

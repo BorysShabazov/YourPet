@@ -13,8 +13,8 @@ export const fetchPets = createAsyncThunk(
   },
 );
 
-export const createPets = createAsyncThunk(
-  'pets/postPets',
+export const createPet = createAsyncThunk(
+  'pets/postPet',
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.post('/api/pets', arg);
@@ -25,8 +25,8 @@ export const createPets = createAsyncThunk(
   },
 );
 
-export const deletePets = createAsyncThunk(
-  'pets/deletePets',
+export const deletePet = createAsyncThunk(
+  'pets/deletePet',
   async (arg, thunkAPI) => {
     try {
       axios.delete(`/api/pets/${arg}`);
