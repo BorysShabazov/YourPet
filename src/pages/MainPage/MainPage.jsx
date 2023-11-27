@@ -15,19 +15,19 @@ const MainPage = () => {
           {/* mx-auto my-auto w-[474px] z-[-1] md:min-w-[900px] xl:block
           xl:w-[820px] xl:absolute xl:-top-[12%] xl:left-[28%] */}
           <source
-            srcSet="/YourPet/src/images/main_img/main.png"
+            srcSet="YourPet/blob/main/src/images/main_img/main.png"
             media="(max-width: 767px)"
           />
           <source
-            srcSet="/YourPet/src/images/main_img/main@2x.png"
+            srcSet="YourPet/blob/main/src/images/main_img/main@2x.png"
             media="(max-width: 1279px)"
           />
           <source
-            srcSet="/YourPet/src/images/main_img/main@3x.png"
+            srcSet="YourPet/blob/main/src/images/main_img/main@3x.png"
             media="(min-width: 1280px)"
           />
           <img
-            src="/YourPet/src/images/main_img/main@3x.png"
+            src="YourPet/blob/main/src/images/main_img/main@3x.png"
             alt="Сute dogs and cat"
           />
         </picture>
