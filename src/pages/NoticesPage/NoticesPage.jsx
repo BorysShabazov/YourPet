@@ -22,7 +22,7 @@ const NoticesPage = () => {
         dispatch(fetchNotices(categoryName))
     }, [categoryName, dispatch])
     const noticies = useSelector(getNotices);
-
+console.log(noticies)
     return (
         <Container >{
             catNameArr.includes(categoryName) ? (<div>
