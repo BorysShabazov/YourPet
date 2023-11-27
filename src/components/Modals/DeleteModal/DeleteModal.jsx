@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { deleteNotice } from '../../../Redux/notices/noticesOperation';
 import Svg from '../../Svg/Svg';
-import { deletePets } from '../../../Redux/pets/petsOperation';
+import { deletePet } from '../../../Redux/pets/petsOperation';
 
 const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
       onCloseModal();
       return;
     }
-    dispatch(deletePets(id));
+    dispatch(deletePet(id));
     onCloseModal();
   };
 
