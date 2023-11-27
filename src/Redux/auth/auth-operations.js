@@ -2,8 +2,9 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setToken, delToken } from '../operations/handleToken';
 
+axios.defaults.baseURL = 'https://your-pet-backend-test.onrender.com';
 // axios.defaults.baseURL = 'https://your-pet-server.onrender.com';
-axios.defaults.baseURL = 'http://localhost:5000';
+// axios.defaults.baseURL = 'http://localhost:5000';
 
 // register
 export const register = createAsyncThunk(
