@@ -6,34 +6,21 @@ import { fetchPets } from '../../Redux/pets/petsOperation';
 import DeleteModal from '../Modals/DeleteModal/DeleteModal';
 import { BasicModal } from '../Modals/BasicModal/BasicModal';
 import MiniLoader from '../MiniLoader/MiniLoader';
-
-// const pets = [
-//   {
-//     _id: 1,
-//     imageURL:
-//       'https://upload.wikimedia.org/wikipedia/commons/8/81/Persialainen.jpg',
-//     name: 'Simba',
-//     birthDate: '22.22.2022',
-//     type: ' Persian cat',
-//     comments:
-//       " Simba is a red Persian cat with green eyes. He loves to be pampered and groomed, and enjoys playing with toys. Although a bitshy, he's a loyal and affectionate lap cat.",
-//   },
-//   {
-//     _id: 2,
-//     imageURL:
-//       'https://people.com/thmb/n6EdTmvAL3TkkAqrT47caD6tUu8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(723x121:725x123)/wisp-the-cat-from-tiktok-092823-1-74797b02afe7475295e1478b2cdf2883.jpg',
-//     name: 'Max',
-//     birthDate: '13.11.2023',
-//     type: ' Persian cat',
-//     comments:
-//       " Max is a white Persian cat with green eyes. He loves to be pampered and groomed, and enjoys playing with toys. Although a bitshy, he's a loyal and affectionate lap cat.",
-//   },
-// ];
+import { Pagination } from './Pagination';
 
 export const MyPetsList = () => {
   const dispatch = useDispatch();
   const petsList = useSelector(getPets);
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [petsPerPage, setPetsPerPage] = useState(3);
+
+  const indexOfLastPet = currentPage * petsPerPage;
+  const indexOfFirstPet = indexOfLastPet - petsPerPage;
+  const currentPets = petsList.slice(indexOfFirstPet, indexOfLastPet);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -53,10 +40,14 @@ export const MyPetsList = () => {
     <>
       <div>
         {!isLoadingPets ? (
-          <ul className="flex flex-col gap-[20px]">
+          <ul
+            className={`flex flex-col gap-[20px] ${
+              petsList.length > 3 && 'xl:h-[650px]'
+            }`}
+          >
             {petsList.length > 0 ? (
-              petsList.map((el) => (
-                <li key={el._id}>
+              currentPets.map((el) => (
+                <li key={el._id} className="mx-auto">
                   <MyPetsCard
                     photo={el.imageURL}
                     name={el.name}
@@ -79,6 +70,13 @@ export const MyPetsList = () => {
             <MiniLoader />
           </div>
         )}
+        {petsList.length > 0 && petsPerPage !== petsList.length && (
+          <Pagination
+            petsPerPage={petsPerPage}
+            totalPets={petsList.length}
+            paginate={paginate}
+          />
+        )}
       </div>
       <BasicModal
         isOpen={isDeleteModalOpen}
@@ -89,6 +87,7 @@ export const MyPetsList = () => {
           nameToDelete={currentName}
           id={currentId}
           onCloseModal={handleTogleDeleteModal}
+          currentPage={currentPage}
         />
       </BasicModal>
     </>
