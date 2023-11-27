@@ -22,10 +22,13 @@ const MoreInfoSection = ({
   sex,
   price,
   location,
+  petImage,
   setPhoto,
   comments,
 }) => {
-  const [petImagePath, setPetImagePath] = useState('');
+  const [petImagePath, setPetImagePath] = useState(
+    petImage ? URL.createObjectURL(petImage) : '',
+  );
 
   const chooseButtonColor = (inputValue) => {
     if (sex === '' && inputValue === 'female') return '#F43F5E';
