@@ -2,8 +2,8 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setToken, delToken } from '../operations/handleToken';
 
-axios.defaults.baseURL = 'https://your-pet-server.onrender.com';
-// axios.defaults.baseURL = 'https://your-pet-server_test.onrender.com';
+// axios.defaults.baseURL = 'https://your-pet-server.onrender.com';
+axios.defaults.baseURL = 'http://localhost:5000';
 
 // register
 export const register = createAsyncThunk(
@@ -13,8 +13,12 @@ export const register = createAsyncThunk(
       const { data } = await axios.post(`/api/users/register`, credentials);
       const { data: dataResponse } = data;
 
-      setToken(dataResponse.token);
-      return { token: dataResponse.token, user: dataResponse.user };
+      setToken(dataResponse.accessToken);
+      return {
+        accessToken: dataResponse.accessToken,
+        refreshToken: dataResponse.refreshToken,
+        user: dataResponse.user,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.status);
     }
@@ -29,8 +33,12 @@ export const login = createAsyncThunk(
       const { data } = await axios.post(`/api/users/login`, credentials);
       const { data: dataResponse } = data;
 
-      setToken(dataResponse.token);
-      return { token: dataResponse.token, user: dataResponse.user };
+      setToken(dataResponse.accessToken);
+      return {
+        accessToken: dataResponse.accessToken,
+        refreshToken: dataResponse.refreshToken,
+        user: dataResponse.user,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.status);
     }
@@ -80,8 +88,9 @@ export const update = createAsyncThunk(
         },
       });
       const { data: dataResponse } = data;
+      console.log(dataResponse);
 
-      return { token: dataResponse.token, user: dataResponse.user };
+      return { user: dataResponse.user };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.status);
     }

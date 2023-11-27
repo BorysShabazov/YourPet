@@ -18,7 +18,7 @@ import { petsStateReducer } from './pets/petsSlice';
 const authPersistConfig = {
   key: 'auth',
   storage: storage,
-  whitelist: ['token'],
+  whitelist: ['token', 'refreshToken'],
 };
 
 const rootReduser = combineReducers({

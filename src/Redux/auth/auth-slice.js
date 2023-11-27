@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   register,
   login,
@@ -11,6 +11,7 @@ const initialState = {
   user: null,
   error: null,
   token: null,
+  refreshToken: null,
   isLoggedIn: false,
   isRefresh: false,
   isRequestActive: false,
@@ -23,17 +24,26 @@ export const authSlice = createSlice({
     resetHttpError: (state) => {
       state.error = null;
     },
+
+    setAccessToken: (state, action) => {
+      state.token = action.payload;
+    },
+
+    setRefreshToken: (state, action) => {
+      state.refreshToken = action.payload;
+    },
   },
+
   extraReducers: (builder) => {
-    // register
-    builder.addCase(register.pending, (state, action) => {
+    builder.addCase(register.pending, (state) => {
       state.error = null;
       state.isRequestActive = true;
     });
 
     builder.addCase(register.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.token = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
       if (!action.payload.user.birthday) {
         state.user.birthday = '00.00.0000';
       }
@@ -48,17 +58,15 @@ export const authSlice = createSlice({
     });
 
     // login
-    builder.addCase(login.pending, (state, action) => {
+    builder.addCase(login.pending, (state) => {
       state.error = null;
       state.isRequestActive = true;
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      state.token = action.payload.token;
-      // if (!action.payload.user.birthday) {
-      //   state.user.birthday = '04.06.1995';
-      // }
+      state.token = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
       state.isLoggedIn = true;
       state.isRequestActive = false;
     });
@@ -69,7 +77,7 @@ export const authSlice = createSlice({
     });
 
     // current
-    builder.addCase(currentUser.pending, (state, action) => {
+    builder.addCase(currentUser.pending, (state) => {
       state.error = null;
       state.isRefresh = true;
     });
@@ -89,11 +97,11 @@ export const authSlice = createSlice({
     });
 
     //logout
-    builder.addCase(logout.pending, (state, action) => {
+    builder.addCase(logout.pending, (state) => {
       state.error = null;
       state.isRefresh = true;
     });
-    builder.addCase(logout.fulfilled, (state, action) => {
+    builder.addCase(logout.fulfilled, (state) => {
       // state = { ...initialState };
       state.user = null;
       state.error = null;
@@ -101,7 +109,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
       state.isRefresh = false;
     });
-    builder.addCase(logout.rejected, (state, action) => {
+    builder.addCase(logout.rejected, (state) => {
       state.user = null;
       state.error = null;
       state.token = null;
@@ -110,7 +118,7 @@ export const authSlice = createSlice({
     });
 
     // update
-    builder.addCase(update.pending, (state, action) => {
+    builder.addCase(update.pending, (state) => {
       state.error = null;
       state.isRequestActive = true;
     });
