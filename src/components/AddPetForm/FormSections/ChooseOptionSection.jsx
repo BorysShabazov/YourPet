@@ -1,9 +1,10 @@
 import { ErrorInputMessage } from '../CustomFormComponents/ErrorInputMessage';
+import { FormSectionContainer } from '../CustomFormComponents/FormSectionContainer';
 import { RadioButton } from '../CustomFormComponents/RadioButton';
 
 const ChooseOptionSection = ({ category }) => {
   return (
-    <div className="relative flex flex-col mb-[45px] gap-[12px] md:mb-[87px]">
+    <FormSectionContainer sectionName="chooseOption">
       <RadioButton category={category} name="category" value="own">
         your pet
       </RadioButton>
@@ -20,7 +21,7 @@ const ChooseOptionSection = ({ category }) => {
         in good hands
       </RadioButton>
       <ErrorInputMessage inputName={'category'} />
-    </div>
+    </FormSectionContainer>
   );
 };
 
