@@ -36,7 +36,7 @@ export function BasicModal({ isOpen, onCloseModal, children }) {
     <>
       {isOpen &&
         createPortal(
-          <div className="modal-overlay flex items-center justify-center fixed bg-black bg-opacity-50 top-0 left-0 w-full h-full">
+          <div className="modal-overlay flex items-center justify-center fixed bg-black bg-opacity-50 top-0 left-0 w-full h-full z-50">
             <div className="modal" ref={modalRef}>
               <div className="modal-content relative justify-center  bg-white w-full smOnly:p-3 md:p-6 rounded-3xl shadow-lg">
                 <Svg
