@@ -11,7 +11,7 @@ export const FriendsItem = ({ friend }) => {
     friend;
 
   return (
-    <li className="px-[16px] py-[12px] w-[280px]  bg-white rounded-[40px] shadow md:w-[336px] md:h-[275px] xl:max-w-[395px]">
+    <li className="px-[16px] py-[12px] w-[280px]  bg-white rounded-[40px] shadow md:w-[336px]  xl:w-[395px]">
       <a
         href={url}
         target="_blank"
@@ -26,26 +26,17 @@ export const FriendsItem = ({ friend }) => {
           src={imageUrl}
           alt={title}
         />
-        <ul className="flex flex-col items-start justify-center relative [&>*:not(:last-child)]:mb">
-          <li className="flex flex-col items-start mb-[12px] last:mb-0">
-            <div>
-              <p className="flex justify-between text-neutral-900  font-semibold font-['Manrope'] text-xs md:text-sm xl:text-base ">
-                Time:
-              </p>
-              <p
-                className={`cursor-pointer flex items-center p-0 border-none text-blue-400 font-medium font-['Manrope'] text-xs w-[85px] md:text-sm md:w-[76px] xl:w-[141px] xl:text-base`}
-              >
-                {workDays
-                  ? !workDays[numberOfDay].isOpen
-                    ? 'Close'
-                    : `${workDays[numberOfDay].from || ''}-${
-                        workDays[numberOfDay].to || ''
-                      }`
-                  : 'day and night'}
-              </p>
-            </div>
-          </li>
-
+        {/* <ul className="flex flex-col items-start justify-center relative [&>*:not(:last-child)]:mb"> */}
+        <ul className="flex flex-col items-start justify-center gap-[12px]">
+          <ListItemDescription title="Time:">
+            {workDays
+              ? !workDays[numberOfDay].isOpen
+                ? 'Close'
+                : `${workDays[numberOfDay].from || ''}-${
+                    workDays[numberOfDay].to || ''
+                  }`
+              : 'day and night'}
+          </ListItemDescription>
           {address ? (
             <ListItemDescription title="Adress:" url={addressUrl}>
               {address}
