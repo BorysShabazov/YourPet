@@ -18,9 +18,9 @@ const catNameArr=['sell','lost', 'found','in-good-hands', 'favorite', 'own' ]
 const NoticesPage = () => {
     const dispatch = useDispatch();
     const {categoryName} = useParams();
-    // useEffect(() => {
-    //     dispatch(fetchNotices(categoryName))
-    // }, dispatch)
+    useEffect(() => {
+        dispatch(fetchNotices(categoryName))
+    }, [categoryName, dispatch])
     const noticies = useSelector(getNotices);
 
     return (

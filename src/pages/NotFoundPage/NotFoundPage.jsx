@@ -1,5 +1,6 @@
 import ToMainPageButton from '../../components/ToMainPageButton/ToMainPageButton';
 import { Container } from '../../ui/Container/Container';
+import images from '../../images/not_found_page';
 
 const NotFoundPage = () => {
   return (
@@ -13,20 +14,17 @@ const NotFoundPage = () => {
       </div>
 
       <picture>
+        <source srcSet={images.notFoundPageMobile} media="(max-width: 767px)" />
         <source
-          srcSet="/src/images/not_found_page/not_found_page_mobi.png"
-          media="(max-width: 767px)"
-        />
-        <source
-          srcSet="/src/images/not_found_page/not_found_page_tablet.png"
+          srcSet={images.notFoundPageTablet}
           media="(max-width: 1279px)"
         />
         <source
-          srcSet="/src/images/not_found_page/not_found_page_desctop.png"
+          srcSet={images.notFoundPageDesctop}
           media="(min-width: 1280px)"
         />
         <img
-          src="/src/images/not_found_page/not_found_page_desctop.png"
+          src={images.notFoundPageDesctop}
           alt="Сute dogs and cat"
           className="mt-[88px] min-w-[280px] mx-auto md:mt-[96px] md:min-w-[704px] xl:w-[822px]"
         />
