@@ -4,8 +4,8 @@ import Svg from '../../Svg/Svg';
 import { firstLetterUp } from '../helpers';
 
 const navLinkArr = [
-  { path: '/login', text: 'log IN' },
-  { path: '/register', text: 'registration' },
+  { path: '/login', text: 'log IN',svg:"icon-pawprint"},
+  { path: '/register', text: 'registration',svg:"" },
 ];
 export default function AuthNav({ onClick, style = '' }) {
   const location = useLocation();
@@ -13,7 +13,7 @@ export default function AuthNav({ onClick, style = '' }) {
 
   return (
     <ul className={`flex text-yellow ${style}`}>
-      {navLinkArr.map(({ path, text }, idx) => (
+      {navLinkArr.map(({ path, text,svg }, idx) => (
         <li key={text} onClick={onClick}>
           <BtnAuth
             path={path}
@@ -23,11 +23,10 @@ export default function AuthNav({ onClick, style = '' }) {
               path === pathPage ? 'text-white bg-yellow' : ''
             }`}
           >
-            {/* {firstLetterUp(text)} */}
-            {text}
-            {idx === 0 ? (
+            {firstLetterUp(text)}
+            {svg ? (
               <Svg
-                id="icon-pawprint"
+                id={svg}
                 fill={`${path === pathPage ? 'white' : '#FFC107'}`}
               />
             ) : null}
