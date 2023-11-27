@@ -1,3 +1,6 @@
+import ListItemDescription from './ListItemDescription';
+import css from './friend.module.css';
+
 const dayNow = new Date();
 const deyWeekArr = [6, 0, 1, 2, 3, 4, 5];
 
@@ -8,18 +11,18 @@ export const FriendsItem = ({ friend }) => {
     friend;
 
   return (
-    <li className="px-[16px] py-[12px] w-[280px] h-[239px] bg-white rounded-[40px] shadow md:w-[336px] md:h-[275px] xl:max-w-[395px]">
+    <li className="px-[16px] py-[12px] w-[280px]  bg-white rounded-[40px] shadow md:w-[336px] md:h-[275px] xl:max-w-[395px]">
       <a
         href={url}
         target="_blank"
         rel="noreferrer noopener nofollow"
-        className="block mb-[16px] font-bold text-center text-blue-400 text-xl font-['Manrope'] "
+        className="block mb-[16px] font-bold text-center text-blue text-xl font-['Manrope'] "
       >
         {title}
       </a>
-      <div className="flex  flex-row  items-start">
+      <div className="flex  flex-row  items-start gap-[16px] md:gap-[14px] xl:gap-[16px]">
         <img
-          className="mr-[16px] max-w-[100px] md:max-w-[120px] md:mr-[14px] xl:max-w-[158px] xl:mr-16px"
+          className="max-w-[100px] md:max-w-[120px]  xl:max-w-[158px]"
           src={imageUrl}
           alt={title}
         />
@@ -29,7 +32,9 @@ export const FriendsItem = ({ friend }) => {
               <p className="flex justify-between text-neutral-900  font-semibold font-['Manrope'] text-xs md:text-sm xl:text-base ">
                 Time:
               </p>
-              <p className="cursor-pointer flex items-center p-0 border-none text-blue-400 font-medium font-['Manrope'] text-xs w-[85px] md:text-sm md:w-[76px] xl:w-[141px] xl:text-base">
+              <p
+                className={`cursor-pointer flex items-center p-0 border-none text-blue-400 font-medium font-['Manrope'] text-xs w-[85px] md:text-sm md:w-[76px] xl:w-[141px] xl:text-base`}
+              >
                 {workDays
                   ? !workDays[numberOfDay].isOpen
                     ? 'Close'
@@ -40,40 +45,34 @@ export const FriendsItem = ({ friend }) => {
               </p>
             </div>
           </li>
-          <li className="flex flex-col items-start mb-[12px] last:mb-0">
-            <p className="flex justify-between text-neutral-900  font-semibold font-['Manrope'] text-xs md:text-sm xl:text-base ">
-              Adress:
-            </p>
-            <a
-              className="no-underline font-medium text-xs md:text-sm xl:text-base"
-              href={addressUrl}
-              target="_blank"
-            >
+
+          {address ? (
+            <ListItemDescription title="Adress:" url={addressUrl}>
               {address}
-            </a>
-          </li>
-          <li className="flex flex-col items-start mb-[12px] last:mb-0">
-            <p className="flex justify-between text-neutral-900  font-semibold font-['Manrope'] text-xs md:text-sm xl:text-base ">
-              Email:
-            </p>
-            <a
-              className="no-underline font-medium text-xs md:text-sm xl:text-base"
-              href={`mailto:${email}`}
-            >
+            </ListItemDescription>
+          ) : (
+            <ListItemDescription title="Adress:" url={url}>
+              website only
+            </ListItemDescription>
+          )}
+          {email ? (
+            <ListItemDescription title="Email:" url={`mailto:${email}`}>
               {email}
-            </a>
-          </li>
-          <li className="flex flex-col items-start mb-[12px] last:mb-0">
-            <p className="flex justify-between text-neutral-900  font-semibold font-['Manrope'] text-xs md:text-sm xl:text-base ">
-              Phone:
-            </p>
-            <a
-              className="no-underline font-medium text-xs md:text-sm xl:text-base"
-              href={`tel:${phone}`}
-            >
+            </ListItemDescription>
+          ) : (
+            <ListItemDescription title="Email:" url={url}>
+              website only
+            </ListItemDescription>
+          )}
+          {phone ? (
+            <ListItemDescription title="Phone:" url={`tel:${phone}`}>
               {phone}
-            </a>
-          </li>
+            </ListItemDescription>
+          ) : (
+            <ListItemDescription title="Phone:" url={url}>
+              website only
+            </ListItemDescription>
+          )}
         </ul>
       </div>
     </li>
