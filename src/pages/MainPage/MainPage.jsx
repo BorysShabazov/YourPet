@@ -15,18 +15,15 @@ const MainPage = () => {
           {/* mx-auto my-auto w-[474px] z-[-1] md:min-w-[900px] xl:block
           xl:w-[820px] xl:absolute xl:-top-[12%] xl:left-[28%] */}
           <source
-            srcSet="/src/images/main_img/main.png"
+            srcSet="/src/images/mainImg/main.png"
             media="(max-width: 767px)"
           />
           <source
-            srcSet="/src/images/main_img/main@2x.png"
+            srcSet="/src/images/mainImg/main@2x.png"
             media="(max-width: 1279px)"
           />
-          <source
-            srcSet="/src/images/main_img/main@3x.png"
-            media="(min-width: 1280px)"
-          />
-          <img src="/src/images/main_img/main@3x.png" alt="Сute dogs and cat" />
+          <source srcSet="/mainImg/main@3x.png" media="(min-width: 1280px)" />
+          <img src="/mainImg/main@3x.png" alt="Сute dogs and cat" />
         </picture>
       </Container>
     </>
