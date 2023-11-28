@@ -70,7 +70,7 @@ export const MyPetsList = () => {
             <MiniLoader />
           </div>
         )}
-        {petsList.length > 0 && petsPerPage !== petsList.length && (
+        {petsList.length > 0 && petsPerPage !== petsList.length && petsPerPage < petsList.length && (
           <Pagination
             petsPerPage={petsPerPage}
             totalPets={petsList.length}
