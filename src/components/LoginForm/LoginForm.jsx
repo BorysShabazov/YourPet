@@ -1,8 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from '../../Redux/auth/auth-operations';
-import { getAuthError, getIsRequest } from '../../Redux/auth/auth-selectors';
+import { getAuthError } from '../../Redux/auth/auth-selectors';
 import LoginFormSchema from '../../schemas/LoginFormSchema';
 import Svg from '../Svg/Svg';
 import AuthHeader from '../AuthComponents/AuthHeader';
@@ -22,11 +22,14 @@ const LoginForm = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const dispatch = useDispatch();
   const httpError = useSelector(getAuthError);
-  const isRequest = useSelector(getIsRequest);
   const messages = {
     axiosError: 'Email or password is invalid',
     accessMessage: 'Password is secure',
   };
+
+  useEffect(() => {
+    dispatch(authSlice.actions.resetHttpError());
+  }, [dispatch]);
 
   // toggle password
   const togglePasswordVisibility = (value) => {
@@ -43,18 +46,19 @@ const LoginForm = () => {
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
-      validate={() => {
-        dispatch(authSlice.actions.resetHttpError());
-      }}
       validationSchema={LoginFormSchema}
-      validateOnBlur={false}
-      validateOnChange={false}
-      onSubmit={({ email, password }, { resetForm }) => {
+      onSubmit={({ email, password }) => {
         dispatch(login({ email, password }));
-        resetForm();
       }}
     >
-      {({ errors, setFieldError, values, setFieldValue }) => (
+      {({
+        errors,
+        touched,
+        setFieldError,
+        values,
+        setFieldValue,
+        handleChange,
+      }) => (
         <Form className={`${formStyles}`}>
           <AuthHeader header="Login" />
           <div className="flex flex-col gap-9 w-full">
@@ -66,14 +70,11 @@ const LoginForm = () => {
                 placeholder="Email"
                 value={values.email}
                 className={`${inputStyles} ${
-                  errors['email'] ? 'border-red' : null
+                  errors.email && touched.email ? 'border-red' : ''
                 }`}
-                onClick={() => {
-                  setFieldError('email', '');
-                }}
               />
 
-              {errors['email'] && values['email'] !== '' && (
+              {errors.email && touched.email && values.email !== '' && (
                 <Svg
                   id="icon-cross"
                   className="right-3 absolute cursor-pointer"
@@ -100,16 +101,22 @@ const LoginForm = () => {
                 placeholder="Password"
                 value={values.password}
                 type={passwordVisible ? 'text' : 'password'}
-                className={`${inputStyles} ${
-                  errors['password'] || httpError ? 'border-red' : null
-                } ${isRequest ? 'border-[#00C3AD]' : null} `}
-                onClick={() => {
-                  setFieldError('password', '');
-                  dispatch(authSlice.actions.resetHttpError());
+                onChange={(e) => {
+                  handleChange(e);
+                  if (httpError) dispatch(authSlice.actions.resetHttpError());
                 }}
+                className={`${inputStyles} ${
+                  (errors.password && touched.password) || httpError
+                    ? 'border-red'
+                    : ''
+                } ${
+                  !errors.password && values.password && !httpError
+                    ? '!border-[#00C3AD]'
+                    : ''
+                } `}
               />
               <AuthSvgWrapper>
-                {isRequest ? (
+                {!errors.password && values.password && !httpError ? (
                   <Svg
                     className="cursor-pointer"
                     id={'icon-check'}
@@ -137,7 +144,7 @@ const LoginForm = () => {
                 <div className={`${wrapperError}`}>{messages.axiosError}</div>
               ) : null}
 
-              {isRequest ? (
+              {!errors.password && values.password && !httpError ? (
                 <div className={`${passwordSuccess}`}>
                   {messages.accessMessage}
                 </div>
