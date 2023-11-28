@@ -23,13 +23,6 @@ import { currentUser } from "./Redux/auth/auth-operations";
 import Loader from "./components/Loader/Loader";
 import PrivateRoute from "./components/Route/PrivateRoute";
 
-// import NoticesCategoriesNav from './components/Notices/NoticesCategoriesNav';
-// import { selectAuth } from './Redux/auth/auth-selectors';
-// const test = import.meta.env.VITE_API_TEST;
-
-// const { token } = useSelector(selectAuth);
-// const navigate = useNavigate();
-// const onLogin = () => navigate('/login');
 
 function App() {
   const dispatch = useDispatch();
