@@ -11,11 +11,12 @@ import {
 import Svg from '../Svg/Svg';
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPets } from '../../Redux/pets/petsOperation';
+import { createPet } from '../../Redux/pets/petsOperation';
 import { createNotice } from '../../Redux/notices/noticesOperation';
 import { AddPetFormContext } from './AddPetForm';
 import { getIsLoadingPets } from '../../Redux/pets/petsSelectors';
 import { formatRawDate } from '../../helpers/formatRawDate';
+import { getIsLoadingNotice } from '../../Redux/notices/noticesSelectors';
 
 const buttonStyles =
   'px-[16px] py-[8px] rounded-[40px] flex justify-center items-center gap-[12px] w-[100%] text-sm font-medium font-manrope tracking-wide';
@@ -23,7 +24,8 @@ const buttonStyles =
 const AddForm = () => {
   const { step, setStep, category, setCategory } =
     useContext(AddPetFormContext);
-  const isLoading = useSelector(getIsLoadingPets);
+  const isAddingPet = useSelector(getIsLoadingPets);
+  const isAddingNotice = useSelector(getIsLoadingNotice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const previousLocation = useLocation();
@@ -89,7 +91,7 @@ const AddForm = () => {
           const formData = createFormData(values);
 
           dispatch(
-            category === 'own' ? createPets(formData) : createNotice(formData),
+            category === 'own' ? createPet(formData) : createNotice(formData),
           ).then((res) => {
             if (!res.error) {
               actions.resetForm();
@@ -150,11 +152,11 @@ const AddForm = () => {
             <button
               type="button"
               className={`${buttonStyles} border ${
-                isLoading
+                isAddingPet || isAddingNotice
                   ? 'bg-lightBlue border-lightBlue'
                   : 'bg-blue border-blue hover:blue-gradient'
               }  text-background md:px-[28px] md:w-[248px] `}
-              disabled={isLoading}
+              disabled={isAddingPet || isAddingNotice}
               onClick={handleSubmit}
             >
               {step === 3 ? 'Done' : 'Next'}
@@ -163,7 +165,7 @@ const AddForm = () => {
             <button
               type="button"
               className={`${buttonStyles} text-blue hover:border hover:border-blue md:w-[116px]`}
-              disabled={isLoading}
+              disabled={isAddingPet || isAddingNotice}
               onClick={goBack}
             >
               <Svg id="icon-arrow-left" className="w-fit" stroke="#54ADFF" />

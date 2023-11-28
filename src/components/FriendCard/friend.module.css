@@ -1,0 +1,20 @@
+.subtitle {
+  font-family: Manrope;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .subtitle {
+    font-size: 14px;
+    line-height: 19px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .subtitle {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}

@@ -1,72 +1,22 @@
-import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 
-const items = [...Array(33).keys()];
-
-function Items({ currentItems }) {
-  return (
-    <div className="items">
-    {currentItems && currentItems.map((item,i) => (
-      <div key={i}>
-        <h3>Item #{item}</h3>
-      </div>
-    ))}
-      </div>
-  );
-}
-
-export function PaginatedItems({ itemsPerPage }) {
-  // We start with an empty list of items.
-  const [currentItems, setCurrentItems] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useState(0);
-
-  useEffect(() => {
-    // Fetch items from another resources.
-    const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(items.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
-    const newOffset = event.selected * itemsPerPage % items.length;
-    console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
-    setItemOffset(newOffset);
-  };
-
-  return (
-    <>
-      <Items currentItems={currentItems} />
-      <ReactPaginate
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={2}
-        pageCount={pageCount}
-        previousLabel="< previous"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        containerClassName="pagination"
-        activeClassName="active"
+export const Pagination = ({handleClickPage, totalPages})=>(
+<>
+  <ReactPaginate
+        nextLabel="&rarr;"
+        onPageChange={handleClickPage}
+        pageRangeDisplayed={window.innerWidth<480 ?4:5 }
+        marginPagesDisplayed={0}
+        pageCount={totalPages}
+        previousLabel="&larr;"
+        pageClassName="w-[35px] h-[35px] rounded-full border flex items-center justify-center"
+        pageLinkClassName="w-[35px] h-[35px] rounded-full flex items-center justify-center"
+        previousClassName="mr-5 w-[35px] h-[35px] rounded-full border"
+        previousLinkClassName="w-[35px] h-[35px]  text-xl text-blue  flex items-center justify-center"
+        nextClassName="mr-5 w-[35px] h-[35px] rounded-full border flex items-center justify-center"
+        nextLinkClassName="w-[35px] h-[35px] text-xl text-blue flex items-center justify-center"
+        containerClassName="flex gap-[5px] mx-auto mt-10 w-max"
+        activeClassName="bg-blue text-white"
         renderOnZeroPageCount={null}
       />
-    </>
-  );
-}
-
-// Add a <div id="container"> to your HTML to see the componend rendered.
-// ReactDOM.render(
-//   <PaginatedItems itemsPerPage={4} />,
-//   document.getElementById("container")
-// );
+</>)

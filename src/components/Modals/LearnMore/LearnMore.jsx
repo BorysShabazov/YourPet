@@ -1,39 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLoggedIn } from '../../../Redux/auth/auth-selectors';
-import ButtonAddToFavorites from './ButtonAddToFavorites';
-import ListOfNotice from './ListInfoOfNotice';
-import ButtonContact from './ButtonContact';
-import { getNoticeById } from '../../../Redux/notices/noticesOperation';
 import Loader from '../../Loader/Loader';
+import { getErrorNotice } from '../../../Redux/notices/noticesSelectors';
 import {
   getIsLoadingNotice,
   getSelectedNotice,
 } from '../../../Redux/notices/noticesSelectors';
 import MiniLoader from '../../MiniLoader/MiniLoader';
+import ContentLearnModal from './ContentLearnModal';
 
-const data = {
-  group: 'In good hands',
-  title: 'Сute dog looking for a home',
-  name: 'Pesto',
-  birthday: '21.09.2020',
-  type: 'Dog',
-  place: 'Kharkiv',
-  the_sex: 'male',
-  email: 'user@mail.com',
-  phone: '+380123456789',
-  price: '$250',
-  comments:
-    ' Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too!',
-};
+// const data = {
+//   group: 'In good hands',
+//   title: 'Сute dog looking for a home',
+//   name: 'Pesto',
+//   birthday: '21.09.2020',
+//   type: 'Dog',
+//   place: 'Kharkiv',
+//   the_sex: 'male',
+//   email: 'user@mail.com',
+//   phone: '+380123456789',
+//   price: '$250',
+//   comments:
+//     ' Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too!',
+// };
 
 const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
-  const isLoadingNotice = true;
-  // = useSelector(getIsLoadingNotice);
-  const [isAddToFavorite, setAddToFavorite] = useState(false);
+  const isLoadingNotice = useSelector(getIsLoadingNotice);
   const isLoggedIn = useSelector(getIsLoggedIn);
-  // const data = useSelector(getSelectedNotice);
-
+  const isError = useSelector(getErrorNotice);
+  const data = useSelector(getSelectedNotice);
+  console.log('data: ', data);
+  const [isAddToFavorite, setAddToFavorite] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -46,16 +44,11 @@ const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
         height: window.innerHeight,
       });
     };
-
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  console.log('isLoggedIn: ', isLoggedIn);
-
   const addToFavorites = () => {
     if (isLoggedIn) {
       if (isAddToFavorite) {
@@ -78,81 +71,37 @@ const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
 
   return (
     <>
-      {isLoadingNotice ? (
-        <div className=" smOnly:w-[280px] smOnly:h-[821px] md:w-[633px] md:h-[495px] flex justify-center items-center">
-          {windowSize.width <= 767.98 ? <MiniLoader /> : <Loader />}
+      {isError ? (
+        <div className="flex flex-col justify-center items-center smOnly:w-[280px] smOnly:h-[821px] md:w-[633px] md:h-[495px]">
+          <img src="/src/images/catError.png" alt="error" />
+          <p className="text-rose-600 text-lg font-bold font-['Manrope']">
+            Sorry, something went wrong !
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className=" md:w-58  md:h-10 smOnly:w-auto smOnly:h-10 md:mt-4 smOnly:mt-5 px-5 py-2 bg-blue hover:blue-gradient text-white rounded-3xl text-base font-bold font-['Manrope']"
+            type="button"
+          >
+            Reload page
+          </button>
         </div>
       ) : (
-        <div className=" smOnly:max-w-[280px] md:w-[633px]">
-          <div className="md:flex ">
-            <div className="flex relative justify-center items-center smOnly:mt-8">
-              <img
-                src="/src/images/Rectangle24.png"
-                alt="dog"
-                className="Rectangle303 smOnly:w-auto smOnly:h-[286px] md:w-[262px] md:h-[325px] rounded-bl-[40px] rounded-br-[40px]"
-              />
-              <p className=" InGoodHands py-2 px-3 rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4 smOnly: left-[1px] md:left-0 absolute">
-                {data.group}
-              </p>
+        <>
+          {isLoadingNotice ? (
+            <div className="smOnly:w-[280px] smOnly:h-[821px] md:w-[633px] md:h-[495px] flex justify-center items-center">
+              {windowSize.width <= 767.98 ? <MiniLoader /> : <Loader />}
             </div>
-            <div className="md:ml-6">
-              <h2 className=" text-black text-2xl smOnly:mt-3 sm: w-52 font-bold font-['Manrope']">
-                {data.title}
-              </h2>
-              <ListOfNotice data={data} />
-            </div>
-          </div>
-          <p className=" mt-3 text-black smOnly:text-sm md:text-base  font-semibold font-['Manrope'] tracking-wide">
-            Comments:{' '}
-            <span className="text-black smOnly:text-sm md:text-base  font-medium font-['Manrope'] tracking-wide">
-              {data.comments}
-            </span>
-          </p>
-          <div className="button-container flex gap-2 md:gap-4 smOnly:mt-3 md:mt-16 smOnly:flex-col md:justify-end">
-            <ButtonAddToFavorites
-              isAddToFavorite={isAddToFavorite}
+          ) : (
+            <ContentLearnModal
               addToFavorites={addToFavorites}
+              isAddToFavorite={isAddToFavorite}
+              data={data}
             />
-            <ButtonContact data={data} />
-          </div>
-        </div>
+          )}
+        </>
       )}
     </>
   );
 };
 
 export default LearnMore;
-//повісити на кнопку LearnMore та передати id
-// onClick={()=>handleOpenLearnMoreModal(el.id)}
-
-// const dispatch = useDispatch();
-// const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
-// const [isAttentionModalOpen, setAttentionModalOpen] = useState(false);
-
-// const handleOpenAttentionModal = () => {
-//     setAttentionModalOpen(true);
-//   };
-//   const handleCloseAttentionModal = () => {
-//     setAttentionModalOpen(false);
-//   };
-
-// const handleOpenLearnMoreModal = (id) => {
-//     setLearnMoreModalOpen(true);
-//     dispatch(getNoticeById(id));
-//   };
-//   const handleCloseLearnMoreModal = () => {
-//     setLearnMoreModalOpen(false);
-//   };
-
-{
-  /* <BasicModal 
-isOpen={isLearnMoreModalOpen}
-        onCloseModal={handleCloseLearnMoreModal}>
-             <LearnMore onOpenAtentionModal={handleOpenAttentionModal} onCloseModal={handleCloseLearnMoreModal} />
-        </BasicModal> */
-}
-// <BasicModal
-// isOpen={isAttentionModalOpen}
-//         onCloseModal={handleCloseAttentionModal}>
-//        <AttentionModal  />
-//       </BasicModal>
