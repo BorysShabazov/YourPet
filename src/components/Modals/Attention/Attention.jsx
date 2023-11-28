@@ -17,7 +17,7 @@ const AttentionModal = ({ onCloseModal }) => {
           <button
             onClick={onCloseModal}
             type="button"
-            className="  smOnly:w-60 smOnly:h-10 smOnly:px-16 smOnly:py-2 md:w-36 md:h-9 md:py-2 md:px-5 bg-yellow hover:bg-gradient-to-l from-yellow to-amber-200 rounded-3xl border-2 border-yellow justify-center items-center gap-2 inline-flex text-white text-base font-bold font-['Manrope'] tracking-wide"
+            className="  smOnly:w-60 smOnly:h-10 smOnly:px-16 smOnly:py-2 md:w-36 md:h-9 md:py-2 md:px-5 bg-yellow hover:orange-gradient rounded-3xl border-2 border-yellow justify-center items-center gap-2 inline-flex text-white text-base font-bold font-['Manrope'] tracking-wide"
           >
             Log IN
             <span className=" rotate-[25deg] w-6 h-6 ">
@@ -34,7 +34,7 @@ const AttentionModal = ({ onCloseModal }) => {
           <button
             onClick={onCloseModal}
             type="button"
-            className="  smOnly:w-60 smOnly:h-10 smOnly:px-16 smOnly:py-2 md:w-36 md:h-9 md:py-2 md:px-5 justify-center items-center hover:bg-gradient-to-l from-yellow to-amber-200 text-yellow hover:text-white flex border-2 border-yellow rounded-3xl"
+            className="  smOnly:w-60 smOnly:h-10 smOnly:px-16 smOnly:py-2 md:w-36 md:h-9 md:py-2 md:px-5 justify-center items-center hover:orange-gradient text-yellow hover:text-white flex border-2 border-yellow rounded-3xl"
           >
             Registration
           </button>

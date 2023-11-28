@@ -9,7 +9,7 @@ const labelStyles =
   'relative flex flex-col text-black text-sm font-medium font-manrope md:text-xl md:leading-relaxed';
 const inputStyles =
   'w-[100%] h-[40px] px-[16px] py-[8px] rounded-[40px] border border-blue justify-start items-center md:h-[48px] md:py-[12px]';
-const errorInputStyle = 'border-red';
+const errorInputStyle = `${inputStyles} border-red`;
 const errorMessageStyles =
   'absolute -bottom-[18px] ml-4 text-red text-xs font-normal';
 
@@ -24,6 +24,8 @@ export const CustomInput = ({
 }) => {
   const [date, setDate] = useState(new Date());
 
+  const mainStyles = error ? errorInputStyle : inputStyles;
+
   return (
     <label className={labelStyles}>
       {children}
@@ -33,7 +35,7 @@ export const CustomInput = ({
           type={type}
           value={value}
           placeholder={placeholder}
-          className={`${inputStyles} ${error ? errorInputStyle : ''}`}
+          className={mainStyles}
         />
       ) : (
         <DatePicker
@@ -44,7 +46,7 @@ export const CustomInput = ({
             callback('birth', formatRawDate(date));
           }}
           dateFormat="dd-MM-yyyy"
-          className={`${inputStyles} ${error ? errorInputStyle : ''}`}
+          className={mainStyles}
         />
       )}
 

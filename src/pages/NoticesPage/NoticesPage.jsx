@@ -24,6 +24,7 @@ const NoticesPage = () => {
     }, [categoryName, dispatch,query])
     const noticies = useSelector(getNotices);
 
+
     const getQuery = (value) => {
         setQuery(value);
         dispatch(fetchNotices({category:categoryName, query}))
@@ -33,6 +34,7 @@ const NoticesPage = () => {
         setQuery('')
         dispatch(fetchNotices(categoryName))
     }
+
 
     return (
         <Container >{

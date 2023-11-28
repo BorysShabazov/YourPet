@@ -1,5 +1,5 @@
 import ListItemDescription from './ListItemDescription';
-import css from './friend.module.css';
+import defaultFriends from '../../images/defaultFriends.jpg';
 
 const dayNow = new Date();
 const deyWeekArr = [6, 0, 1, 2, 3, 4, 5];
@@ -11,7 +11,7 @@ export const FriendsItem = ({ friend }) => {
     friend;
 
   return (
-    <li className="px-[16px] py-[12px] w-[280px]  bg-white rounded-[40px] shadow md:w-[336px]  xl:w-[395px]">
+    <li className=" px-[14px] py-[16px] bg-white rounded-[40px] shadow w-[280px] md:w-[336px] xl:w-[394px]">
       <a
         href={url}
         target="_blank"
@@ -20,13 +20,11 @@ export const FriendsItem = ({ friend }) => {
       >
         {title}
       </a>
-      <div className="flex  flex-row  items-start gap-[16px] md:gap-[14px] xl:gap-[16px]">
+      <div className="grid items-start gap-[16px] grid-cols-[100px_auto] md:grid-cols-[120px_auto] md:gap-[14px] xl:grid-cols-[158px_auto] xl:gap-[16px]">
         <img
-          className="max-w-[100px] md:max-w-[120px]  xl:max-w-[158px]"
-          src={imageUrl}
+          src={imageUrl ?? defaultFriends}
           alt={title}
         />
-        {/* <ul className="flex flex-col items-start justify-center relative [&>*:not(:last-child)]:mb"> */}
         <ul className="flex flex-col items-start justify-center gap-[12px]">
           <ListItemDescription title="Time:">
             {workDays
