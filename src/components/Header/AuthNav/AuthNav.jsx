@@ -8,8 +8,10 @@ const navLinkArr = [
   { path: '/register', text: 'registration', svg: '' },
 ];
 export default function AuthNav({ onClick, style = '' }) {
+
   const location = useLocation();
   const pathPage = location.pathname;
+  
   return (
     <ul className={`flex text-yellow ${style}`}>
       {navLinkArr.map(({ path, text, svg }, idx) => (
