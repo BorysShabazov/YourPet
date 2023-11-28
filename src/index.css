@@ -11,7 +11,9 @@
   .blue-gradient-full {
     background: linear-gradient(290deg, #419ef1 0%, #9bd0ff 107.89%);
   }
-}
+
+  .orange-gradient:hover {background: linear-gradient(90deg,#FFDF48  0%, #FFC107 107.89%)
+}}
 
 .visually-hidden {
   position: absolute;
