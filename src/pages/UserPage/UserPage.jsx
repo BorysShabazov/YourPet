@@ -6,12 +6,13 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Congrats from '../../components/Modals/Congrats/Congrats';
 import { BasicModal } from '../../components/Modals/BasicModal/BasicModal';
-import { getIsLoggedIn } from '../../Redux/auth/auth-selectors';
+import { getIsLoggedIn, getUser } from '../../Redux/auth/auth-selectors';
 import Leaving from '../../components/Modals/Leaving/Leaving';
 import { MyPetsList } from '../../components/MyPetsList/MyPetsList';
 
 const UserPage = () => {
   const location = useLocation();
+  const { email } = useSelector(getUser);
   const [isCongratsModalOpen, setShowCongratsModal] = useState(false);
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
@@ -20,10 +21,19 @@ const UserPage = () => {
   };
 
   useEffect(() => {
-    if (location.state && location.state.fromPage === '/YourPet/register') {
+    const hasUserSeenModal = sessionStorage.getItem(
+      `hasUserSeenModal_${email}`,
+    );
+    if (
+      (location.state &&
+        location.state.fromPage === '/YourPet/register' &&
+        !hasUserSeenModal) ||
+      hasUserSeenModal === 'false'
+    ) {
       setShowCongratsModal(true);
+      sessionStorage.setItem(`hasUserSeenModal_${email}`, 'true');
     }
-  }, [location]);
+  }, [location, email]);
 
   const handleCloseCongratsModal = () => {
     setShowCongratsModal(false);
