@@ -21,8 +21,8 @@ import { getRefresh } from "./Redux/auth/auth-selectors";
 import { useEffect } from "react";
 import { currentUser } from "./Redux/auth/auth-operations";
 import Loader from "./components/Loader/Loader";
+import PrivateRoute from "./components/Route/PrivateRoute";
 
-import PrivateRoute from './components/PrivateRoute/privateRoute';
 // import NoticesCategoriesNav from './components/Notices/NoticesCategoriesNav';
 // import { selectAuth } from './Redux/auth/auth-selectors';
 // const test = import.meta.env.VITE_API_TEST;
