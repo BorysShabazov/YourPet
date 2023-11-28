@@ -93,7 +93,7 @@ const PetCard = ({ pet }) => {
 
         <div
           className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
-          onClick={() => handleOpenDeleteModal(id)}
+          onClick={() => handleOpenDeleteModal(pet._id)}
         >
           <Svg
             id={'icon-trash'}
@@ -184,7 +184,7 @@ const PetCard = ({ pet }) => {
       >
         <DeleteModal
           id={pet._id}
-          title={pet.type}
+          title={'adverstiment'}
           nameToDelete={pet.title}
           onCloseModal={handleCloseDeleteModal}
         />
