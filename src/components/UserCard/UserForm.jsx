@@ -364,7 +364,7 @@ export const UserForm = ({
                 className="flex justify-center w-[248px] text-stone-50 text-sm font-bold font-['Manrope'] tracking-wide h-[31px] px-[107px] py-1.5 bg-blue rounded-[40px] md:justify-center items-center gap-2 inline-flex md:w-[255px]  xl:w-[255px]"
                 type="submit"
               >
-                Submit
+                Save
               </button>
             </div>
           ) : (
