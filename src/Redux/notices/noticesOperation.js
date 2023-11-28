@@ -3,9 +3,11 @@ import axios from 'axios';
 
 export const fetchNotices = createAsyncThunk(
   'notices/fetchNotices',
-  async (category, thunkAPI) => {
+  async ({category, query}, thunkAPI) => {
     try {
-      const response = await axios.get(`/api/notices/${category}`);
+
+      const response = await axios.get(`/api/notices/${category}?q=${query}`);
+
       return response.data.data.notices;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
