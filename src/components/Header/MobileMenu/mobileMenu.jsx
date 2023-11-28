@@ -25,7 +25,7 @@ export default function MobileMenu({ onToogleMobileMenu }) {
 
   return (
     <>
-      <div className="absolute bg-background top-0 left-0  h-screen w-screen pt-[20px] md:pt-[24px] xl:hidden ">
+      <div className="absolute bg-background top-0 left-0  h-screen w-screen pt-[20px] md:pt-[24px] xl:hidden z-50">
         <Container className="bg-transparent
          relative h-screen flex flex-col gap-[42px]  md:gap-[92px] items-centr bg-background ">
           <div className="flex  items-center justify-between w-full h-[28px] md:h-[44px]">
