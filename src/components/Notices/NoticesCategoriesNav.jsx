@@ -10,7 +10,7 @@ const NoticesCategoriesNav = ({ className = '' }) => {
             <Link to='/notices/sell' >sell</Link>
             <Link to='/notices/lost'>lost</Link>
             <Link to='/notices/found'>found</Link>
-            <Link to='/notices/in-good-hands'>in good hands</Link>
+            <Link to='/notices/good-hands'>in good hands</Link>
             
             {!!isLogin && <>
             <Link to='/notices/favorite'>favorite ads</Link>
