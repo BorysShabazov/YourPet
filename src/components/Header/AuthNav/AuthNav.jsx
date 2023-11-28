@@ -10,7 +10,6 @@ const navLinkArr = [
 export default function AuthNav({ onClick, style = '' }) {
   const location = useLocation();
   const pathPage = location.pathname;
-  console.log(pathPage);
 
   return (
     <ul className={`flex text-yellow ${style}`}>
