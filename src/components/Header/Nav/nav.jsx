@@ -2,7 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../../images/svg/logo.svg';
 
 import css from './nav.module.css';
-import { firstLetterUp } from '../helpers';
+import { firstLetterUp, transformPath } from '../helpers';
 
 const navLinkArr = [
   { path: '/news', text: 'news' },
@@ -19,8 +19,6 @@ export default function Nav({
   const location = useLocation();
   const pathPage = location.pathname;
 
-const transformPath=(path)=>path.split("/").slice(0,2).join("/")
-
   return (
     <div className={style}>
       <NavLink to="/" state={{ from: location }} className={`${styleLogo}`}>
@@ -35,7 +33,9 @@ const transformPath=(path)=>path.split("/").slice(0,2).join("/")
               id={text}
               state={{ from: location }}
               className={`cursor-pointer hover:opacity-80 ${
-                transformPath(path)===transformPath(pathPage)? 'text-yellow' : ''
+                transformPath(path) === transformPath(pathPage)
+                  ? 'text-yellow'
+                  : ''
               }`}
             >
               {firstLetterUp(text)}

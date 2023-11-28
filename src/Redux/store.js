@@ -26,6 +26,7 @@ const rootReduser = combineReducers({
   auth: persistReducer(authPersistConfig, authSlice.reducer),
   notices: noticesStateReducer,
   pets: petsStateReducer,
+  // path: pathStateReducer,
 });
 
 export const store = configureStore({
