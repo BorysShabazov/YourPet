@@ -31,7 +31,7 @@ const noticesStateSlice = createSlice({
     });
     builder.addCase(fetchNotices.rejected, rejectFunc);
 
-    //getNoticeById
+        //getNoticeById
 
     builder.addCase(getNoticeById.pending, pendingFunc);
     builder.addCase(getNoticeById.fulfilled, (state, action) => {

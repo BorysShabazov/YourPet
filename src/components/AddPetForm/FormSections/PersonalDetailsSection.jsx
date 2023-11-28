@@ -1,4 +1,5 @@
 import { CustomInput } from '../CustomFormComponents/CustomInput';
+import { FormSectionContainer } from '../CustomFormComponents/FormSectionContainer';
 
 const PersonalDetailsSection = ({
   errors,
@@ -10,7 +11,7 @@ const PersonalDetailsSection = ({
   type,
 }) => {
   return (
-    <div className="flex flex-col mb-[24px] gap-[20px] md:gap-[24px] md:mb-[40px]">
+    <FormSectionContainer sectionName="personalDetails">
       {category !== 'own' && (
         <CustomInput
           name="title"
@@ -50,7 +51,7 @@ const PersonalDetailsSection = ({
       >
         Type
       </CustomInput>
-    </div>
+    </FormSectionContainer>
   );
 };
 

@@ -34,7 +34,7 @@ const NewsCard = ({ date, imgUrl, text, title, url }) => {
         />
           </div>
          <h2 className="text-2xl font-bold font-manrope "><CuttedText text={ title} length="40"/></h2>
-          <p className="text-base font-normal font-manrope"><CuttedText text={ text} length="400" /></p>
+          <p className="text-base font-normal font-manrope"><CuttedText text={ text} length="200" /></p>
         </div>
         <div className="flex justify-between mt-[24px] md:mt-[40px]">
           <p className=" text-grey text-base font-normal font-manrope">

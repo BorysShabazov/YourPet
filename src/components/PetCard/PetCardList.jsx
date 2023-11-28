@@ -3,9 +3,9 @@ import PetCard from "./PetCard";
 
 const PetCardList = ({ pets }) => {
     return (
-      <div className="mt-[24px] md:mt-[40px] mx-auto  flex flex-wrap  gap-[24px] md:gap-x-[32px]">
-        {pets.map((pet, index) => (
-          <PetCard key={index} pet={pet} />
+      <div className="mt-[24px] md:mt-[40px]  smOnly:justify-center flex flex-wrap  gap-[24px] md:gap-x-[32px]">
+        {pets.map((pet) => (
+          <PetCard key={pet._id} pet={pet} />
         ))}
 
       </div>

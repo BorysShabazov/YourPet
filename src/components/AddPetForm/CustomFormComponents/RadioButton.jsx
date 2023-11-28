@@ -2,16 +2,14 @@ import { Field } from 'formik';
 
 const baseButtonStyles =
   'px-[16px] py-[8px] rounded-[40px] justify-center items-center w-fit  text-sm font-medium font-manrope tracking-wide cursor-pointer';
-const regularButtonStyles = 'bg-lightBlue text-blue';
-const hoveredButtonStyles = 'bg-blue text-background';
+const regularButtonStyles = `${baseButtonStyles} bg-lightBlue text-blue`;
+const hoveredButtonStyles = `${baseButtonStyles} bg-blue text-background`;
 
-export const RadioButton = ({ category, name, value, children }) => {
+export const RadioButton = ({ category, name, value, style, children }) => {
+  const mainRadioButtonStyle =
+    category === value ? hoveredButtonStyles : regularButtonStyles;
   return (
-    <label
-      className={`${baseButtonStyles} ${
-        category === value ? hoveredButtonStyles : regularButtonStyles
-      }`}
-    >
+    <label className={style ? style : mainRadioButtonStyle}>
       <Field
         name={name}
         type="radio"
