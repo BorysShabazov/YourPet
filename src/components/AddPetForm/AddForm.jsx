@@ -95,7 +95,7 @@ const AddForm = () => {
           ).then((res) => {
             if (!res.error) {
               actions.resetForm();
-              navigate(category === 'own' ? '/user' : '/notices/sell');
+              navigate(category === 'own' ? '/user' : '/notices/own');
             }
           });
         }
