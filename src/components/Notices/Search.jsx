@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Svg from '../Svg/Svg';
 
-export const Search = ({getQuery, className = '' }) => {
+export const Search = ({getQuery, refreshClear, className = '' }) => {
   const [value, setValue] = useState('');
   
   const handleChange = ({ target }) => {
@@ -9,6 +9,7 @@ export const Search = ({getQuery, className = '' }) => {
   };
   const handleClear = () => {
     setValue('');
+    refreshClear();
   };
   const handleSearch = () => {
     getQuery(value);
@@ -22,6 +23,11 @@ export const Search = ({getQuery, className = '' }) => {
         placeholder="Search"
         value={value}
         onChange={handleChange}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            handleSearch();
+          }
+        }}
         className="w-full md:w-[608px] h-11 bg-white rounded-[24px] md:rounded-[20px] pl-5 shadow"
       />
       <div className="right-[10px] top-[10px] absolute flex gap-2.5">
