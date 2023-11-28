@@ -24,7 +24,7 @@ const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
         <p className="text-black text-base font-medium font-manrope md:text-xl">
           Are you sure you want to delete
           <br />
-          <span className="font-bold">'{nameToDelete}'?</span>
+          <span className="font-bold">&quot;{nameToDelete}&quot;?</span>
           <br />
           You can`t undo this action.
         </p>
@@ -58,31 +58,3 @@ const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
 };
 
 export default DeleteModal;
-
-// Також можно перевикористати компонент для  видалення своїх улюбленців
-//Треба передати у компонент
-//  const title = 'your pet';
-//const nameToDelete = "Сute dog looking  for a home";
-
-// Повісити на кнопку видалення
-//onClick={()=>handleOpenDeleteModal(el.id)}
-
-// const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-// const [id, setId] = useState(null);
-// const handleOpenDeleteModal = (id) => {
-//     setDeleteModalOpen(true);
-// setId(id);
-//   };
-//   const handleCloseDeleteModal = () => {
-//     setDeleteModalOpen(false);
-//     setId(null);
-//   };
-
-{
-  /* <BasicModal 
-isOpen={isDeleteModalOpen}
-        onCloseModal={handleCloseDeleteModal}>
-      <DeleteModal id={id} title={title} nameToDelete={nameToDelete} onCloseModal={handleCloseDeleteModal}/>
-      </BasicModal>
-    */
-}
