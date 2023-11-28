@@ -3,6 +3,13 @@ export default function ListItemDescription({
   url = '',
   children,
 }) {
+  const onClick = (e) => {
+    if (e.target.title.toLowerCase() === 'time:') {
+      e.preventDefault();
+    }
+    return;
+  };
+
   return (
     <li className="flex flex-col items-start">
       <p className="flex justify-between text-neutral-900  font-semibold font-['Manrope'] text-xs md:text-sm xl:text-base ">
@@ -10,8 +17,10 @@ export default function ListItemDescription({
       </p>
       <a
         className="no-underline font-normal text-xs md:text-sm xl:text-base"
+        title={title}
         href={url}
-        target="_blank"
+        target={!url.includes('tel' || 'mailto') ? '_blank' : ''}
+        onClick={onClick}
       >
         {children}
       </a>

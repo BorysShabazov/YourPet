@@ -62,7 +62,7 @@ let shortedWrod = newWord(pet.location, 4);
   return (
     <>
       <div className=" w-[288px] h-[456px]  pb-[24px]  mdOnly:w-[336px] smOnly:w-[280px] relative hover:shadow-xl  bg-white rounded-bl-[40px] rounded-br-[40px] shadow-default hover:shadow-focus">
-        <img className="h-[288px] w-[100%]" src={pet.imageURL} alt={pet.type} />
+        <img className="h-[288px] w-[100%] object-cover" src={pet.imageURL} alt={pet.type} />
 
         <div className=" flex   w-[126px] h-[32px] px-[17px] py-[11px] left-0 top-[16px] absolute bg-[#CCE4FB] rounded-tr-2xl rounded-br-2xl  ">
           <p className=" flex items-center justify-center  w-[92px] h-[10px]  text-neutral-900 text-sm font-medium font-['Manrope']">

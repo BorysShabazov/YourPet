@@ -10,7 +10,7 @@ import { Pagination } from "../../components/Pagination/Pagination";
 const NewsPage = () => {
   const [news, setNews] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [query, setQuery] = useState('');
   

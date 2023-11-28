@@ -16,12 +16,10 @@ const hoverStyle =
 const labelStyle =
   "text-neutral-900 text-sm font-semibold font-['Manrope'] tracking-wide mdOnly:text-[16px] ";
 const inputStyle =
-  "text-neutral-900 text-xs font-normal font-['Manrope'] tracking-wide w-[190px] h-6 px-3 py-1 rounded-[20px] border border-blue-400 justify-start items-center gap-[191px] inline-flex md:w-[255px]  xl:w-[255px]";
+  " outline-offset-0 outline-0  border border-blue outline-none text-neutral-900 text-xs font-normal font-['Manrope'] tracking-wide w-[190px] h-6 px-3 py-1 rounded-[20px] border border-blue-400 justify-start items-center gap-[191px] inline-flex md:w-[255px]  xl:w-[255px]";
 
 export const UserForm = ({
   onTogleLeavingModal,
-  handleEditForm,
-  editReset,
 }) => {
   const user = useSelector(getUser);
   const isUpdatePending = useSelector((state) => state.auth.isRequestActive); // Предполагается, что isRequestActive используется для update
@@ -40,12 +38,6 @@ export const UserForm = ({
     }
   }, [isEdit]);
 
-  useEffect(() => {
-    if (editReset) {
-      setIsEdit(false);
-      resetFields();
-    }
-  }, [editReset]);
 
   const birthdayType = (date) => {
     const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
@@ -143,7 +135,6 @@ export const UserForm = ({
           <div
             onClick={() => {
               setIsEdit(true);
-              handleEditForm();
             }}
           >
             <Svg
@@ -173,7 +164,7 @@ export const UserForm = ({
             htmlFor="avatar"
             className="flex justify-center flex-col gap-[5px]"
           >
-            <div className="flex justify-center mb-[14px]  w-[182px] h-[182px] rounded-[40px] bg-slate-100 items-center overflow-hidden">
+            <div className={`flex justify-center mb-[14px]  w-[182px] h-[182px] rounded-[40px] bg-slate-100 items-center overflow-hidden ${isEdit && hoverStyle}`}>
               {!isUpdatePending ? (
                 <img
                   className=" object-cover  rounded-[40px] w-[182px] h-[182px]"
@@ -364,7 +355,7 @@ export const UserForm = ({
                 className="flex justify-center w-[248px] text-stone-50 text-sm font-bold font-['Manrope'] tracking-wide h-[31px] px-[107px] py-1.5 bg-blue rounded-[40px] md:justify-center items-center gap-2 inline-flex md:w-[255px]  xl:w-[255px]"
                 type="submit"
               >
-                Submit
+                Save
               </button>
             </div>
           ) : (

@@ -20,7 +20,7 @@ const OurFriendsPage = () => {
   }, []);
 
   return (
-    <Container className="pt-[40px] md:pt-[80px] pb-[75px] md:pb-[172px] xl:pb-[70px]">
+    <Container className="  pt-[40px] md:pt-[80px] pb-[75px] md:pb-[172px] xl:pb-[70px]">
       <Title className="mb-[24px] md:mb-[40px] xl:mb-[60px]">Our Friend</Title>
       <FriendCards friends={friends} />
     </Container>
