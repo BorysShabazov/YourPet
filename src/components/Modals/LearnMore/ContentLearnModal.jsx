@@ -14,7 +14,7 @@ const ContentLearnModal = ({ data, isAddToFavorite, addToFavorites }) => {
               )
             }
             alt="dog"
-            className="Rectangle303 smOnly:w-auto smOnly:h-[286px] md:w-[262px] md:h-[300px] rounded-bl-[40px] rounded-br-[40px]"
+            className="Rectangle303 smOnly:w-auto smOnly:h-[286px] md:w-[262px] md:h-[300px] rounded-bl-[40px] rounded-br-[40px] object-contain"
           />
           <p className=" InGoodHands flex items-center w-[126px] h-[32px] px-[17px] py-[11px] rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4  smOnly: left-[1px] md:left-0 absolute">
             {data.category || (
