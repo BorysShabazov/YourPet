@@ -108,7 +108,7 @@ const PetCard = ({ pet }) => {
           />
         </div>
 
-        {user._id === pet.owner && (
+        {isLoggedIn && pet.owner === user._id && (
           <div
             className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
             onClick={() => handleOpenDeleteModal(pet._id)}
