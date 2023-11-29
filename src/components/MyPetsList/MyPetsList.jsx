@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import MyPetsCard from '../../components/MyPetsCard/MyPetsCard';
-import { getPets } from '../../Redux/pets/petsSelectors';
+import { getPetsData } from '../../Redux/pets/petsSelectors';
 import { useEffect, useState } from 'react';
 import { fetchPets } from '../../Redux/pets/petsOperation';
 import DeleteModal from '../Modals/DeleteModal/DeleteModal';
@@ -10,8 +10,12 @@ import { Pagination } from './Pagination';
 
 export const MyPetsList = () => {
   const dispatch = useDispatch();
-  const {pets: petsList, total, qty} = useSelector(getPets);
 
+  useEffect(() => {
+    dispatch(fetchPets());
+  }, [dispatch]);
+
+  const { items: petsList, total, qty } = useSelector(getPetsData);
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,12 +25,10 @@ export const MyPetsList = () => {
   let indexOfFirstPet;
   let currentPets;
 
-  if(petsList) {
-
-  setPetsPerPage(qty)
-  indexOfLastPet = currentPage * petsPerPage;
-  indexOfFirstPet = indexOfLastPet - petsPerPage;
-  currentPets = petsList.slice(indexOfFirstPet, indexOfLastPet);
+  if (petsList) {
+    indexOfLastPet = currentPage * petsPerPage;
+    indexOfFirstPet = indexOfLastPet - petsPerPage;
+    currentPets = petsList.slice(indexOfFirstPet, indexOfLastPet);
   }
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -41,14 +43,10 @@ export const MyPetsList = () => {
     setCurrentName(name);
   };
 
-  useEffect(() => {
-    dispatch(fetchPets());
-  }, [dispatch]);
-
   return (
     <>
       <div>
-        {(!isLoadingPets && petsList) ? (
+        {!isLoadingPets && petsList ? (
           <ul
             className={`flex flex-col gap-[20px] ${
               petsList.length > 3 && 'xl:h-[650px]'
@@ -79,13 +77,16 @@ export const MyPetsList = () => {
             <MiniLoader />
           </div>
         )}
-        {petsList && petsList.length > 0 && petsPerPage !== petsList.length && petsPerPage < petsList.length && (
-          <Pagination
-            petsPerPage={petsPerPage}
-            totalPets={total}
-            paginate={paginate}
-          />
-        )}
+        {petsList &&
+          petsList.length > 0 &&
+          petsPerPage !== petsList.length &&
+          petsPerPage < petsList.length && (
+            <Pagination
+              petsPerPage={petsPerPage}
+              totalPets={total}
+              paginate={paginate}
+            />
+          )}
       </div>
       <BasicModal
         isOpen={isDeleteModalOpen}
