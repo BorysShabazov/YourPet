@@ -1,0 +1,21 @@
+{
+  "name": "YourPet",
+  "short_name": "YourPet",
+  "start_url": "https://borysshabazov.github.io/YourPet/",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#fff",
+  "description": "This site is dedicated to the limitless world of pets that make our lives better every day.",
+  "icons": [
+    {
+      "src": "./logo_48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo_72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }
+  ]
+}
