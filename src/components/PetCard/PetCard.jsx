@@ -24,10 +24,27 @@ const PetCard = ({ pet }) => {
       return word || '';
     }
   };
-  let shortedWrod = newWord(pet.location, 4);
+  let shortedWord = newWord(pet.location, 4);
   const birthDate = new Date(pet.birthDate);
-  const currentYear = new Date().getFullYear();
-  const age = Math.ceil(currentYear - birthDate.getFullYear());
+
+  const currentDate = new Date();
+
+  const ageInMonths =
+    currentDate.getMonth() -
+    birthDate.getMonth() +
+    12 * (currentDate.getFullYear() - birthDate.getFullYear());
+
+  let age;
+
+  if (ageInMonths < 1) {
+    const days = Math.ceil((currentDate - birthDate) / (1000 * 60 * 60 * 24));
+    age = days === 1 ? `${days} day` : `${days} days`;
+  } else if (ageInMonths < 12) {
+    age = `${ageInMonths} mth`;
+  } else {
+    const year = Math.ceil(currentDate.getFullYear() - birthDate.getFullYear());
+    age = year === 1 ? `${year} year` : `${year} years`;
+  }
 
   const dispatch = useDispatch();
   const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
@@ -127,7 +144,7 @@ const PetCard = ({ pet }) => {
             className="fill-transparent stroke-[#54ADFF]"
           />
           <p className="text-neutral-900 text-xs font-semibold manrope tracking-wide  ">
-            {shortedWrod}
+            {shortedWord}
           </p>
         </div>
 
@@ -138,7 +155,7 @@ const PetCard = ({ pet }) => {
             className="fill-transparent stroke-[#54ADFF] "
           />
           <p className="text-neutral-900 text-xs font-semibold font-['Manrope'] tracking-wide ">
-            {age} {age === 1 ? 'year' : 'years'}
+            {age}
           </p>
         </div>
 
