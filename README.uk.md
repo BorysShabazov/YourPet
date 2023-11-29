@@ -1,13 +1,14 @@
-# Your Pets
+# Ваші домашні тварини
 
-### Take good care of your small pets
+### Дбайте про своїх маленьких домашніх тварин
 
-Welcome to our [site](https://borysshabazov.github.io/YourPet/) where you can
-post pet loss ads, find pet owners, and post pet-for-sale ads.
+Ласкаво просимо на наш [сайт](https://borysshabazov.github.io/YourPet/), де ви
+можете розміщувати оголошення про втрату домашніх тварин, шукати власників
+домашніх тварин і розміщувати оголошення про продаж домашніх тварин.
 
 ![Your Pets](./public/readme.jpg)
 
-## 📃Technologies
+## 📃Технології
 
 - [![React][React.js]][React-url]
 - [![Tailwind CSS][TailwindCSS.js]][Tailwind-url]
@@ -17,7 +18,7 @@ post pet loss ads, find pet owners, and post pet-for-sale ads.
 - [![Date-fns][Date-fns.js]][Date-fns-url]
 - [![Vite][Vite.js]][Vite-url]
 
-### 💻Collaborators
+## 💻Розробники
 
 - [Borys Shabazov](https://github.com/BorysShabazov)
 - [Oleksii Khyrshovianu](https://github.com/ToreadorUa)
@@ -29,25 +30,25 @@ post pet loss ads, find pet owners, and post pet-for-sale ads.
 - [Viacheslav Zolotoy](https://github.com/Viacheslav-Zolotoy)
 - [Kseniya Pin](https://github.com/KseniyaPin)
 
-## 🥁Getting Started
+## 🥁Для початку роботи
 
-This is an example of how you may give instructions on setting up your project
-locally. To get a local copy up and running follow these simple example steps.
+Це приклад того, як ви можете налаштувати цей проект локально. Щоб запустити
+локальну копію, виконайте ці прості кроки.
 
-1. Use the LTS version of Node.js.
-2. Install the project's basic dependencies with the npm install command.
+1. Використовуйте LTS-версію Node.js.
+2. Встановіть основні залежності проекту за допомогою команди npm install.
 
 ```sh
  npm install
 ```
 
-3. Start development mode by running the npm run dev command.
+3. Запустіть режим розробки, виконавши команду npm run dev.
 
 ```sh
  npm run dev
 ```
 
-4. Go to the address indicated in the terminal in the browser.
+4. Перейдіть за адресою, вказаною в терміналі.
 
 ```sh
 $ npm run dev
