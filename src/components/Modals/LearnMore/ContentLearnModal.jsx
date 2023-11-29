@@ -2,21 +2,17 @@ import ButtonAddToFavorites from './ButtonAddToFavorites';
 import ButtonContact from './ButtonContact';
 import ListOfNotice from './ListInfoOfNotice';
 
-const ContentLearnModal = ({ data, isAddToFavorite, addToFavorites }) => {
+const ContentLearnModal = ({ data = {}, isAddToFavorite, addToFavorites }) => {
   return (
     <div className=" smOnly:max-w-[280px] md:w-[633px]">
       <div className="md:flex ">
-        <div className="flex relative justify-center items-center smOnly:mt-8 smOnly:w-[280px] smOnly:h-[286px] md:w-[262px] md:h-[300px]">
+        <div className="flex relative justify-center items-center smOnly:mt-8 smOnly:w-[280px] smOnly:h-[286px] md:w-[262px] md:h-[290px]">
           <img
-            src={
-              data.imageURL || (
-                <span className="text-gray-300">No information...</span>
-              )
-            }
+            src={data.imageURL || '/src/images/petAvatar.jpg'}
             alt="dog"
-            className="Rectangle303 smOnly:w-auto smOnly:h-[286px] md:w-[262px] md:h-[300px] rounded-bl-[40px] rounded-br-[40px] object-contain"
+            className="Rectangle303 smOnly:w-auto smOnly:h-[286px] md:w-[262px] md:h-[290px] object-cover rounded-bl-[40px] rounded-br-[40px]"
           />
-          <p className=" InGoodHands flex items-center w-[126px] h-[32px] px-[17px] py-[11px] rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4  smOnly: left-[1px] md:left-0 absolute">
+          <p className=" InGoodHands flex object-cover justify-center items-center w-[126px] h-[32px] px-[17px] py-[11px] rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4  smOnly: left-[1px] md:left-0 absolute">
             {data.category || (
               <span className="text-gray-300">Not information...</span>
             )}

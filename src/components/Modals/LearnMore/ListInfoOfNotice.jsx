@@ -71,15 +71,15 @@ const ListOfNotice = ({ data }) => {
           </p>
         </li>
         <li className="text-yellow smOnly:text-sm md:text-base font-medium font-['Manrope'] underline">
-          <a href="#">
-            {data.email || (
+          <a href={data.owner.email ? `mailto:${data.owner.email}` : '#'}>
+            {data.owner.email || (
               <span className="text-gray-300">No information...</span>
             )}
           </a>
         </li>
         <li className="text-yellow smOnly:text-sm md:text-base font-medium font-['Manrope'] underline">
-          <a href="#">
-            {data.phone || (
+          <a href={data.owner.phone ? `tel:${data.owner.phone}` : '#'}>
+            {data.owner.phone || (
               <span className="text-gray-300">No information...</span>
             )}
           </a>
