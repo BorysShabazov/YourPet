@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getIsLoggedIn } from '../../../Redux/auth/auth-selectors';
 import Loader from '../../Loader/Loader';
 import { getErrorNotice } from '../../../Redux/notices/noticesSelectors';
@@ -10,27 +10,11 @@ import {
 import MiniLoader from '../../MiniLoader/MiniLoader';
 import ContentLearnModal from './ContentLearnModal';
 
-// const data = {
-//   group: 'In good hands',
-//   title: 'Сute dog looking for a home',
-//   name: 'Pesto',
-//   birthday: '21.09.2020',
-//   type: 'Dog',
-//   place: 'Kharkiv',
-//   the_sex: 'male',
-//   email: 'user@mail.com',
-//   phone: '+380123456789',
-//   price: '$250',
-//   comments:
-//     ' Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too!',
-// };
-
 const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
   const isLoadingNotice = useSelector(getIsLoadingNotice);
   const isLoggedIn = useSelector(getIsLoggedIn);
   const isError = useSelector(getErrorNotice);
   const data = useSelector(getSelectedNotice);
-  console.log('data: ', data);
   const [isAddToFavorite, setAddToFavorite] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
