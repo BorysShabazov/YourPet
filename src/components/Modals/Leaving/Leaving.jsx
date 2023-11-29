@@ -1,11 +1,10 @@
 import Svg from '../../Svg/Svg';
 import { logout } from '../../../Redux/auth/auth-operations';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Leaving = ({ onCloseModal }) => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -45,22 +44,3 @@ const Leaving = ({ onCloseModal }) => {
 };
 
 export default Leaving;
-
-// const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
-
-// const handleOpenLeavingModal = () => {
-//     setLeavingModalOpen(true);
-
-//   };
-//   const handleCloseLeavingModal = () => {
-//     setLeavingModalOpen(false);
-//   };
-
-{
-  /* <BasicModal
-isOpen={isLeavingModalOpen}
-        onCloseModal={handleCloseLeavingModal}>
-      <Leaving onCloseModal={handleCloseLeavingModal}/>
-     </BasicModal>
-     */
-}

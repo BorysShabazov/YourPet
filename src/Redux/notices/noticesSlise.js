@@ -12,6 +12,7 @@ const initialNotices = {
   isLoading: false,
   error: null,
   selectedNotice: null,
+  total:0,
 };
 
 const noticesStateSlice = createSlice({
@@ -24,9 +25,10 @@ const noticesStateSlice = createSlice({
     builder.addCase(fetchNotices.pending, pendingFunc);
     builder.addCase(fetchNotices.fulfilled, (_, action) => {
       return {
-        items: [...action.payload],
+        items: [...action.payload.notices],
         isLoading: false,
         error: null,
+        total: action.payload.total,
       };
     });
     builder.addCase(fetchNotices.rejected, rejectFunc);
