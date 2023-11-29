@@ -108,16 +108,18 @@ const PetCard = ({ pet }) => {
           />
         </div>
 
-        <div
-          className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
-          onClick={() => handleOpenDeleteModal(pet._id)}
-        >
-          <Svg
-            id={'icon-trash'}
-            size={24}
-            className=" left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF] "
-          />
-        </div>
+        {user._id === pet.owner && (
+          <div
+            className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
+            onClick={() => handleOpenDeleteModal(pet._id)}
+          >
+            <Svg
+              id={'icon-trash'}
+              size={24}
+              className=" left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF] "
+            />
+          </div>
+        )}
         <p className="w-[231px] h-[66px] text-neutral-900 text-2xl font-bold manrope mt-[20px] ml-[20px]">
           {pet.title}
         </p>
