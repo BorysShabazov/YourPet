@@ -192,5 +192,4 @@ const PetCard = ({ pet }) => {
     </>
   );
 };
-
 export default PetCard;
