@@ -12,6 +12,7 @@ const initialNotices = {
   isLoading: false,
   error: null,
   selectedNotice: null,
+  total:0,
 };
 
 const noticesStateSlice = createSlice({
@@ -24,14 +25,15 @@ const noticesStateSlice = createSlice({
     builder.addCase(fetchNotices.pending, pendingFunc);
     builder.addCase(fetchNotices.fulfilled, (_, action) => {
       return {
-        items: [...action.payload],
+        items: [...action.payload.notices],
         isLoading: false,
         error: null,
+        total: action.payload.total,
       };
     });
     builder.addCase(fetchNotices.rejected, rejectFunc);
 
-        //getNoticeById
+    //getNoticeById
 
     builder.addCase(getNoticeById.pending, pendingFunc);
     builder.addCase(getNoticeById.fulfilled, (state, action) => {
@@ -61,7 +63,7 @@ const noticesStateSlice = createSlice({
     builder.addCase(deleteNotice.pending, pendingFunc);
     builder.addCase(deleteNotice.fulfilled, (state, action) => {
       return {
-        items: [...state.items.filter((el) => el.id !== action.payload)],
+        items: [...state.items.filter((el) => el._id !== action.payload)],
         isLoading: false,
         error: null,
       };

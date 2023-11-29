@@ -5,26 +5,29 @@ import { useState } from 'react';
 import LearnMore from '../Modals/LearnMore/LearnMore';
 import { BasicModal } from '../Modals/BasicModal/BasicModal';
 import AttentionModal from '../Modals/Attention/Attention';
-import { getIsLoggedIn } from '../../Redux/auth/auth-selectors';
+import { getIsLoggedIn, getUser } from '../../Redux/auth/auth-selectors';
 import DeleteModal from '../Modals/DeleteModal/DeleteModal';
 
 const PetCard = ({ pet }) => {
-  const isFemale = pet.sex === 'female'
-const newWord = (word, qty) => {
-  if (word && word.length && qty) {
-    if (word.length > qty) {
-      return word.slice(0, qty) + "...";
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  const user = useSelector(getUser);
+
+  const isFemale = pet.sex === 'female';
+  const newWord = (word, qty) => {
+    if (word && word.length && qty) {
+      if (word.length > qty) {
+        return word.slice(0, qty) + '...';
+      } else {
+        return word;
+      }
     } else {
-      return word;
+      return word || '';
     }
-  } else {
-    return word || "";
-  }
-};
-let shortedWrod = newWord(pet.location, 4);
+  };
+  let shortedWrod = newWord(pet.location, 4);
   const birthDate = new Date(pet.birthDate);
   const currentYear = new Date().getFullYear();
-  const age = Math.ceil((currentYear - birthDate.getFullYear()));
+  const age = Math.ceil(currentYear - birthDate.getFullYear());
 
   const dispatch = useDispatch();
   const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
@@ -57,20 +60,30 @@ let shortedWrod = newWord(pet.location, 4);
     setDeleteModalOpen(false);
     setId(null);
   };
-  
 
   return (
     <>
       <div className=" w-[288px] h-[456px]  pb-[24px]  mdOnly:w-[336px] smOnly:w-[280px] relative hover:shadow-xl  bg-white rounded-bl-[40px] rounded-br-[40px] shadow-default hover:shadow-focus">
-        <img className="h-[288px] w-[100%] object-cover" src={pet.imageURL} alt={pet.type} />
+        <img
+          className="h-[288px] w-[100%] object-cover"
+          src={pet.imageURL}
+          alt={pet.type}
+        />
 
         <div className=" flex   w-[126px] h-[32px] px-[17px] py-[11px] left-0 top-[16px] absolute bg-[#CCE4FB] rounded-tr-2xl rounded-br-2xl  ">
-          <p className=" flex items-center justify-center  w-[92px] h-[10px]  text-neutral-900 text-sm font-medium font-['Manrope']">
+          <p className=" flex items-center justify-center  w-[92px] h-[10px]  text-neutral-900 text-sm font-medium manrope">
             {pet.category}
           </p>
         </div>
 
-        <div className="w-10 h-10 right-[12px] top-[12px] bg-[#CCE4FB] rounded-full absolute group">
+        <div
+          className="w-10 h-10 right-[12px] top-[12px] bg-[#CCE4FB] rounded-full absolute group cursor-pointer"
+          onClick={
+            isLoggedIn
+              ? () => handleOpenLearnMoreModal(pet._id)
+              : handleOpenAttentionModal
+          }
+        >
           <Svg
             id={'icon-heart'}
             size={24}
@@ -79,8 +92,8 @@ let shortedWrod = newWord(pet.location, 4);
         </div>
 
         <div
-          className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full "
-          onClick={() => handleOpenDeleteModal(id)}
+          className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
+          onClick={() => handleOpenDeleteModal(pet._id)}
         >
           <Svg
             id={'icon-trash'}
@@ -88,13 +101,13 @@ let shortedWrod = newWord(pet.location, 4);
             className=" left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF] "
           />
         </div>
-        <p className="w-[231px] h-[66px] text-neutral-900 text-2xl font-bold font-['Manrope'] mt-[20px] ml-[20px]">
+        <p className="w-[231px] h-[66px] text-neutral-900 text-2xl font-bold manrope mt-[20px] ml-[20px]">
           {pet.title}
         </p>
 
         <button
           onClick={() => handleOpenLearnMoreModal(pet._id)}
-          className="hover:bg-gradient-to-l from-[#419EF1] to-[#9BD0FF] hover:text-white hover:border-none w-[248px] h-[38px] mx-[20px] mt-[20px] smOnly:mx-[16px] mdOnly:mx-[44px] mdOnly:h-[40px] rounded-[40px] border-2 border-[#54ADFF]  text-[#54ADFF] items-center pl-[78px]   flex font-['Manrope'] tracking-wide group"
+          className="hover:bg-gradient-to-l from-[#419EF1] to-[#9BD0FF] hover:text-white hover:border-none w-[248px] h-[38px] mx-[20px] mt-[20px] smOnly:mx-[16px] mdOnly:mx-[44px] mdOnly:h-[40px] rounded-[40px] border-2 border-[#54ADFF]  text-[#54ADFF] items-center pl-[78px]   flex manrope tracking-wide group"
           type="button"
         >
           <p className="transition-transform transform group-hover:-translate-x-[12px] flex ">
@@ -111,9 +124,9 @@ let shortedWrod = newWord(pet.location, 4);
           <Svg
             id={'icon-location'}
             size={24}
-            className="fill-transparent stroke-[#54ADFF] "
+            className="fill-transparent stroke-[#54ADFF]"
           />
-          <p className="text-neutral-900 text-xs font-semibold font-['Manrope'] tracking-wide  ">
+          <p className="text-neutral-900 text-xs font-semibold manrope tracking-wide  ">
             {shortedWrod}
           </p>
         </div>
@@ -125,26 +138,26 @@ let shortedWrod = newWord(pet.location, 4);
             className="fill-transparent stroke-[#54ADFF] "
           />
           <p className="text-neutral-900 text-xs font-semibold font-['Manrope'] tracking-wide ">
-          {age} {age === 1 ? 'year' : 'years'}
+            {age} {age === 1 ? 'year' : 'years'}
           </p>
         </div>
 
         <div className=" w-[80px] h-[28px] px-1 py-0.5 left-[196px] smOnly:left-[192px] mdOnly:left-[232px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl flex items-center gap-[4px] group">
-        {isFemale ? (
-        <Svg
-          id={'icon-female'}
-          size={24}
-          px
-          className="fill-transparent stroke-[#54ADFF] "
-        />
-      ) : (
-        <Svg
-          id={'icon-male'}
-          size={24}
-          px
-          className="fill-transparent stroke-[#3498db] "
-        />
-      )}
+          {isFemale ? (
+            <Svg
+              id={'icon-female'}
+              size={24}
+              px
+              className="fill-transparent stroke-[#54ADFF] "
+            />
+          ) : (
+            <Svg
+              id={'icon-male'}
+              size={24}
+              px
+              className="fill-transparent stroke-[#3498db] "
+            />
+          )}
           <p className="text-neutral-900 text-xs font-semibold font-['Manrope'] tracking-wide ">
             {pet.sex}
           </p>
@@ -171,7 +184,7 @@ let shortedWrod = newWord(pet.location, 4);
       >
         <DeleteModal
           id={pet._id}
-          title={pet.type}
+          title={'adverstiment'}
           nameToDelete={pet.title}
           onCloseModal={handleCloseDeleteModal}
         />

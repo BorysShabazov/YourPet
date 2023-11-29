@@ -40,7 +40,8 @@ export function BasicModal({ isOpen, onCloseModal, children }) {
             <div className="modal" ref={modalRef}>
               <div className="modal-content relative justify-center  bg-white w-full smOnly:p-3 md:p-6 rounded-3xl shadow-lg">
                 <Svg
-                  className="ml-auto mb-2  absolute smOnly:right-3 md:right-6 cursor-pointer hover:stroke-yellow "
+                  className="ml-auto mb-2  absolute smOnly:right-3 md:right-6 cursor-pointer"
+                  classNameSvg=" hover:stroke-red hover:scale-125 transition-transform transform-all hover:rotate-90"
                   id={'icon-cross'}
                   size={'24px'}
                   stroke={'#54ADFF'}

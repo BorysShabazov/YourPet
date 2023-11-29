@@ -155,7 +155,7 @@ const LoginForm = () => {
           <div className="w-full flex justify-center mt-[60px] mb-[20px] ">
             <AuthButton name="Login" />
           </div>
-          <AuthFooter pathName="Register" />
+          <AuthFooter pathName="register" />
         </Form>
       )}
     </Formik>
