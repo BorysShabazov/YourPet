@@ -1,4 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  differenceInYears,
+  differenceInMonths,
+  differenceInDays,
+} from 'date-fns';
 import { getNoticeById } from '../../Redux/notices/noticesOperation';
 import Svg from '../Svg/Svg';
 import { useState } from 'react';
@@ -24,6 +29,7 @@ const PetCard = ({ pet }) => {
       return word || '';
     }
   };
+
   let shortedWord = newWord(pet.location, 4);
   const birthDate = new Date(pet.birthDate);
 
@@ -44,7 +50,7 @@ const PetCard = ({ pet }) => {
   } else {
     const year = Math.ceil(currentDate.getFullYear() - birthDate.getFullYear());
     age = year === 1 ? `${year} year` : `${year} years`;
-  }
+
 
   const dispatch = useDispatch();
   const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
@@ -150,14 +156,18 @@ const PetCard = ({ pet }) => {
           </p>
         </div>
 
-        <div className=" w-20 px-1 py-0.5 left-[104px] smOnly:left-[100px] mdOnly:left-[128px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
+        <div className=" w-[88px] px-1 py-0.5 left-[102px] smOnly:left-[96px] mdOnly:left-[124px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[2px] inline-flex group">
           <Svg
             id={'icon-clock'}
             size={24}
             className="fill-transparent stroke-[#54ADFF] "
           />
           <p className="text-neutral-900 text-xs font-semibold font-['Manrope'] tracking-wide ">
+
             {age}
+
+           
+
           </p>
         </div>
 
