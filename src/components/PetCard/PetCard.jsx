@@ -29,24 +29,28 @@ const PetCard = ({ pet }) => {
       return word || '';
     }
   };
-  let shortedWrod = newWord(pet.location, 4);
-  const birthDate = new Date(pet.birthDate || '');
-  const today = new Date();
-  const month = newWord('months', 3);
-  const age = (years, months, days) => {
-    let ageString = '';
-    if (years > 0) {
-      ageString = `${years} ${years === 1 ? 'year' : 'years'}`;
-    } else if (months > 0) {
-      ageString = `${months} ${months === 1 ? 'month' : month}`;
-    } else {
-      ageString = `${days} ${days === 1 ? 'day' : 'days'}`;
-    }
-    return ageString;
-  };
-  const years = differenceInYears(today, birthDate);
-  const months = differenceInMonths(today, birthDate) % 12;
-  const days = differenceInDays(today, birthDate);
+
+  let shortedWord = newWord(pet.location, 4);
+  const birthDate = new Date(pet.birthDate);
+
+  const currentDate = new Date();
+
+  const ageInMonths =
+    currentDate.getMonth() -
+    birthDate.getMonth() +
+    12 * (currentDate.getFullYear() - birthDate.getFullYear());
+
+  let age;
+
+  if (ageInMonths < 1) {
+    const days = Math.ceil((currentDate - birthDate) / (1000 * 60 * 60 * 24));
+    age = days === 1 ? `${days} day` : `${days} days`;
+  } else if (ageInMonths < 12) {
+    age = `${ageInMonths} mth`;
+  } else {
+    const year = Math.ceil(currentDate.getFullYear() - birthDate.getFullYear());
+    age = year === 1 ? `${year} year` : `${year} years`;
+
 
   const dispatch = useDispatch();
   const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
@@ -110,16 +114,18 @@ const PetCard = ({ pet }) => {
           />
         </div>
 
-        <div
-          className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
-          onClick={() => handleOpenDeleteModal(pet._id)}
-        >
-          <Svg
-            id={'icon-trash'}
-            size={24}
-            className=" left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF] "
-          />
-        </div>
+        {isLoggedIn && pet.owner === user._id && (
+          <div
+            className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
+            onClick={() => handleOpenDeleteModal(pet._id)}
+          >
+            <Svg
+              id={'icon-trash'}
+              size={24}
+              className=" left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF] "
+            />
+          </div>
+        )}
         <p className="w-[231px] h-[66px] text-neutral-900 text-2xl font-bold manrope mt-[20px] ml-[20px]">
           {pet.title}
         </p>
@@ -146,7 +152,7 @@ const PetCard = ({ pet }) => {
             className="fill-transparent stroke-[#54ADFF]"
           />
           <p className="text-neutral-900 text-xs font-semibold manrope tracking-wide  ">
-            {shortedWrod}
+            {shortedWord}
           </p>
         </div>
 
@@ -157,7 +163,11 @@ const PetCard = ({ pet }) => {
             className="fill-transparent stroke-[#54ADFF] "
           />
           <p className="text-neutral-900 text-xs font-semibold font-['Manrope'] tracking-wide ">
-            {age(years, months, days)}
+
+            {age}
+
+           
+
           </p>
         </div>
 
