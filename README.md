@@ -9,13 +9,13 @@ post pet loss ads, find pet owners, and post pet-for-sale ads.
 
 ## 📃Technologies
 
-- [![React][React.js]][React-url]
-- [![Tailwind CSS][TailwindCSS.js]][Tailwind-url]
-- [![Axios][Axios.js]][Axios-url]
-- [![Formik][Formik.js]][Formik-url]
-- [![Yup][Yup.js]][Yup-url]
-- [![Date-fns][Date-fns.js]][Date-fns-url]
-- [![Vite][Vite.js]][Vite-url]
+- <a href="https://reactjs.org/" target="_blank">![React][React.js]</a>
+- <a href="https://tailwindcss.com/" target="_blank">![Tailwind CSS][TailwindCSS.js]</a>
+- <a href="https://axios-http.com/ru/" target="_blank">![Axios][Axios.js]</a>
+- <a href="https://formik.org/" target="_blank">![Formik][Formik.js]</a>
+- <a href="https://github.com/jquense/yup" target="_blank">![Yup][Yup.js]</a>
+- <a href="https://date-fns.org/" target="_blank">![Date-fns][Date-fns.js]</a>
+- <a href="https://vitejs.dev/" target="_blank">![Vite][Vite.js]</a>
 
 ### 💻Collaborators
 
@@ -62,21 +62,14 @@ VITE v4.5.0  ready in 1099 ms
 
 <!-- LINKS  -->
 
-[React-url]: https://reactjs.org/
 [React.js]:
   https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[Tailwind-url]: https://tailwindcss.com/
 [TailwindCSS.js]:
   https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=FFF
-[Axios-url]: https://axios-http.com/ru/
 [Axios.js]:
   https://img.shields.io/badge/Axios-FFF?style=for-the-badge&logo=axios&logoColor=5A29E4
-[Formik-url]: https://formik.org/
 [Formik.js]: https://img.shields.io/badge/Formik-172B4D?style=for-the-badge
-[Yup-url]: https://github.com/jquense/yup
 [Yup.js]: https://img.shields.io/badge/Yup-c458ad?style=for-the-badge
-[Date-fns-url]: https://github.com/jquense/yup
 [Date-fns.js]: https://img.shields.io/badge/Date--fns-770c56?style=for-the-badge
-[Vite-url]: https://vitejs.dev/
 [Vite.js]:
   https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=646CFF&labelColor=FFF&color=FFF
