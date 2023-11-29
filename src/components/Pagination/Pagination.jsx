@@ -12,9 +12,9 @@ export const Pagination = ({handleClickPage, totalPages})=>(
         pageClassName="w-[35px] h-[35px] rounded-full border border-blue flex items-center justify-center"
         pageLinkClassName="w-[35px] h-[35px] rounded-full flex items-center justify-center"
         previousClassName="mr-5 w-[35px] h-[35px] rounded-full border border-blue"
-        previousLinkClassName="w-[35px] h-[35px]  text-xl text-blue  flex items-center justify-center"
+        previousLinkClassName="w-[35px] h-[35px]  text-xl text-blue  flex items-base justify-center"
         nextClassName="ml-5 w-[35px] h-[35px] rounded-full border border-blue flex items-center justify-center"
-        nextLinkClassName="w-[35px] h-[35px] text-xl text-blue flex items-center justify-center"
+        nextLinkClassName="w-[35px] h-[35px] text-xl text-blue flex items-base justify-center"
         containerClassName="flex gap-[5px] mx-auto mt-10 w-max"
         activeClassName="bg-blue text-white"
         renderOnZeroPageCount={null}

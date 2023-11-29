@@ -10,5 +10,6 @@ export const pendingFunc = (state) => {
     items: state.items,
     isLoading: true,
     error: null,
+    total:0
   };
 };
