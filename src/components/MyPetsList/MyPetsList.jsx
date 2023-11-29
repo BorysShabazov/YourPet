@@ -11,17 +11,23 @@ import { Pagination } from './Pagination';
 export const MyPetsList = () => {
   const dispatch = useDispatch();
   const {pets: petsList, total, qty} = useSelector(getPets);
-  // const petsList = useSelector(getPets);
-  
-  console.log(petsList);
+
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [petsPerPage, setPetsPerPage] = useState(qty);
+  const [petsPerPage, setPetsPerPage] = useState(4);
 
-  const indexOfLastPet = currentPage * petsPerPage;
-  const indexOfFirstPet = indexOfLastPet - petsPerPage;
-  const currentPets = petsList.slice(indexOfFirstPet, indexOfLastPet);
+  let indexOfLastPet;
+  let indexOfFirstPet;
+  let currentPets;
+
+  if(petsList) {
+
+  setPetsPerPage(qty)
+  indexOfLastPet = currentPage * petsPerPage;
+  indexOfFirstPet = indexOfLastPet - petsPerPage;
+  currentPets = petsList.slice(indexOfFirstPet, indexOfLastPet);
+  }
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -42,7 +48,7 @@ export const MyPetsList = () => {
   return (
     <>
       <div>
-        {!isLoadingPets ? (
+        {(!isLoadingPets && petsList) ? (
           <ul
             className={`flex flex-col gap-[20px] ${
               petsList.length > 3 && 'xl:h-[650px]'
@@ -73,7 +79,7 @@ export const MyPetsList = () => {
             <MiniLoader />
           </div>
         )}
-        {petsList.length > 0 && petsPerPage !== petsList.length && petsPerPage < petsList.length && (
+        {petsList && petsList.length > 0 && petsPerPage !== petsList.length && petsPerPage < petsList.length && (
           <Pagination
             petsPerPage={petsPerPage}
             totalPets={total}
