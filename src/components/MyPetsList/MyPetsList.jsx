@@ -10,11 +10,14 @@ import { Pagination } from './Pagination';
 
 export const MyPetsList = () => {
   const dispatch = useDispatch();
-  const petsList = useSelector(getPets);
+  const {pets: petsList, total, qty} = useSelector(getPets);
+  // const petsList = useSelector(getPets);
+  
+  console.log(petsList);
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [petsPerPage, setPetsPerPage] = useState(3);
+  const [petsPerPage, setPetsPerPage] = useState(qty);
 
   const indexOfLastPet = currentPage * petsPerPage;
   const indexOfFirstPet = indexOfLastPet - petsPerPage;
@@ -73,7 +76,7 @@ export const MyPetsList = () => {
         {petsList.length > 0 && petsPerPage !== petsList.length && petsPerPage < petsList.length && (
           <Pagination
             petsPerPage={petsPerPage}
-            totalPets={petsList.length}
+            totalPets={total}
             paginate={paginate}
           />
         )}
