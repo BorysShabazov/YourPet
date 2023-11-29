@@ -16,7 +16,6 @@ const MyPetsCard = ({
   const birthday = new Date(birth);
   const formatDate = format(birthday, 'dd.MM.yyyy');
 
-
   return (
     <div className="relative w-[280px] bg-white rounded-[20px] shadow pt-[16px] pb-[24px] px-[20px] md:w-[703px] md:flex xl:w-[821px] md:gap-5">
       <div className="w-60 rounded-[20px] justify-center flex smOnly:mb-[20px] ">
@@ -61,7 +60,7 @@ const MyPetsCard = ({
             <p className="text-black text-sm font-normal font-['Manrope'] tracking-wide">
               <span className="text-black text-sm font-bold font-['Manrope'] tracking-wide">
                 Type:
-              </span>{' '}
+              </span>
               {type}
             </p>
           </li>
