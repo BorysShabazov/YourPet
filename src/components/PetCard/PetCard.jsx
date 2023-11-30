@@ -1,4 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  differenceInYears,
+  differenceInMonths,
+  differenceInDays,
+} from 'date-fns';
 import { getNoticeById } from '../../Redux/notices/noticesOperation';
 import Svg from '../Svg/Svg';
 import { useState } from 'react';
@@ -24,10 +29,28 @@ const PetCard = ({ pet }) => {
       return word || '';
     }
   };
-  let shortedWrod = newWord(pet.location, 4);
+
+  let shortedWord = newWord(pet.location, 4);
   const birthDate = new Date(pet.birthDate);
-  const currentYear = new Date().getFullYear();
-  const age = Math.ceil(currentYear - birthDate.getFullYear());
+
+  const currentDate = new Date();
+
+  const ageInMonths =
+    currentDate.getMonth() -
+    birthDate.getMonth() +
+    12 * (currentDate.getFullYear() - birthDate.getFullYear());
+
+  let age;
+
+  if (ageInMonths < 1) {
+    const days = Math.ceil((currentDate - birthDate) / (1000 * 60 * 60 * 24));
+    age = days === 1 ? `${days} day` : `${days} days`;
+  } else if (ageInMonths < 12) {
+    age = `${ageInMonths} mth`;
+  } else {
+    const year = Math.ceil(currentDate.getFullYear() - birthDate.getFullYear());
+    age = year === 1 ? `${year} year` : `${year} years`;
+  }
 
   const dispatch = useDispatch();
   const [isLearnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
@@ -91,16 +114,18 @@ const PetCard = ({ pet }) => {
           />
         </div>
 
-        <div
-          className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
-          onClick={() => handleOpenDeleteModal(pet._id)}
-        >
-          <Svg
-            id={'icon-trash'}
-            size={24}
-            className=" left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF] "
-          />
-        </div>
+        {isLoggedIn && pet.owner === user._id && (
+          <div
+            className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
+            onClick={() => handleOpenDeleteModal(pet._id)}
+          >
+            <Svg
+              id={'icon-trash'}
+              size={24}
+              className=" left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF] "
+            />
+          </div>
+        )}
         <p className="w-[231px] h-[66px] text-neutral-900 text-2xl font-bold manrope mt-[20px] ml-[20px]">
           {pet.title}
         </p>
@@ -127,18 +152,18 @@ const PetCard = ({ pet }) => {
             className="fill-transparent stroke-[#54ADFF]"
           />
           <p className="text-neutral-900 text-xs font-semibold manrope tracking-wide  ">
-            {shortedWrod}
+            {shortedWord}
           </p>
         </div>
 
-        <div className=" w-20 px-1 py-0.5 left-[104px] smOnly:left-[100px] mdOnly:left-[128px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[4px] inline-flex group">
+        <div className=" w-[88px] px-1 py-0.5 left-[102px] smOnly:left-[96px] mdOnly:left-[124px] top-[248px] absolute bg-[#CCE4FB]  rounded-2xl justify-center items-center gap-[2px] inline-flex group">
           <Svg
             id={'icon-clock'}
             size={24}
             className="fill-transparent stroke-[#54ADFF] "
           />
           <p className="text-neutral-900 text-xs font-semibold font-['Manrope'] tracking-wide ">
-            {age} {age === 1 ? 'year' : 'years'}
+            {age}
           </p>
         </div>
 

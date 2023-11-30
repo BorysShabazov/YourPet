@@ -12,7 +12,7 @@ const initialNotices = {
   isLoading: false,
   error: null,
   selectedNotice: null,
-  total:0,
+  total: 0,
 };
 
 const noticesStateSlice = createSlice({
