@@ -86,7 +86,7 @@ const ListOfNotice = ({ data }) => {
         </li>
         {data.price && (
           <li>
-            <p className="text-green">{data.price}</p>
+            <p className="text-green">${data.price}</p>
           </li>
         )}
       </ul>
