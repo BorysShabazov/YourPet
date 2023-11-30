@@ -1,0 +1,13 @@
+.heightBackground {
+  height: calc(100vh - 48px);
+}
+@media screen and (min-width: 768px) {
+  .heightBackground {
+    height: calc(100vh - 68px);
+  }
+}
+@media screen and (min-width: 1280px) {
+  .heightBackground {
+    height: calc(100vh - 64px);
+  }
+}
