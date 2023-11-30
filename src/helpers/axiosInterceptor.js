@@ -1,14 +1,12 @@
 import { setToken } from '../Redux/operations/handleToken';
-import { instance } from '../Redux/auth/auth-operations';
+import { instance, logout } from '../Redux/auth/auth-operations';
 import { authSlice } from '../Redux/auth/auth-slice';
 
-const setUpInterceptor = (dispatch, logout) => {
+const setUpInterceptor = (dispatch) => {
   const handleError = async (error) => {
     if (error.response.status === 401) {
       try {
         const refresh = localStorage.getItem('refresh');
-
-        if (!refresh) dispatch(logout);
 
         const { data } = await instance.post('api/users/refresh', {
           refreshToken: refresh,
@@ -29,12 +27,13 @@ const setUpInterceptor = (dispatch, logout) => {
     }
 
     if (error.response.status === 403) {
-      console.log(error.response);
-      try {
-        dispatch(logout());
-      } catch (error) {
-        return Promise.reject(error);
-      }
+      return dispatch(logout())
+        .catch((logoutError) => {
+          return Promise.reject(logoutError);
+        })
+        .finally(() => {
+          return Promise.reject(error);
+        });
     }
 
     return Promise.reject(error);
