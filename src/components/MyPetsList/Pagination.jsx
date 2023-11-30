@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Svg from '../Svg/Svg';
 
-export const Pagination = ({ petsPerPage, totalPets, currentPage, paginate }) => {
+export const Pagination = ({ petsPerPage, maxPages, currentPage, paginate }) => {
   let pageNumbers = [];
-  const maxPages = Math.ceil(totalPets / petsPerPage)
+  // const maxPages = Math.ceil(totalPets / petsPerPage)
 
   const [selectedPage, setSelectedPage] = useState(currentPage || 1);
 

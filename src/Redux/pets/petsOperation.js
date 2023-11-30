@@ -3,9 +3,14 @@ import axios from 'axios';
 
 export const fetchPets = createAsyncThunk(
   'pets/fetchPets',
-  async (_, thunkAPI) => {
+  async ({ page, limit }, thunkAPI) => {
     try {
-      const response = await axios.get(`/api/pets/own`);
+      const response = await axios.get(`/api/pets/own`, {
+        params: {
+          page,
+          limit,
+        },
+      });
       return response.data.data;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
