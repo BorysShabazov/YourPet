@@ -1,16 +1,29 @@
 import { setToken } from '../Redux/operations/handleToken';
-import { instance, logout } from '../Redux/auth/auth-operations';
+import { instance } from '../Redux/auth/auth-operations';
 import { authSlice } from '../Redux/auth/auth-slice';
+
+const isLoginOrRegisterRequest = (config) => {
+  const { url, method } = config;
+  return (
+    (url.includes('/auth/users/login') ||
+      url.includes('/auth/users/register')) &&
+    method.toLowerCase() === 'post'
+  );
+};
 
 const setUpInterceptor = (dispatch) => {
   const handleError = async (error) => {
-    if (error.response.status === 401) {
+    if (
+      error.response.status === 401 &&
+      !isLoginOrRegisterRequest(error.config)
+    ) {
       try {
         const refresh = localStorage.getItem('refresh');
 
         const { data } = await instance.post('api/users/refresh', {
           refreshToken: refresh,
         });
+
         const { data: dataResponse } = data;
 
         error.config.headers.Authorization = `Bearer ${dataResponse.accessToken}`;
@@ -22,20 +35,14 @@ const setUpInterceptor = (dispatch) => {
 
         return instance(error.config);
       } catch (error) {
+        const { refreshToken } = JSON.parse(error.response.config.data);
+        if (error.response.data.code === 403 && refreshToken) {
+          dispatch(authSlice.actions.refreshToken(null));
+          return;
+        }
         return Promise.reject(error);
       }
     }
-
-    if (error.response.status === 403) {
-      return dispatch(logout())
-        .catch((logoutError) => {
-          return Promise.reject(logoutError);
-        })
-        .finally(() => {
-          return Promise.reject(error);
-        });
-    }
-
     return Promise.reject(error);
   };
 

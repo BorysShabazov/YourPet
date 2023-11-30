@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setToken, delToken } from '../operations/handleToken';
 
 export const instance = axios.create({
-  baseURL: 'https://your-pet-server.onrender.com',
+  baseURL: 'https://your-pet-backend-test.onrender.com',
 });
 
 // register
