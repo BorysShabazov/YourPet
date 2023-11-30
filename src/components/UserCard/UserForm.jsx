@@ -18,9 +18,7 @@ const labelStyle =
 const inputStyle =
   " outline-offset-0 outline-0  border border-blue outline-none text-neutral-900 text-xs font-normal font-['Manrope'] tracking-wide w-[190px] h-6 px-3 py-1 rounded-[20px] border border-blue-400 justify-start items-center gap-[191px] inline-flex md:w-[255px]  xl:w-[255px]";
 
-export const UserForm = ({
-  onTogleLeavingModal,
-}) => {
+export const UserForm = ({ onTogleLeavingModal }) => {
   const user = useSelector(getUser);
   const isUpdatePending = useSelector((state) => state.auth.isRequestActive); // Предполагается, что isRequestActive используется для update
   const dispatch = useDispatch();
@@ -37,7 +35,6 @@ export const UserForm = ({
       setPreviewAvatar('');
     }
   }, [isEdit]);
-
 
   const birthdayType = (date) => {
     const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
@@ -164,7 +161,11 @@ export const UserForm = ({
             htmlFor="avatar"
             className="flex justify-center flex-col gap-[5px]"
           >
-            <div className={`flex justify-center mb-[14px]  w-[182px] h-[182px] rounded-[40px] bg-slate-100 items-center overflow-hidden ${isEdit && hoverStyle}`}>
+            <div
+              className={`flex justify-center mb-[14px]  w-[182px] h-[182px] rounded-[40px] bg-slate-100 items-center overflow-hidden ${
+                isEdit && hoverStyle
+              }`}
+            >
               {!isUpdatePending ? (
                 <img
                   className=" object-cover  rounded-[40px] w-[182px] h-[182px]"
@@ -315,11 +316,11 @@ export const UserForm = ({
             <input
               className={`${inputStyle} ${
                 errors['phone'] && 'border-rose-400'
-              }`}
+              } ${!isEdit && 'bg-transparent'}`}
               type="tel"
               id="phone"
               name="phone"
-              placeholder="+38123456789"
+              placeholder={isEdit ? '+380123456789' : ''}
               value={formikValues['phone']}
               onChange={formik.handleChange}
               readOnly={!isEdit}
