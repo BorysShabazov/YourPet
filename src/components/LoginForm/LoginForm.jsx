@@ -67,6 +67,7 @@ const LoginForm = () => {
               <Field
                 id="email"
                 name="email"
+                type="email"
                 placeholder="Email"
                 value={values.email}
                 className={`${inputStyles} ${

@@ -74,7 +74,7 @@ const AuthForm = () => {
         setFieldValue,
         handleChange,
       }) => (
-        <Form className={`${formStyles}`} autoComplete="off">
+        <Form className={`${formStyles}`}>
           <AuthHeader header="Registration" />
           <div className="flex flex-col gap-9 w-full">
             <AuthInputWrapper>
@@ -114,6 +114,7 @@ const AuthForm = () => {
                 id="email"
                 name="email"
                 placeholder="Email"
+                type="email"
                 value={values.email}
                 className={`${inputStyles} ${
                   (errors.email && touched.email) || httpError
