@@ -20,5 +20,5 @@ export const userSchema = yup.object().shape({
 
   phone: yup
     .string('Type must be a string')
-    .matches(phoneRegExp, 'Format: +38123456789'),
+    .matches(phoneRegExp, 'Format: +380123456789'),
 });
