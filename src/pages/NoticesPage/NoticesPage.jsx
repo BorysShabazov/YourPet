@@ -12,47 +12,51 @@ import PetCardList from "../../components/PetCard/PetCardList";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { getRefresh } from "../../Redux/auth/auth-selectors";
 
-const catNameArr = [
-  "sell",
-  "lost",
-  "found",
-  "good-hands",
-  "favorite",
-  "own",
-];
- const limit = 4;
+const catNameArr = ["sell", "lost", "found", "good-hands", "favorite", "own"];
+const limit = 4;
 
 const NoticesPage = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
 
   const dispatch = useDispatch();
-    const noticies = useSelector(getNotices);
-    const isLoading = useSelector(getRefresh)
-    const totalItems = useSelector(getTotal)
+  const noticies = useSelector(getNotices);
+  const isLoading = useSelector(getRefresh);
+  const totalItems = useSelector(getTotal);
 
-  const { categoryName } = useParams();
+    const { categoryName } = useParams();
+
+    useEffect(() => {
+        if (query) {
+            get(1, query)
+            setPage(1)
+        } else
+            get(page);
+  }, [page, query]);
 
   useEffect(() => {
-      dispatch(fetchNotices({ category: categoryName, query, page, limit }));
-  }, [categoryName, dispatch, query, page]);
-    useEffect(() => {
-         setTotalPages( Math.ceil(totalItems / limit))
-    },[totalItems])
+    setTotalPages(Math.ceil(totalItems / limit));
+  }, [totalItems, categoryName]);
+    
+    function get(page, query) {
+    dispatch(fetchNotices({ category: categoryName, query, page, limit }));
+  }
 
   const getQuery = (value) => {
-    setQuery(value);
-    // dispatch(fetchNotices({ category: categoryName, query }));
-  };
+      setQuery(value);
+
+  };    
 
   const refreshClear = () => {
     setQuery("");
+  };
+
+  const handleClickPage = (target) => {
+    setPage(target.selected + 1);
     };
     
-    const handleClickPage = (target) => {
-        setPage(target.selected+1)
-    }
+    
 
   return (
     <Container className="pb-[117px] md:pb-[126px]">
@@ -67,17 +71,29 @@ const NoticesPage = () => {
             className="mt-[24px] md:mt-[40px]"
           />
           <div className="md:flex justify-between">
-            <NoticesCategoriesNav className="mt-[20px] md:mt-[40px]" />
+            <NoticesCategoriesNav className="mt-[20px] md:mt-[40px] " onClick={()=>setPage(1)} />
             <AddPetButton />
           </div>
         </div>
       ) : (
         <NotFoundPage />
       )}
-          <Outlet />
-          {noticies.length>0 ?<PetCardList pets={noticies} />: catNameArr.includes(categoryName)&&!isLoading&&(<div className="mx-auto mt-10 w-fit text-xl">There are no ads in this category and search query... Try more!</div>)}
-      
-          <Pagination totalPages={totalPages} handleClickPage={ handleClickPage} />
+      <Outlet />
+      {noticies.length > 0 ? (
+        <PetCardList pets={noticies} />
+      ) : (
+        catNameArr.includes(categoryName) &&
+        !isLoading && (
+          <div className="mx-auto mt-10 w-fit text-xl">
+            There are no ads in this category and search query... Try more!
+          </div>
+        )
+      )}
+      <Pagination
+        totalPages={totalPages}
+        handleClickPage={handleClickPage}
+        currentPage={page-1}
+      />
     </Container>
   );
 };

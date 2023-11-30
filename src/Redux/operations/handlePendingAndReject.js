@@ -3,6 +3,7 @@ export const rejectFunc = (state, action) => {
     items: state.items,
     isLoading: false,
     error: action.payload,
+    total:0,
   };
 };
 export const pendingFunc = (state) => {
