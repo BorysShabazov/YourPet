@@ -66,17 +66,19 @@ export const MyPetsList = () => {
               </div>
             )}
           </ul>
+          
         ) : (
           <div className="w-full flex justify-center py-7">
             <MiniLoader />
           </div>
         )}
-        {petsList && petsList.length !== total && 
+        {(!isLoadingPets && petsList && petsList.length !== total ) &&
 (
             <Pagination
               petsPerPage={petsPerPage}
               maxPages={maxPages}
               paginate={paginate}
+              currentPage={currentPage}
             />
           )}
       </div>
