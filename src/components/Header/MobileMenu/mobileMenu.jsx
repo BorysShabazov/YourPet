@@ -25,16 +25,18 @@ export default function MobileMenu({ onToogleMobileMenu }) {
 
   return (
     <>
-      <div className="absolute bg-background top-0 left-0  h-screen w-screen pt-[20px] md:pt-[24px] xl:hidden z-50">
-        <Container className="bg-transparent
-         relative h-screen flex flex-col gap-[42px]  md:gap-[92px] items-centr bg-background ">
+      <div className="absolute truncate bg-background  top-0 left-0  h-full w-screen pt-[20px] md:pt-[24px] xl:hidden z-50 snap-y">
+        <Container
+          className="bg-transparent
+         relative h-full flex flex-col gap-[42px]  md:gap-[92px]  bg-background "
+        >
           <div className="flex  items-center justify-between w-full h-[28px] md:h-[44px]">
             <Nav styleNavList="hidden" onClick={onToogleMobileMenu} />
             <div className="flex gap-[24px] ">
               {token ? (
                 <BtnLogout
                   onClick={onToogleLeavingModal}
-                  style="absolute bottom-[40px] left-[20px] md:static flex"
+                  style="absolute bottom-[20px] left-[20px] md:static flex"
                 >
                   log out
                 </BtnLogout>
@@ -54,9 +56,14 @@ export default function MobileMenu({ onToogleMobileMenu }) {
               style="flex-col  gap-[12px] items-center md:hidden "
             />
           ) : (
-              <UserInfo
-                onClick={onToogleMobileMenu}
-                style={`${token ? 'flex justify-center items-center gap-[12px] pb-[44px]' : ''} text-yellow md:hidden`}  />
+            <UserInfo
+              onClick={onToogleMobileMenu}
+              style={`${
+                token
+                  ? 'flex justify-center items-center gap-[12px] pb-[44px]'
+                  : ''
+              } text-yellow md:hidden`}
+            />
           )}
           <Nav onClick={onToogleMobileMenu} styleLogo="hidden" />
         </Container>

@@ -1,8 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { register } from '../../Redux/auth/auth-operations';
-import { getAuthError, getIsRequest } from '../../Redux/auth/auth-selectors';
+import { getAuthError } from '../../Redux/auth/auth-selectors';
 import AuthFormSchema from '../../schemas/AuthFormSchema';
 import Svg from '../Svg/Svg';
 import AuthHeader from '../AuthComponents/AuthHeader';
@@ -22,11 +22,14 @@ import { AuthSvgWrapper } from '../AuthComponents/AuthSvgWrapper';
 const AuthForm = () => {
   const dispatch = useDispatch();
   const httpError = useSelector(getAuthError);
-  const isRequest = useSelector(getIsRequest);
   const messages = {
-    axiosError: 'Email or password is invalid',
+    axiosError: 'Email in use',
     accessMessage: 'Password is secure',
   };
+
+  useEffect(() => {
+    dispatch(authSlice.actions.resetHttpError());
+  }, [dispatch]);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -59,18 +62,21 @@ const AuthForm = () => {
         dispatch(authSlice.actions.resetHttpError());
       }}
       validationSchema={AuthFormSchema}
-      validateOnBlur={false}
-      validateOnChange={false}
-      onSubmit={({ name, email, password }, { resetForm }) => {
+      onSubmit={({ name, email, password }) => {
         dispatch(register({ name, email, password }));
-        resetForm();
       }}
     >
-      {({ errors, setFieldError, values, setFieldValue }) => (
+      {({
+        errors,
+        touched,
+        setFieldError,
+        values,
+        setFieldValue,
+        handleChange,
+      }) => (
         <Form className={`${formStyles}`}>
           <AuthHeader header="Registration" />
           <div className="flex flex-col gap-9 w-full">
-            {/* Name */}
             <AuthInputWrapper>
               <AuthLabel htmlFor="name" />
               <Field
@@ -79,14 +85,11 @@ const AuthForm = () => {
                 placeholder="Name"
                 value={values.name}
                 className={`${inputStyles} ${
-                  errors['name'] ? 'border-red' : null
+                  errors.name && touched.name ? 'border-red' : ''
                 }`}
-                onClick={() => {
-                  setFieldError('name', '');
-                }}
               />
 
-              {errors['name'] && values['name'] !== '' && (
+              {errors.name && touched.name && values.name !== '' && (
                 <Svg
                   id="icon-cross"
                   className="right-3 absolute cursor-pointer"
@@ -105,23 +108,22 @@ const AuthForm = () => {
               />
             </AuthInputWrapper>
 
-            {/* Email */}
             <AuthInputWrapper>
               <AuthLabel htmlFor="email" />
               <Field
                 id="email"
                 name="email"
                 placeholder="Email"
+                type="email"
                 value={values.email}
                 className={`${inputStyles} ${
-                  errors['email'] || httpError ? 'border-red' : null
+                  (errors.email && touched.email) || httpError
+                    ? 'border-red'
+                    : ''
                 }`}
-                onClick={() => {
-                  setFieldError('email', '');
-                }}
               />
 
-              {errors['email'] && values['email'] !== '' && (
+              {errors.email && values.email !== '' && (
                 <Svg
                   id="icon-cross"
                   className="right-3 absolute cursor-pointer"
@@ -138,13 +140,13 @@ const AuthForm = () => {
                 component="div"
                 className={`${wrapperError}`}
               />
+
               {/* Axios Error */}
               {httpError === 409 ? (
                 <div className={`${wrapperError}`}>{messages.axiosError}</div>
               ) : null}
             </AuthInputWrapper>
 
-            {/* Password */}
             <AuthInputWrapper>
               <AuthLabel htmlFor="password" />
               <Field
@@ -154,15 +156,15 @@ const AuthForm = () => {
                 value={values.password}
                 type={passwordVisible ? 'text' : 'password'}
                 className={`${inputStyles} ${
-                  errors['password'] ? 'border-red' : null
-                } ${isRequest ? 'border-[#00C3AD]' : null} `}
-                onClick={() => {
-                  setFieldError('password', '');
-                  dispatch(authSlice.actions.resetHttpError());
-                }}
+                  errors.password && touched.password ? 'border-red' : ''
+                } ${
+                  !errors.password && values.password && !httpError
+                    ? '!border-[#00C3AD]'
+                    : ''
+                } `}
               />
               <AuthSvgWrapper>
-                {isRequest ? (
+                {!errors.password && values.password && !httpError ? (
                   <Svg
                     className="cursor-pointer"
                     id={'icon-check'}
@@ -187,7 +189,7 @@ const AuthForm = () => {
                 className={`${wrapperError}`}
               />
 
-              {isRequest ? (
+              {!errors.password && values.password && !httpError ? (
                 <div className={`${passwordSuccess}`}>
                   {messages.accessMessage}
                 </div>
@@ -204,15 +206,21 @@ const AuthForm = () => {
                 value={values.confirmPassword}
                 type={confirmPasswordVisible ? 'text' : 'password'}
                 className={`${inputStyles} ${
-                  errors['confirmPassword'] ? 'border-red' : null
-                } ${isRequest ? 'border-[#00C3AD]' : null} `}
-                onClick={() => {
-                  setFieldError('confirmPassword', '');
-                  dispatch(authSlice.actions.resetHttpError());
-                }}
+                  errors.confirmPassword && touched.confirmPassword
+                    ? 'border-red'
+                    : ''
+                } ${
+                  !errors.confirmPassword &&
+                  values.confirmPassword &&
+                  !httpError
+                    ? '!border-[#00C3AD]'
+                    : ''
+                } `}
               />
               <AuthSvgWrapper>
-                {isRequest ? (
+                {!errors.confirmPassword &&
+                values.confirmPassword &&
+                !httpError ? (
                   <Svg
                     className="cursor-pointer"
                     id={'icon-check'}
@@ -237,7 +245,9 @@ const AuthForm = () => {
                 className={`${wrapperError}`}
               />
 
-              {isRequest ? (
+              {!errors.confirmPassword &&
+              values.confirmPassword &&
+              !httpError ? (
                 <div className={`${passwordSuccess}`}>
                   {messages.accessMessage}
                 </div>
@@ -248,7 +258,7 @@ const AuthForm = () => {
           <div className="w-full flex justify-center mt-[60px] mb-[20px] ">
             <AuthButton name="Registration" />
           </div>
-          <AuthFooter pathName="Login" />
+          <AuthFooter pathName="login" />
         </Form>
       )}
     </Formik>

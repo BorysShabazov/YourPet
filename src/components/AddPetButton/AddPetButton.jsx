@@ -1,7 +1,12 @@
+import { Link } from 'react-router-dom';
 import Svg from '../Svg/Svg';
 
-const AddPetButton = () => {
+const AddPetButton = ({location}) => {
   return (
+    <Link
+            to={'/add-pet'}
+            state={location}
+          >
     <div
       className="transition duration-200 ease-in-out hover:opacity-80 cursor-pointer flex justify-center items-center flex-col w-20 h-20  bg-gradient-to-r from-lightBlue to-blue rounded-full shadow z-10 
 group hover:from-blue hover:to-lightBlue md:hover:from-blue md:hover:to-blue
@@ -17,6 +22,7 @@ md:w-[129px] md:h-10 md:px-5 md:py-2 md:from-blue md:to-blue md:rounded-[40px] m
         Add pet
       </div>
     </div>
+    </Link>
   );
 };
 

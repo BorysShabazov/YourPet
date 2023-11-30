@@ -3,10 +3,15 @@ import axios from 'axios';
 
 export const fetchPets = createAsyncThunk(
   'pets/fetchPets',
-  async (_, thunkAPI) => {
+  async ({ page, limit }, thunkAPI) => {
     try {
-      const response = await axios.get(`/api/pets/own`);
-      return response.data;
+      const response = await axios.get(`/api/pets/own`, {
+        params: {
+          page,
+          limit,
+        },
+      });
+      return response.data.data;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
     }
@@ -18,7 +23,8 @@ export const createPet = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.post('/api/pets', arg);
-      return data;
+      // fetchPets();
+      return data.data;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
     }
@@ -30,6 +36,7 @@ export const deletePet = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       axios.delete(`/api/pets/${arg}`);
+      // fetchPets();
       return arg;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);

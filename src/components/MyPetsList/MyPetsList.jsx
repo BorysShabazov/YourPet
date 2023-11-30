@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import MyPetsCard from '../../components/MyPetsCard/MyPetsCard';
-import { getPets } from '../../Redux/pets/petsSelectors';
+import { getPetsData } from '../../Redux/pets/petsSelectors';
 import { useEffect, useState } from 'react';
 import { fetchPets } from '../../Redux/pets/petsOperation';
 import DeleteModal from '../Modals/DeleteModal/DeleteModal';
@@ -10,17 +10,24 @@ import { Pagination } from './Pagination';
 
 export const MyPetsList = () => {
   const dispatch = useDispatch();
-  const petsList = useSelector(getPets);
+
+  const { items: petsList, total, qty } = useSelector(getPetsData);
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
-
+  console.log();
   const [currentPage, setCurrentPage] = useState(1);
-  const [petsPerPage, setPetsPerPage] = useState(3);
+  const petsPerPage = 4;
+  const [maxPages, setMaxPages] = useState(0)
 
-  const indexOfLastPet = currentPage * petsPerPage;
-  const indexOfFirstPet = indexOfLastPet - petsPerPage;
-  const currentPets = petsList.slice(indexOfFirstPet, indexOfLastPet);
+  useEffect(() => {
+    dispatch(fetchPets({ page: currentPage, limit: petsPerPage }));
+  }, [currentPage, dispatch, petsPerPage]);
+  useEffect(() => {
+    setMaxPages( Math.ceil(total / petsPerPage))
+},[total])
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    console.log(pageNumber);
+    setCurrentPage(pageNumber)};
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -32,21 +39,15 @@ export const MyPetsList = () => {
     setCurrentName(name);
   };
 
-  useEffect(() => {
-    dispatch(fetchPets());
-  }, [dispatch]);
-
   return (
     <>
       <div>
-        {!isLoadingPets ? (
+        {!isLoadingPets && petsList ? (
           <ul
-            className={`flex flex-col gap-[20px] ${
-              petsList.length > 3 && 'xl:h-[650px]'
-            }`}
+            className={`flex flex-col gap-[20px]`}
           >
             {petsList.length > 0 ? (
-              currentPets.map((el) => (
+              petsList.map((el) => (
                 <li key={el._id} className="mx-auto">
                   <MyPetsCard
                     photo={el.imageURL}
@@ -65,18 +66,21 @@ export const MyPetsList = () => {
               </div>
             )}
           </ul>
+          
         ) : (
           <div className="w-full flex justify-center py-7">
             <MiniLoader />
           </div>
         )}
-        {petsList.length > 0 && petsPerPage !== petsList.length && petsPerPage < petsList.length && (
-          <Pagination
-            petsPerPage={petsPerPage}
-            totalPets={petsList.length}
-            paginate={paginate}
-          />
-        )}
+        {(!isLoadingPets && petsList && petsList.length !== total ) &&
+(
+            <Pagination
+              petsPerPage={petsPerPage}
+              maxPages={maxPages}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          )}
       </div>
       <BasicModal
         isOpen={isDeleteModalOpen}

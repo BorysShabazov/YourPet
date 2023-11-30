@@ -115,7 +115,7 @@ export const UserForm = ({ onTogleLeavingModal }) => {
     setConfirmChangeAvatar(false);
     formik.setFieldValue('name', user.name);
     formik.setFieldValue('email', user.email);
-    formik.setFieldValue('birthday', user.birthday);
+    formik.setFieldValue('birthday', birthdayType(user.birthday));
     formik.setFieldValue('phone', user.phone);
     formik.setFieldValue('city', user.city);
   };
@@ -300,6 +300,7 @@ export const UserForm = ({ onTogleLeavingModal }) => {
                 selected={new Date(formikValues['birthday'])}
                 onChange={(date) => {
                   formik.setFieldValue('birthday', date);
+                  console.log();
                 }}
                 readOnly={!isEdit}
                 dateFormat="dd-MM-yyyy"
@@ -323,7 +324,7 @@ export const UserForm = ({ onTogleLeavingModal }) => {
               placeholder={isEdit ? '+380123456789' : ''}
               value={formikValues['phone']}
               onChange={formik.handleChange}
-              readOnly={!isEdit}
+              disabled={!isEdit}
             />
             {errors['phone'] && (
               <p className={errorTextStyle}>{errors['phone']}</p>
