@@ -23,6 +23,10 @@ export const authSlice = createSlice({
     resetHttpError: (state) => {
       state.error = null;
     },
+
+    refreshToken: (state, action) => {
+      state.token = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // register

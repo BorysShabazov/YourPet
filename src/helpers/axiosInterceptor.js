@@ -1,5 +1,6 @@
 import { setToken } from '../Redux/operations/handleToken';
 import { instance } from '../Redux/auth/auth-operations';
+import { authSlice } from '../Redux/auth/auth-slice';
 
 const setUpInterceptor = (dispatch, logout) => {
   const handleError = async (error) => {
@@ -7,7 +8,7 @@ const setUpInterceptor = (dispatch, logout) => {
       try {
         const refresh = localStorage.getItem('refresh');
 
-        if (!refresh) return;
+        if (!refresh) dispatch(logout);
 
         const { data } = await instance.post('api/users/refresh', {
           refreshToken: refresh,
@@ -15,6 +16,8 @@ const setUpInterceptor = (dispatch, logout) => {
         const { data: dataResponse } = data;
 
         error.config.headers.Authorization = `Bearer ${dataResponse.accessToken}`;
+        dispatch(authSlice.actions.refreshToken(dataResponse.accessToken));
+
         setToken(dataResponse.accessToken);
 
         localStorage.setItem('refresh', dataResponse.refreshToken);
@@ -29,7 +32,6 @@ const setUpInterceptor = (dispatch, logout) => {
       console.log(error.response);
       try {
         dispatch(logout());
-        console.log('403');
       } catch (error) {
         return Promise.reject(error);
       }
