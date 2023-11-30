@@ -27,13 +27,15 @@ const NoticesPage = () => {
 
     const { categoryName } = useParams();
 
+
+
     useEffect(() => {
         if (query) {
             get(1, query)
             setPage(1)
         } else
             get(page);
-  }, [page, query]);
+  }, [page, query, categoryName]);
 
   useEffect(() => {
     setTotalPages(Math.ceil(totalItems / limit));
