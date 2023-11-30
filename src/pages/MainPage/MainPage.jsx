@@ -1,7 +1,6 @@
 import { Container } from '../../ui/Container/Container';
 import BackgroundContainer from '../../components/AddPetForm/BackgroundContainer';
 import mainImages from '../../images/mainImg';
-
 const MainPage = () => {
   return (
     <BackgroundContainer>
