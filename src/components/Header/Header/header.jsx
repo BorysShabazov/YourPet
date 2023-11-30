@@ -20,16 +20,16 @@ const mobileMenuRoot = document.querySelector('#mobile-menu');
 
 export default function Header() {
   const { token } = useSelector(selectAuth);
-  // const token=true
-  // const token=false
   const [isMobilMenuActive, setIsMobilMenuActive] = useState(false);
   const [isLeavingModalOpen, setLeavingModalOpen] = useState(false);
 
   useEffect(() => {
     if (isMobilMenuActive) {
       document.body.classList.add('overflow-hidden');
+      document.getElementById('root').classList.add('visually-hidden');
     } else {
       document.body.classList.remove('overflow-hidden');
+      document.getElementById('root').classList.remove('visually-hidden');
     }
   }, [isMobilMenuActive]);
 
