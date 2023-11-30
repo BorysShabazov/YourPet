@@ -5,10 +5,13 @@ export const fetchNotices = createAsyncThunk(
   'notices/fetchNotices',
   async ({ category, query = '', page, limit }, thunkAPI) => {
     try {
+      const params = new URLSearchParams({
+        q: query,
+        page: page,
+        limit:limit,
+      })
       const response = await axios.get(
-        `/api/notices/${category}?${
-          query ? `q=${query}` : ''
-        }&page=${page}&limit=${limit}`,
+        `/api/notices/${category}`, {params}
       );
       return response.data.data;
     } catch (evt) {
