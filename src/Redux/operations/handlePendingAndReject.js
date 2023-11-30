@@ -7,9 +7,9 @@ export const rejectFunc = (state, action) => {
 };
 export const pendingFunc = (state) => {
   return {
+    ...state,
     items: state.items,
     isLoading: true,
     error: null,
-    total:0
   };
 };

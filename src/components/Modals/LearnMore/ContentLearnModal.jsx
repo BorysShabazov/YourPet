@@ -12,7 +12,7 @@ const ContentLearnModal = ({ data = {}, isAddToFavorite, addToFavorites }) => {
             alt="dog"
             className="Rectangle303 smOnly:w-auto smOnly:h-[286px] md:w-[262px] md:h-[290px] object-cover rounded-bl-[40px] rounded-br-[40px]"
           />
-          <p className=" InGoodHands flex object-cover justify-center items-center w-[126px] h-[32px] px-[17px] py-[11px] rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4  smOnly: left-[1px] md:left-0 absolute">
+          <p className=" InGoodHands flex object-cover justify-center items-center w-[126px] h-[32px] px-[17px] py-[11px] rounded-e-2xl bg-lightBlue text-neutral-900 text-sm font-medium font-['Manrope'] top-4  smOnly: left-[0px] md:left-0 absolute">
             {data.category || (
               <span className="text-gray-300">Not information...</span>
             )}
