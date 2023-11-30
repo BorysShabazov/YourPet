@@ -81,16 +81,11 @@ const UserPage = () => {
           <h2 className="text-black text-xl font-medium font-['Manrope'] tracking-wide mb-[18px] md:text-[28px] md:mb-[24px]">
             My pets:
           </h2>
-
-          <Link
-            to={'/add-pet'}
-            state={location}
-            className={`z-10 fixed right-[20px] ${
+            <div  className={`z-10 fixed right-[20px] ${
               !limitAddButton ? 'bottom-[60px] ' : 'bottom-[20px] '
-            } md:absolute md:top-[-10px] md:right-0 md:bottom-full`}
-          >
-            <AddPetButton />
-          </Link>
+            } md:absolute md:top-[-10px] md:right-0 md:bottom-full`}>
+              <AddPetButton location={location}/>
+            </div>
           <MyPetsList />
         </div>
       </div>

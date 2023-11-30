@@ -11,27 +11,23 @@ import { Pagination } from './Pagination';
 export const MyPetsList = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchPets());
-  }, [dispatch]);
-
   const { items: petsList, total, qty } = useSelector(getPetsData);
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
-
+  console.log();
   const [currentPage, setCurrentPage] = useState(1);
-  const [petsPerPage, setPetsPerPage] = useState(4);
+  const petsPerPage = 4;
+  const [maxPages, setMaxPages] = useState(0)
 
-  let indexOfLastPet;
-  let indexOfFirstPet;
-  let currentPets;
+  useEffect(() => {
+    dispatch(fetchPets({ page: currentPage, limit: petsPerPage }));
+  }, [currentPage, dispatch, petsPerPage]);
+  useEffect(() => {
+    setMaxPages( Math.ceil(total / petsPerPage))
+},[total])
 
-  if (petsList) {
-    indexOfLastPet = currentPage * petsPerPage;
-    indexOfFirstPet = indexOfLastPet - petsPerPage;
-    currentPets = petsList.slice(indexOfFirstPet, indexOfLastPet);
-  }
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    console.log(pageNumber);
+    setCurrentPage(pageNumber)};
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -48,12 +44,10 @@ export const MyPetsList = () => {
       <div>
         {!isLoadingPets && petsList ? (
           <ul
-            className={`flex flex-col gap-[20px] ${
-              petsList.length > 3 && 'xl:h-[650px]'
-            }`}
+            className={`flex flex-col gap-[20px]`}
           >
             {petsList.length > 0 ? (
-              currentPets.map((el) => (
+              petsList.map((el) => (
                 <li key={el._id} className="mx-auto">
                   <MyPetsCard
                     photo={el.imageURL}
@@ -77,13 +71,11 @@ export const MyPetsList = () => {
             <MiniLoader />
           </div>
         )}
-        {petsList &&
-          petsList.length > 0 &&
-          petsPerPage !== petsList.length &&
-          petsPerPage < petsList.length && (
+        {petsList && petsList.length !== total && 
+(
             <Pagination
               petsPerPage={petsPerPage}
-              totalPets={total}
+              maxPages={maxPages}
               paginate={paginate}
             />
           )}
