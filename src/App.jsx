@@ -17,7 +17,7 @@ const RegiserPage = lazy(() => import('./pages/RegiserPage/RegiserPage'));
 const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
 const AddPetPage = lazy(() => import('./pages/AddPetPage/AddPetPage'));
 
-import { currentUser } from './Redux/auth/auth-operations';
+import { currentUser, logout } from './Redux/auth/auth-operations';
 import PrivateRoute from './components/Route/PrivateRoute';
 import setUpInterceptor from './helpers/axiosInterceptor';
 
@@ -25,13 +25,9 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setUpInterceptor(dispatch);
+    setUpInterceptor(dispatch, logout);
     dispatch(currentUser());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(currentUser());
-  // }, [dispatch]);
 
   return (
     <>

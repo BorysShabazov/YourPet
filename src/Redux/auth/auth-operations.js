@@ -76,6 +76,7 @@ export const currentUser = createAsyncThunk(
 export const logout = createAsyncThunk('/api/auth/logout', async (thunkAPI) => {
   try {
     const result = await instance.post(`/api/users/logout`);
+    localStorage.setItem('refresh', null);
     delToken();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.status);
