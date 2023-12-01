@@ -5,7 +5,7 @@
 Welcome to our [site](https://borysshabazov.github.io/YourPet/) where you can
 post pet loss ads, find pet owners, and post pet-for-sale ads.
 
-![Your Pets](./public/readme.jpg)
+<a href="https://borysshabazov.github.io/YourPet/" target="_blank">![Your Pets](./public/readme.jpg)</a>
 
 ## 📃Technologies
 
@@ -28,6 +28,19 @@ post pet loss ads, find pet owners, and post pet-for-sale ads.
 - [Nikita Salnykov](https://github.com/NikitaSalnykov)
 - [Viacheslav Zolotoy](https://github.com/Viacheslav-Zolotoy)
 - [Kseniya Pin](https://github.com/KseniyaPin)
+
+Backend for this site you may see here:
+[your-pet-backend](https://github.com/Yuriy-St/your-pet-backend)
+
+and see documentation here:
+<a href="https://borysshabazov.github.io/YourPet/" target="_blank">![see documentation here](./public/readme_back.jpg)</a>
+
+Backend collaborators💻:
+
+- [Yuriy Staynov](https://github.com/Yuriy-St)
+- [OLEKSANDR KUROCHKIN](https://github.com/ASKurochkin)
+- [Andrii Kuzhelnii](https://github.com/ribacot)
+- [Tanya Pavliuk](https://github.com/Tanyapavliuk)
 
 ## 🥁Getting Started
 

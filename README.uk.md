@@ -30,6 +30,19 @@
 - [Viacheslav Zolotoy](https://github.com/Viacheslav-Zolotoy)
 - [Kseniya Pin](https://github.com/KseniyaPin)
 
+Бекенд для цього сайту ви можете побачити тут:
+[your-pet-backend](https://github.com/Yuriy-St/your-pet-бекенд)
+
+Документацію можна знайти тут:
+<a href="https://borysshabazov.github.io/YourPet/" target="_blank">![перегляньте документацію тут](./public/readme_back.jpg)</a>
+
+Бекенд-співавтори💻:
+
+- [Юрій Стайнов](https://github.com/Yuriy-St)
+- [ОЛЕКСАНДР КУРОЧКІН](https://github.com/ASKurochkin)
+- [Андрій Кужельний](https://github.com/ribacot)
+- [Таня Павлюк](https://github.com/Tanyapavliuk)
+
 ## 🥁Для початку роботи
 
 Це приклад того, як ви можете налаштувати цей проект локально. Щоб запустити
