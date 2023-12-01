@@ -6,10 +6,8 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { persistor, store } from './Redux/store.js';
 import { PersistGate } from 'redux-persist/integration/react';
-// import Auth from './components/Auth/Auth.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <BrowserRouter basename="/YourPet/">
@@ -17,5 +15,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </BrowserRouter>
     </PersistGate>
   </Provider>,
-  // </React.StrictMode>,
 );
