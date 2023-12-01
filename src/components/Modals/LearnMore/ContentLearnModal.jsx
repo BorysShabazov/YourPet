@@ -2,7 +2,7 @@ import ButtonAddToFavorites from './ButtonAddToFavorites';
 import ButtonContact from './ButtonContact';
 import ListOfNotice from './ListInfoOfNotice';
 
-const ContentLearnModal = ({ data = {}, isAddToFavorite, addToFavorites }) => {
+const ContentLearnModal = ({ data = {}, addToFavorites }) => {
   return (
     <div className=" smOnly:max-w-[280px] md:w-[633px]">
       <div className="md:flex ">
@@ -36,10 +36,7 @@ const ContentLearnModal = ({ data = {}, isAddToFavorite, addToFavorites }) => {
         </span>
       </p>
       <div className="button-container flex gap-2 md:gap-4 smOnly:mt-3 md:mt-16 smOnly:flex-col md:justify-end">
-        <ButtonAddToFavorites
-          isAddToFavorite={isAddToFavorite}
-          addToFavorites={addToFavorites}
-        />
+        <ButtonAddToFavorites addToFavorites={addToFavorites} />
         <ButtonContact data={data} />
       </div>
     </div>

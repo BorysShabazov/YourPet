@@ -1,30 +1,29 @@
-import { Outlet, useParams } from "react-router";
-import NoticesCategoriesNav from "../../components/Notices/NoticesCategoriesNav";
-import { Search } from "../../components/Notices/Search";
-import { Container, Title } from "../../ui";
-import { AddPetButton } from "../../components/Notices/AddPetButton";
-import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchNotices } from "../../Redux/notices/noticesOperation";
-import { getNotices, getTotal } from "../../Redux/notices/noticesSelectors";
-import PetCardList from "../../components/PetCard/PetCardList";
-import { Pagination } from "../../components/Pagination/Pagination";
-import { getRefresh } from "../../Redux/auth/auth-selectors";
+import { Outlet, useParams } from 'react-router';
+import NoticesCategoriesNav from '../../components/Notices/NoticesCategoriesNav';
+import { Search } from '../../components/Notices/Search';
+import { Container, Title } from '../../ui';
+import { AddPetButton } from '../../components/Notices/AddPetButton';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNotices } from '../../Redux/notices/noticesOperation';
+import { getNotices, getTotal } from '../../Redux/notices/noticesSelectors';
+import PetCardList from '../../components/PetCard/PetCardList';
+import { Pagination } from '../../components/Pagination/Pagination';
+import { getRefresh } from '../../Redux/auth/auth-selectors';
 
-const catNameArr = ["sell", "lost", "found", "good-hands", "favorite", "own"];
+const catNameArr = ['sell', 'lost', 'found', 'good-hands', 'favorite', 'own'];
 const limit = 4;
 
 const NoticesPage = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [isLoading, setIsLoadng] = useState(false);
-    
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoadng] = useState(false);
 
   const dispatch = useDispatch();
   const noticies = useSelector(getNotices);
-//   const isLoading = useSelector(getRefresh);
+  // const isLoading = useSelector(getRefresh);
   const totalItems = useSelector(getTotal);
 
   const { categoryName } = useParams();
@@ -40,10 +39,10 @@ const NoticesPage = () => {
     setTotalPages(Math.ceil(totalItems / limit));
   }, [totalItems, categoryName]);
 
-    function get(page, query) {
-      setIsLoadng(true)
-        dispatch(fetchNotices({ category: categoryName, query, page, limit }));
-        setIsLoadng(false)
+  function get(page, query) {
+    setIsLoadng(true);
+    dispatch(fetchNotices({ category: categoryName, query, page, limit }));
+    setIsLoadng(false);
   }
 
   const getQuery = (value) => {
@@ -51,7 +50,7 @@ const NoticesPage = () => {
   };
 
   const refreshClear = () => {
-    setQuery("");
+    setQuery('');
   };
 
   const handleClickPage = (target) => {
@@ -95,7 +94,7 @@ const NoticesPage = () => {
       <Pagination
         totalPages={totalPages}
         handleClickPage={handleClickPage}
-        currentPage={page-1 }
+        currentPage={page - 1}
       />
     </Container>
   );
