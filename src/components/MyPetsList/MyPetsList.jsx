@@ -19,6 +19,7 @@ export const MyPetsList = () => {
 
   useEffect(() => {
     dispatch(fetchPets({ page: currentPage, limit: petsPerPage }));
+    
   }, [currentPage, dispatch, petsPerPage]);
 
   useEffect(() => {
@@ -26,10 +27,10 @@ export const MyPetsList = () => {
   }, [total]);
 
   useEffect(() => {
-    if (petsList.length <= 0 && currentPage >= 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
+    if (petsList.length === 0 && currentPage !== 1 && !isLoadingPets) {
+      setCurrentPage((prevPage) => prevPage - 1/2);
     }
-  }, [petsList, currentPage]);
+  }, [petsList, currentPage, isLoadingPets]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
