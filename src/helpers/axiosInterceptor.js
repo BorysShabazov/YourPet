@@ -12,43 +12,47 @@ const isLoginOrRegisterRequest = (config) => {
 };
 
 const setUpInterceptor = (dispatch) => {
+  let isRefreshing = false;
+  let refreshPromise = null;
+
   const handleError = async (error) => {
     if (
       error.response.status === 401 &&
       !isLoginOrRegisterRequest(error.config)
     ) {
       try {
-        const refresh = localStorage.getItem('refresh');
+        if (!isRefreshing) {
+          isRefreshing = true;
 
-        const { data } = await instance.post('api/users/refresh', {
-          refreshToken: refresh,
-        });
+          const refresh = localStorage.getItem('refresh');
+          const body = { refreshToken: refresh };
 
-        const { data: dataResponse } = data;
+          const { data } = await instance.post('api/users/refresh', body);
+          const { data: dataResponse } = data;
 
-        error.config.headers.Authorization = `Bearer ${dataResponse.accessToken}`;
-        dispatch(authSlice.actions.refreshToken(dataResponse.accessToken));
+          error.config.headers.Authorization = `Bearer ${dataResponse.accessToken}`;
+          dispatch(authSlice.actions.refreshToken(dataResponse.accessToken));
+          setToken(dataResponse.accessToken);
 
-        setToken(dataResponse.accessToken);
+          localStorage.setItem('refresh', dataResponse.refreshToken);
 
-        localStorage.setItem('refresh', dataResponse.refreshToken);
-
-        return instance(error.config);
+          return instance(error.config);
+        } else {
+          return refreshPromise;
+        }
       } catch (error) {
         const { refreshToken } = JSON.parse(error.response.config.data);
         if (error.response.data.code === 403 && refreshToken) {
           dispatch(authSlice.actions.refreshToken(null));
-          return;
         }
-        return Promise.reject(error);
+        throw error;
+      } finally {
+        isRefreshing = false;
+        refreshPromise = null;
       }
     }
     return Promise.reject(error);
   };
-
-  instance.interceptors.request.use(async (config) => {
-    return config;
-  });
 
   instance.interceptors.response.use((response) => response, handleError);
 };

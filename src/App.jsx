@@ -24,9 +24,7 @@ import setUpInterceptor from './helpers/axiosInterceptor';
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setUpInterceptor(dispatch);
-  }, [dispatch]);
+  setUpInterceptor(dispatch);
 
   useEffect(() => {
     dispatch(currentUser());
