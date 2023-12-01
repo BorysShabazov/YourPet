@@ -24,7 +24,7 @@ export const FriendsItem = ({ friend }) => {
         href={url}
         target="_blank"
         rel="noreferrer noopener nofollow"
-        className="block mb-[16px] font-bold text-center text-blue text-xl font-['Manrope'] "
+        className="block mb-[16px] font-bold text-center text-blue text-xl manrope "
       >
         {title}
       </a>

@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   register,
   login,
@@ -23,10 +23,14 @@ export const authSlice = createSlice({
     resetHttpError: (state) => {
       state.error = null;
     },
+
+    refreshToken: (state, action) => {
+      state.token = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // register
-    builder.addCase(register.pending, (state, action) => {
+    builder.addCase(register.pending, (state) => {
       state.error = null;
       state.isRequestActive = true;
     });
@@ -43,12 +47,12 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(register.rejected, (state, action) => {
-      state.error = action.payload; //409
+      state.error = action.payload;
       state.isRequestActive = false;
     });
 
     // login
-    builder.addCase(login.pending, (state, action) => {
+    builder.addCase(login.pending, (state) => {
       state.error = null;
       state.isRequestActive = true;
     });
@@ -56,52 +60,45 @@ export const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
-      // if (!action.payload.user.birthday) {
-      //   state.user.birthday = '04.06.1995';
-      // }
       state.isLoggedIn = true;
       state.isRequestActive = false;
     });
 
     builder.addCase(login.rejected, (state, action) => {
-      state.error = action.payload; //401
+      state.error = action.payload;
       state.isRequestActive = false;
     });
 
     // current
-    builder.addCase(currentUser.pending, (state, action) => {
+    builder.addCase(currentUser.pending, (state) => {
       state.error = null;
       state.isRefresh = true;
     });
 
     builder.addCase(currentUser.fulfilled, (state, action) => {
       state.user = action.payload.data.user;
-      // if (!action.payload.user?.birthday) {
-      //   state.user.birthday = '04.06.2000';
-      // }
       state.isLoggedIn = true;
       state.isRefresh = false;
     });
 
     builder.addCase(currentUser.rejected, (state, action) => {
-      state.error = action.payload; //401
+      state.error = action.payload;
       state.isRefresh = false;
     });
 
     //logout
-    builder.addCase(logout.pending, (state, action) => {
+    builder.addCase(logout.pending, (state) => {
       state.error = null;
       state.isRefresh = true;
     });
-    builder.addCase(logout.fulfilled, (state, action) => {
-      // state = { ...initialState };
+    builder.addCase(logout.fulfilled, (state) => {
       state.user = null;
       state.error = null;
       state.token = null;
       state.isLoggedIn = false;
       state.isRefresh = false;
     });
-    builder.addCase(logout.rejected, (state, action) => {
+    builder.addCase(logout.rejected, (state) => {
       state.user = null;
       state.error = null;
       state.token = null;
@@ -110,7 +107,7 @@ export const authSlice = createSlice({
     });
 
     // update
-    builder.addCase(update.pending, (state, action) => {
+    builder.addCase(update.pending, (state) => {
       state.error = null;
       state.isRequestActive = true;
     });
@@ -123,7 +120,7 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(update.rejected, (state, action) => {
-      state.error = action.payload; //409
+      state.error = action.payload;
       state.isRequestActive = false;
     });
   },
