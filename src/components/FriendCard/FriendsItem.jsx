@@ -38,7 +38,7 @@ export const FriendsItem = ({ friend }) => {
             {workDays ? (
               <>
                 {!workDays[numberOfDay].isOpen
-                  ? 'Close'
+                  ? 'Closed'
                   : `${workDays[numberOfDay].from || ''}-${
                       workDays[numberOfDay].to || ''
                     }`}
