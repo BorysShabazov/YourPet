@@ -25,10 +25,10 @@ export default function MobileMenu({ onToogleMobileMenu }) {
 
   return (
     <>
-      <div className="absolute truncate bg-background  top-0 left-0  h-full w-screen pt-[20px] md:pt-[24px] xl:hidden z-50 snap-y">
+      <div className="absolute  bg-background  top-0 left-0  h-full w-screen pt-[20px] md:pt-[24px]  xl:hidden z-50 snap-y">
         <Container
           className="bg-transparent
-         relative h-full flex flex-col gap-[42px]  md:gap-[92px]  bg-background "
+         relative h-full  flex flex-col gap-[42px]  md:gap-[92px]  bg-background "
         >
           <div className="flex  items-center justify-between w-full h-[28px] md:h-[44px]">
             <Nav styleNavList="hidden" onClick={onToogleMobileMenu} />
