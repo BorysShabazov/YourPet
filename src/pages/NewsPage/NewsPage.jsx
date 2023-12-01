@@ -10,9 +10,9 @@ import { Pagination } from "../../components/Pagination/Pagination";
 const NewsPage = () => {
   const [news, setNews] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  // const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [query, setQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   
   const limit = 6;  
   
@@ -21,13 +21,15 @@ const NewsPage = () => {
   }, [])
 
 const fetchNews = async () => {
-      try {
+  try {
+        setIsLoading(true)
         const data = await getNews()
         setNews(data.data)
         setTotal(prevTotal => {
           if (data.total !== prevTotal) {
             setTotalPages(Math.ceil(data.total / limit));
           }
+          setIsLoading(false)
           return data.total;
         })
       
@@ -54,7 +56,6 @@ const fetchNews = async () => {
   
   const handleClickPage = (target) => {
     dataQuery(query, target.selected+1 )
-    console.log(target.selected+1);
   }
 
   const refreshClear = () => {
@@ -72,7 +73,10 @@ const fetchNews = async () => {
           <li key={_id}><NewsCard date={date} imgUrl={imgUrl} text={text} title={title} url={url}/></li>
         ))}
       </ul>
-      <Pagination handleClickPage={handleClickPage } totalPages={totalPages} />
+      <Pagination handleClickPage={handleClickPage} totalPages={totalPages} />
+      {news.length===0 &&!isLoading&&(<div className="mx-auto mt-10 w-fit text-xl">
+            No news found for this search... Try more!
+          </div>)}
     </Container>
   );
 };

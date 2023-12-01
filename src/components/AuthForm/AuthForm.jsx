@@ -256,7 +256,7 @@ const AuthForm = () => {
           </div>
 
           <div className="w-full flex justify-center mt-[60px] mb-[20px] ">
-            <AuthButton name="Registration" />
+            <AuthButton name="Register" />
           </div>
           <AuthFooter pathName="login" />
         </Form>
