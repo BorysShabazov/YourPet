@@ -1,34 +1,31 @@
-import { Route, Routes } from "react-router-dom";
-import { lazy } from "react";
+import { Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { lazy, useEffect } from 'react';
 
-import SharedLayout from "./components/SharedLayout/SharedLayout";
-import MainPage from "./pages/MainPage/MainPage";
-import PublicRoute from "./components/Route/PublicRoute";
+import SharedLayout from './components/SharedLayout/SharedLayout';
+import MainPage from './pages/MainPage/MainPage';
+import PublicRoute from './components/Route/PublicRoute';
 
-const NoticesPage = lazy(() => import("./pages/NoticesPage/NoticesPage"));
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
-const NewsPage = lazy(() => import("./pages/NewsPage/NewsPage"));
+const NoticesPage = lazy(() => import('./pages/NoticesPage/NoticesPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
+const NewsPage = lazy(() => import('./pages/NewsPage/NewsPage'));
 const OurFriendsPage = lazy(() =>
-  import("./pages/OurFriendsPage/OurFriendsPage")
+  import('./pages/OurFriendsPage/OurFriendsPage'),
 );
-const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-const RegiserPage = lazy(() => import("./pages/RegiserPage/RegiserPage"));
-const UserPage = lazy(() => import("./pages/UserPage/UserPage"));
-const AddPetPage = lazy(() => import("./pages/AddPetPage/AddPetPage"));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+const RegiserPage = lazy(() => import('./pages/RegiserPage/RegiserPage'));
+const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
+const AddPetPage = lazy(() => import('./pages/AddPetPage/AddPetPage'));
 
-import { useDispatch, useSelector } from "react-redux";
-import { getRefresh } from "./Redux/auth/auth-selectors";
-import { useEffect } from "react";
-import { currentUser } from "./Redux/auth/auth-operations";
-import Loader from "./components/Loader/Loader";
-import PrivateRoute from "./components/Route/PrivateRoute";
-
+import { currentUser } from './Redux/auth/auth-operations';
+import PrivateRoute from './components/Route/PrivateRoute';
+import setUpInterceptor from './helpers/axiosInterceptor';
 
 function App() {
   const dispatch = useDispatch();
-  const isRefresh = useSelector(getRefresh);
 
-  // handle refresh page
+  setUpInterceptor(dispatch);
+
   useEffect(() => {
     dispatch(currentUser());
   }, [dispatch]);

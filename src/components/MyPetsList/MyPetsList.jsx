@@ -13,21 +13,28 @@ export const MyPetsList = () => {
 
   const { items: petsList, total, qty } = useSelector(getPetsData);
   const isLoadingPets = useSelector((state) => state.pets.isLoading);
-  console.log();
   const [currentPage, setCurrentPage] = useState(1);
   const petsPerPage = 4;
-  const [maxPages, setMaxPages] = useState(0)
+  const [maxPages, setMaxPages] = useState(0);
 
   useEffect(() => {
     dispatch(fetchPets({ page: currentPage, limit: petsPerPage }));
+    
   }, [currentPage, dispatch, petsPerPage]);
+
   useEffect(() => {
-    setMaxPages( Math.ceil(total / petsPerPage))
-},[total])
+    setMaxPages(Math.ceil(total / petsPerPage));
+  }, [total]);
+
+  useEffect(() => {
+    if (petsList.length === 0 && currentPage !== 1 && !isLoadingPets) {
+      setCurrentPage((prevPage) => prevPage - 1/2);
+    }
+  }, [petsList, currentPage, isLoadingPets]);
 
   const paginate = (pageNumber) => {
-    console.log(pageNumber);
-    setCurrentPage(pageNumber)};
+    setCurrentPage(pageNumber);
+  };
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -43,44 +50,42 @@ export const MyPetsList = () => {
     <>
       <div>
         {!isLoadingPets && petsList ? (
-          <ul
-            className={`flex flex-col gap-[20px]`}
-          >
-            {petsList.length > 0 ? (
-              petsList.map((el) => (
-                <li key={el._id} className="mx-auto">
-                  <MyPetsCard
-                    photo={el.imageURL}
-                    name={el.name}
-                    birth={el.birthDate}
-                    type={el.type}
-                    comments={el.comments}
-                    id={el._id}
-                    handleTogleDeleteModal={handleTogleDeleteModal}
-                  />
-                </li>
-              ))
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-black font-medium font-['Manrope'] tracking-wide">{`You haven't added any pets yet`}</p>
-              </div>
+          <>
+            <ul className={`flex flex-col gap-[20px]`}>
+              {petsList.length > 0 ? (
+                petsList.map((el) => (
+                  <li key={el._id} className="mx-auto">
+                    <MyPetsCard
+                      photo={el.imageURL}
+                      name={el.name}
+                      birth={el.birthDate}
+                      type={el.type}
+                      comments={el.comments}
+                      id={el._id}
+                      handleTogleDeleteModal={handleTogleDeleteModal}
+                    />
+                  </li>
+                ))
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-black font-medium font-['Manrope'] tracking-wide">{`You haven't added any pets yet`}</p>
+                </div>
+              )}
+            </ul>
+            {petsList.length !== total && petsList.length !== 0 && (
+              <Pagination
+                petsPerPage={petsPerPage}
+                maxPages={maxPages}
+                paginate={paginate}
+                currentPage={currentPage}
+              />
             )}
-          </ul>
-          
+          </>
         ) : (
           <div className="w-full flex justify-center py-7">
             <MiniLoader />
           </div>
         )}
-        {(!isLoadingPets && petsList && petsList.length !== total ) &&
-(
-            <Pagination
-              petsPerPage={petsPerPage}
-              maxPages={maxPages}
-              paginate={paginate}
-              currentPage={currentPage}
-            />
-          )}
       </div>
       <BasicModal
         isOpen={isDeleteModalOpen}
@@ -91,7 +96,6 @@ export const MyPetsList = () => {
           nameToDelete={currentName}
           id={currentId}
           onCloseModal={handleTogleDeleteModal}
-          currentPage={currentPage}
         />
       </BasicModal>
     </>
