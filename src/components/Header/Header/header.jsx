@@ -25,10 +25,8 @@ export default function Header() {
 
   useEffect(() => {
     if (isMobilMenuActive) {
-      document.body.classList.add('overflow-hidden');
       document.getElementById('root').classList.add('visually-hidden');
     } else {
-      document.body.classList.remove('overflow-hidden');
       document.getElementById('root').classList.remove('visually-hidden');
     }
   }, [isMobilMenuActive]);
