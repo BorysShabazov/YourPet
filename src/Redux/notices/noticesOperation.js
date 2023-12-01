@@ -55,3 +55,20 @@ export const deleteNotice = createAsyncThunk(
     }
   },
 );
+
+export const addToFavorite = createAsyncThunk(
+  'notices/addToFavorite',
+  async ({ data, user }, thunkAPI) => {
+    try {
+      const favorite = !data.inFavorites.includes(user._id);
+
+      const response = await instance.post(
+        `/api/notices/favorites/${data._id}?favorite=${favorite}`,
+      );
+
+      return response.data.data.notice;
+    } catch (evt) {
+      return thunkAPI.rejectWithValue(evt.message);
+    }
+  },
+);

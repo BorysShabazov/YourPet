@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getIsLoggedIn } from '../../../Redux/auth/auth-selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIsLoggedIn, getUser } from '../../../Redux/auth/auth-selectors';
 import Loader from '../../Loader/Loader';
 import { getErrorNotice } from '../../../Redux/notices/noticesSelectors';
 import {
@@ -9,13 +9,15 @@ import {
 } from '../../../Redux/notices/noticesSelectors';
 import MiniLoader from '../../MiniLoader/MiniLoader';
 import ContentLearnModal from './ContentLearnModal';
+import { addToFavorite } from '../../../Redux/notices/noticesOperation';
 
 const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
+  const dispatch = useDispatch();
   const isLoadingNotice = useSelector(getIsLoadingNotice);
   const isLoggedIn = useSelector(getIsLoggedIn);
+  const user = useSelector(getUser);
   const isError = useSelector(getErrorNotice);
   const data = useSelector(getSelectedNotice);
-  const [isAddToFavorite, setAddToFavorite] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -35,19 +37,8 @@ const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
   }, []);
   const addToFavorites = () => {
     if (isLoggedIn) {
-      if (isAddToFavorite) {
-        // Функція для видалення з улюблені
-
-        setAddToFavorite(false);
-        console.log('Видалення з улюблених');
-        return;
-      }
-      // Функція для додавання в улюблені
-      setAddToFavorite(true);
-      console.log('Додавання в улюблені');
+      dispatch(addToFavorite({ data, user }));
     } else {
-      // Відкриття модалки Atention для входу або реєстрації
-      console.log('Відкриття модалки Attention');
       onCloseModal();
       onOpenAtentionModal();
     }
@@ -76,11 +67,7 @@ const LearnMore = ({ onCloseModal, onOpenAtentionModal }) => {
               {windowSize.width <= 767.98 ? <MiniLoader /> : <Loader />}
             </div>
           ) : (
-            <ContentLearnModal
-              addToFavorites={addToFavorites}
-              isAddToFavorite={isAddToFavorite}
-              data={data}
-            />
+            <ContentLearnModal addToFavorites={addToFavorites} data={data} />
           )}
         </>
       )}
