@@ -141,7 +141,7 @@ const LoginForm = () => {
                 component="div"
                 className={`${wrapperError}`}
               />
-              {httpError === 401 ? (
+              {httpError ? (
                 <div className={`${wrapperError}`}>{messages.axiosError}</div>
               ) : null}
 

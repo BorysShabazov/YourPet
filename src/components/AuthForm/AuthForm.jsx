@@ -142,7 +142,7 @@ const AuthForm = () => {
               />
 
               {/* Axios Error */}
-              {httpError === 409 ? (
+              {httpError ? (
                 <div className={`${wrapperError}`}>{messages.axiosError}</div>
               ) : null}
             </AuthInputWrapper>

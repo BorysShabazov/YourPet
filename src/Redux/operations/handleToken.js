@@ -1,9 +1,9 @@
-import axios from 'axios';
+import { instance } from '../auth/auth-operations';
 
 export const setToken = (token) => {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
 export const delToken = () => {
-  axios.defaults.headers.common['Authorization'] = '';
+  instance.defaults.headers.common['Authorization'] = '';
 };

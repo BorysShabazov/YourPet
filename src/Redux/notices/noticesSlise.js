@@ -5,7 +5,6 @@ import {
   fetchNotices,
   getNoticeById,
 } from './noticesOperation';
-import { pendingFunc, rejectFunc } from '../operations/handlePendingAndReject';
 
 const initialNotices = {
   items: [],
@@ -13,6 +12,23 @@ const initialNotices = {
   error: null,
   selectedNotice: null,
   total: 0,
+};
+
+const rejectFunc = (state, action) => {
+  return {
+    items: state.items,
+    isLoading: false,
+    error: action.payload,
+    total: 0,
+  };
+};
+const pendingFunc = (state) => {
+  return {
+    ...state,
+    items: state.items,
+    isLoading: true,
+    error: null,
+  };
 };
 
 const noticesStateSlice = createSlice({
@@ -73,13 +89,3 @@ const noticesStateSlice = createSlice({
 });
 
 export const noticesStateReducer = noticesStateSlice.reducer;
-
-// builder.addCase(getNoticeById.pending, pendingFunc);
-// builder.addCase(getNoticeById.fulfilled, (_, action) => {
-//   return {
-//     items: [...action.payload],
-//     isLoading: false,
-//     error: null,
-//   };
-// });
-// builder.addCase(getNoticeById.rejected, rejectFunc);
