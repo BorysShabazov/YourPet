@@ -36,7 +36,6 @@ export const deletePet = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       instance.delete(`/api/pets/${arg}`);
-      // fetchPets();
       return arg;
     } catch (evt) {
       return thunkAPI.rejectWithValue(evt.message);
