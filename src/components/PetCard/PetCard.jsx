@@ -4,7 +4,10 @@ import {
   differenceInMonths,
   differenceInDays,
 } from 'date-fns';
-import { getNoticeById } from '../../Redux/notices/noticesOperation';
+import {
+  addToFavorite,
+  getNoticeById,
+} from '../../Redux/notices/noticesOperation';
 import Svg from '../Svg/Svg';
 import { useState } from 'react';
 import LearnMore from '../Modals/LearnMore/LearnMore';
@@ -84,6 +87,9 @@ const PetCard = ({ pet }) => {
     setId(null);
   };
 
+  const isFavorite = (pet) => pet?.inFavorites?.includes(user._id);
+  const data = pet;
+
   return (
     <>
       <div className=" w-[288px] h-[456px]  pb-[24px]  mdOnly:w-[336px] smOnly:w-[280px] relative hover:shadow-xl  bg-white rounded-bl-[40px] rounded-br-[40px] shadow-default hover:shadow-focus">
@@ -93,30 +99,34 @@ const PetCard = ({ pet }) => {
           alt={pet.type}
         />
 
-        <div className=" flex   w-[126px] h-[32px] px-[17px] py-[11px] left-0 top-[16px] absolute bg-[#CCE4FB] rounded-tr-2xl rounded-br-2xl  ">
+        <div className=" flex   w-[126px] h-[32px] px-[17px] py-[11px] left-0 top-[16px] absolute bg-lightBlue rounded-tr-2xl rounded-br-2xl  ">
           <p className=" flex items-center justify-center  w-[92px] h-[10px]  text-neutral-900 text-sm font-medium manrope">
             {pet.category}
           </p>
         </div>
 
         <div
-          className="w-10 h-10 right-[12px] top-[12px] bg-[#CCE4FB] rounded-full absolute group cursor-pointer"
+          className="w-10 h-10 right-[12px] top-[12px] bg-lightBlue rounded-full absolute group cursor-pointer hover:bg-blue"
           onClick={
             isLoggedIn
-              ? () => handleOpenLearnMoreModal(pet._id)
-              : handleOpenAttentionModal
+              ? () => dispatch(addToFavorite({ data, user }))
+              : () => handleOpenAttentionModal()
           }
         >
           <Svg
             id={'icon-heart'}
             size={24}
-            className="left-[8px] fill-transparent stroke-[#54ADFF] top-[9px] absolute group-hover:fill-[#54ADFF]"
+            className={
+              isFavorite(pet)
+                ? `left-[8px] fill-blue stroke-blue top-[9px] absolute group-hover:fill-lightBlue group-hover:stroke-lightBlue`
+                : `left-[8px] fill-transparent stroke-blue top-[9px] absolute group-hover:fill-lightBlue group-hover:stroke-lightBlue`
+            }
           />
         </div>
 
         {isLoggedIn && pet.owner === user._id && (
           <div
-            className="w-10 h-10 right-[12px] top-[68px] absolute group bg-[#CCE4FB] rounded-full cursor-pointer "
+            className="w-10 h-10 right-[12px] top-[68px] absolute group bg-lightBlue rounded-full cursor-pointer "
             onClick={() => handleOpenDeleteModal(pet._id)}
           >
             <Svg

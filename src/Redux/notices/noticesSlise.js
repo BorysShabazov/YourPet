@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  addToFavorite,
   createNotice,
   deleteNotice,
   fetchNotices,
@@ -85,6 +86,30 @@ const noticesStateSlice = createSlice({
       };
     });
     builder.addCase(deleteNotice.rejected, rejectFunc);
+
+    // add to favorite
+
+    builder.addCase(addToFavorite.pending, pendingFunc);
+    builder.addCase(addToFavorite.fulfilled, (state, action) => {
+      const index = state.items.findIndex(
+        (el) => el._id === action.payload._id,
+      );
+
+      if (index !== -1) {
+        return {
+          ...state,
+          items: state.items.map((el, i) =>
+            i === index ? action.payload : el,
+          ),
+          isLoading: false,
+          error: null,
+          selectedNotice: action.payload,
+        };
+      }
+
+      return state;
+    });
+    builder.addCase(addToFavorite.rejected, rejectFunc);
   },
 });
 
