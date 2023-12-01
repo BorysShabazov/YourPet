@@ -8,6 +8,8 @@ import { userSchema } from './UserSchema';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import MiniLoader from '../../components/MiniLoader/MiniLoader';
+import { formatRawDate } from '../../helpers/formatRawDate';
+import { format } from 'date-fns';
 
 const errorTextStyle =
   'pl-4 absolute -bottom-5 text-rose-500 text-xs font-normal top-6 left-[60px] xl:left-[85px]';
@@ -42,7 +44,7 @@ export const UserForm = ({ onTogleLeavingModal }) => {
     if (typeof date === 'string' && dateRegex.test(date)) {
       return date;
     }
-
+    console.log(date);
     return Date.now();
   };
 
@@ -59,10 +61,11 @@ export const UserForm = ({ onTogleLeavingModal }) => {
     validationSchema: userSchema,
 
     onSubmit: ({ name, email, birthday, phone, city }) => {
+      console.log(birthday);
       const updateUser = {
         name,
         email,
-        birthday,
+        birthday: format(birthday, 'dd-MM-yyyy', Date.now()),
         phone,
         city,
       };
@@ -83,6 +86,7 @@ export const UserForm = ({ onTogleLeavingModal }) => {
 
   const createUserFormData = (data) => {
     const formData = new FormData();
+    console.log(data);
 
     formData.append('avatar', data.avatar);
     formData.append('name', data.name);
@@ -90,7 +94,7 @@ export const UserForm = ({ onTogleLeavingModal }) => {
     formData.append('birthday', data.birthday);
     formData.append('phone', data.phone);
     formData.append('city', data.city);
-
+    console.log(formData);
     return formData;
   };
 
