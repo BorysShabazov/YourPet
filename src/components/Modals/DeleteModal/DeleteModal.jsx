@@ -8,6 +8,7 @@ const DeleteModal = ({ id = { id }, onCloseModal, title, nameToDelete }) => {
   const onDelete = () => {
     if (title === 'adverstiment') {
       dispatch(deleteNotice(id));
+
       onCloseModal();
       return;
     }
