@@ -6,7 +6,7 @@ import { getUser } from '../../../Redux/auth/auth-selectors';
 const ButtonAddToFavorites = ({ addToFavorites }) => {
   const user = useSelector(getUser);
   const pet = useSelector(getSelectedNotice);
-  const isFavorite = (data) => data.inFavorites.includes(user?._id);
+  const isFavorite = (data) => data?.inFavorites?.includes(user?._id);
 
   return (
     <button
