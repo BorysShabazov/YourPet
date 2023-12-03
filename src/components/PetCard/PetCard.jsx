@@ -127,7 +127,7 @@ const PetCard = ({ pet }) => {
         {isLoggedIn && pet.owner === user?._id && (
           <div
             className="w-10 h-10 right-[12px] top-[68px] absolute group bg-lightBlue rounded-full cursor-pointer "
-            onClick={() => handleOpenDeleteModal(pet._id)}
+            onClick={() => handleOpenDeleteModal(pet?._id)}
           >
             <Svg
               id={'icon-trash'}
@@ -141,7 +141,7 @@ const PetCard = ({ pet }) => {
         </p>
 
         <button
-          onClick={() => handleOpenLearnMoreModal(pet._id)}
+          onClick={() => handleOpenLearnMoreModal(pet?._id)}
           className="hover:bg-gradient-to-l from-[#419EF1] to-[#9BD0FF] hover:text-white hover:border-none w-[248px] h-[38px] mx-[20px] mt-[20px] smOnly:mx-[16px] mdOnly:mx-[44px] mdOnly:h-[40px] rounded-[40px] border-2 border-[#54ADFF]  text-[#54ADFF] items-center pl-[78px]   flex manrope tracking-wide group"
           type="button"
         >
