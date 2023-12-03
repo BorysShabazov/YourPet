@@ -2,6 +2,8 @@ import { Link } from "react-router-dom/dist";
 import { format } from "date-fns";
 import { useState } from "react";
 
+import noImage from '../../images/no-image.png'
+
 const CuttedText = ({text, length}) => {
   const [isHover, setIsHover] = useState(false);
   
@@ -30,7 +32,8 @@ const NewsCard = ({ date, imgUrl, text, title, url }) => {
              <img 
           src={imgUrl}
           alt="newImage"
-          className="w-full  bg-black bg-opacity-20 rounded-[20px] h-[252px] "
+              className="w-full  bg-black bg-opacity-20 rounded-[20px] h-[252px] "
+              onError={(e) => { e.target.src = noImage; }}
         />
           </div>
          <h2 className="text-2xl font-bold font-manrope "><CuttedText text={ title} length="40"/></h2>
