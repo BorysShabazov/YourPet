@@ -67,9 +67,9 @@ const PetCard = ({ pet }) => {
     setAttentionModalOpen(false);
   };
 
-  const handleOpenLearnMoreModal = (_id) => {
+  const handleOpenLearnMoreModal = (id) => {
     setLearnMoreModalOpen(true);
-    dispatch(getNoticeById(_id));
+    dispatch(getNoticeById(id));
   };
 
   const handleCloseLearnMoreModal = () => {
@@ -87,7 +87,7 @@ const PetCard = ({ pet }) => {
     setId(null);
   };
 
-  const isFavorite = (pet) => pet.inFavorites?.includes(user?._id);
+  const isFavorite = (pet) => pet?.inFavorites?.includes(user?._id);
   const data = pet;
 
   return (
@@ -124,7 +124,7 @@ const PetCard = ({ pet }) => {
           />
         </div>
 
-        {isLoggedIn && pet.owner === user._id && (
+        {isLoggedIn && pet.owner === user?._id && (
           <div
             className="w-10 h-10 right-[12px] top-[68px] absolute group bg-lightBlue rounded-full cursor-pointer "
             onClick={() => handleOpenDeleteModal(pet._id)}
