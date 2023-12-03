@@ -10,10 +10,10 @@ import { fetchNotices } from '../../Redux/notices/noticesOperation';
 import { getNotices, getTotal } from '../../Redux/notices/noticesSelectors';
 import PetCardList from '../../components/PetCard/PetCardList';
 import { Pagination } from '../../components/Pagination/Pagination';
-import { getRefresh } from '../../Redux/auth/auth-selectors';
+import { getRefresh, getUser } from '../../Redux/auth/auth-selectors';
 
 const catNameArr = ['sell', 'lost', 'found', 'good-hands', 'favorite', 'own'];
-const limit = 4;
+const limit = 12;
 
 const NoticesPage = () => {
   const [query, setQuery] = useState('');
@@ -23,10 +23,18 @@ const NoticesPage = () => {
 
   const dispatch = useDispatch();
   const noticies = useSelector(getNotices);
+  const user = useSelector(getUser);
   // const isLoading = useSelector(getRefresh);
   const totalItems = useSelector(getTotal);
 
   const { categoryName } = useParams();
+
+  const favoriteFilter = (noticies) => {
+    if (categoryName === 'favorite') {
+      return noticies.filter((el) => el.inFavorites?.includes(user?._id));
+    }
+    return noticies;
+  };
 
   useEffect(() => {
     if (query) {
@@ -38,6 +46,12 @@ const NoticesPage = () => {
   useEffect(() => {
     setTotalPages(Math.ceil(totalItems / limit));
   }, [totalItems, categoryName]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      get(page, query);
+    }, 1000);
+  }, [totalItems]);
 
   function get(page, query) {
     setIsLoadng(true);
@@ -82,7 +96,7 @@ const NoticesPage = () => {
       )}
       <Outlet />
       {noticies.length > 0 ? (
-        <PetCardList pets={noticies} />
+        <PetCardList pets={favoriteFilter(noticies)} />
       ) : (
         catNameArr.includes(categoryName) &&
         !isLoading && (

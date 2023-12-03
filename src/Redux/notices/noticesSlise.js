@@ -68,6 +68,7 @@ const noticesStateSlice = createSlice({
     builder.addCase(createNotice.pending, pendingFunc);
     builder.addCase(createNotice.fulfilled, (state, action) => {
       return {
+        ...state,
         items: [action.payload.data, ...state.items],
         isLoading: false,
         error: null,
@@ -83,6 +84,7 @@ const noticesStateSlice = createSlice({
         items: [...state.items.filter((el) => el._id !== action.payload)],
         isLoading: false,
         error: null,
+        total: state.total - 1,
       };
     });
     builder.addCase(deleteNotice.rejected, rejectFunc);

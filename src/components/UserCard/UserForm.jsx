@@ -44,7 +44,6 @@ export const UserForm = ({ onTogleLeavingModal }) => {
     if (typeof date === 'string' && dateRegex.test(date)) {
       return date;
     }
-    console.log(date);
     return Date.now();
   };
 
@@ -61,7 +60,6 @@ export const UserForm = ({ onTogleLeavingModal }) => {
     validationSchema: userSchema,
 
     onSubmit: ({ name, email, birthday, phone, city }) => {
-      console.log(birthday);
       const updateUser = {
         name,
         email,
@@ -86,7 +84,6 @@ export const UserForm = ({ onTogleLeavingModal }) => {
 
   const createUserFormData = (data) => {
     const formData = new FormData();
-    console.log(data);
 
     formData.append('avatar', data.avatar);
     formData.append('name', data.name);
