@@ -87,7 +87,7 @@ const PetCard = ({ pet }) => {
     setId(null);
   };
 
-  const isFavorite = (pet) => pet?.inFavorites?.includes(user._id);
+  const isFavorite = (pet) => pet.inFavorites?.includes(user?._id);
   const data = pet;
 
   return (
